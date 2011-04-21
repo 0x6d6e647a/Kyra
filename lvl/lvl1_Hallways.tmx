@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" width="91" height="54" tilewidth="32" tileheight="32">
+ <tileset firstgid="1" name="Collsion" tilewidth="32" tileheight="32">
+  <image source="Collsion.png" width="32" height="32"/>
+  <tile id="0">
+   <properties>
+    <property name="blocked" value="true"/>
+   </properties>
+  </tile>
+ </tileset>
+ <tileset firstgid="2" name="Random" tilewidth="32" tileheight="32">
+  <image source="Random.png" width="64" height="64"/>
+ </tileset>
+ <layer name="Background" width="91" height="54">
+  <data encoding="base64" compression="zlib">
+   eJztwzENAAAMBKEb3r/maugOCaumqqqqqqqqqqqqqqqqqqqqqqqq+nhBQ0zJ
+  </data>
+ </layer>
+ <layer name="Collsion" width="91" height="54">
+  <data encoding="base64" compression="zlib">
+   eJztmMEOwyAMQ7v//+kddhhDQOkIiU38JA49tH240bB2XXt5Hb6QiM4iY9angbgvRCcLEPeF6GQB4r4QnSxA3BeikwWI+yqd6vM7ukM86Rq9ayRGTtEZrvQ61qx3v3/lXsasa6+7uUGAzZ1tNkrY3Nl8S9jc2c7yEjb36NlAOhsRehPSavmxuN/tA231HC3ds/N0rv95trL+cFrWyN/2LusVd831L6fNNTKeWXue71EOKz2EaSnr/cxkvfv9WZiZGWFD9FxnQln7UeZZ/24oa1ui5zrTt2TrfFF9zQKv7qqsuVxbMPkzubZg8h/1EAaYfJlcWzD5M7m2YPKP7g9Pu0bvmoHo/FZ7HVPW0czkpKz96M02Y29CR3Pth7L245QewoDm2o+ZrHd1ymzM9BBlbcPuLJT1F2Xtx6iHWD8/O5prP5S1H5H/I2bDK+s3kpQEGw==
+  </data>
+ </layer>
+ <layer name="Forground" width="91" height="54">
+  <data encoding="base64" compression="zlib">
+   eJztwTEBAAAAwqD1T20Gf6AAAAAAAAAAAAAAAAAAAAAAAAAAPgNMyAAB
+  </data>
+ </layer>
+</map>
