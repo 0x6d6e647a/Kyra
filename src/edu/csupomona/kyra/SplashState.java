@@ -5,16 +5,13 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
-import org.newdawn.slick.tiled.TiledMap;
 
-public class GameState extends BasicGameState {
-	
-	private TiledMap testroom00;
+public class SplashState extends BasicGameState {
 
-	int stateID = 5;
+	int stateID = 0;
 	Controls con;
 	
-	public GameState(int stateID, Controls con) {
+	public SplashState(int stateID, Controls con) {
 		this.stateID = stateID;
 		this.con = con;
 	}
@@ -25,14 +22,15 @@ public class GameState extends BasicGameState {
     }
 	
 	public void init(GameContainer gc, StateBasedGame sbg) throws SlickException {
-		testroom00 = new TiledMap("lvl/lvl1_Hallways.tmx");
+	
     }
  
     public void render(GameContainer gc, StateBasedGame sbg, Graphics gc1) throws SlickException {
-    	testroom00.render(0, 0);
+    	
     }
  
     public void update(GameContainer gc, StateBasedGame sbg, int delta) throws SlickException {
  
     }
 }
+

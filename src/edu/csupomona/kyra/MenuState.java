@@ -8,20 +8,26 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
-
-
 public class MenuState extends BasicGameState {
 
 	Image background = null;
 	Image start = null;
+	Image startSelect = null;
 	Image options = null;
+	Image optionsSelect = null;
 	Image exit = null;
-	int stateID = 0;
-	private static int menuX = 410;
-	private static int menuY = 160;
+	Image exitSelect = null;
+	int stateID = 1;
+	Controls con;
+	boolean insideStart = true;
+	boolean insideOptions = false;
+	boolean insideExit = false;
+	private static int menuX = 312;
+	private static int menuY = 334;
 	
-	public MenuState(int stateID) {
+	public MenuState(int stateID, Controls con) {
 		this.stateID = stateID;
+		this.con = con;
 	}
 	
 	@Override
@@ -29,63 +35,82 @@ public class MenuState extends BasicGameState {
         return stateID;
     }
 	
-	public void init(GameContainer gc, StateBasedGame sbg) throws SlickException {
-		 background = new Image("img/menu_background.png");
-		 Image menuOptions = new Image("img/menu_options.png");
-		 start = menuOptions.getSubImage(0, 0, 400, 100);
-	     options = menuOptions.getSubImage(0, 0, 400, 200);
-	     exit = menuOptions.getSubImage(0, 0, 400, 300);
+	public void init(GameContainer gc, StateBasedGame sbg) throws SlickException {	
+		Image startLook = new Image("img/menu_start.png");
+		Image optionsLook = new Image("img/menu_options.png");
+		Image exitLook = new Image("img/menu_exit.png");
+		background = new Image("img/menu_background.png");
+		start = startLook.getSubImage(0, 0, 400, 100);
+		startSelect = startLook.getSubImage(0, 100, 400, 100);
+	    options = optionsLook.getSubImage(0, 0, 400, 100);
+	    optionsSelect = optionsLook.getSubImage(0, 100, 400, 100);
+	    exit = exitLook.getSubImage(0, 0, 400, 100);
+	    exitSelect = exitLook.getSubImage(0, 100, 400, 100);
 
     }
  
     public void render(GameContainer gc, StateBasedGame sbg, Graphics gc1) throws SlickException {
     	background.draw(0, 0);
-    	start.draw(menuX, menuY);
-    	options.draw(menuX, menuY+10);
-    	exit.draw(menuX, menuY+20);
+    	if(insideStart) {
+    		startSelect.draw(menuX, menuY);
+    	} else {
+    		start.draw(menuX, menuY);
+    	}
+    	if(insideOptions) {
+    		optionsSelect.draw(menuX, menuY+100);
+    	} else {
+    		options.draw(menuX, menuY+100);
+    	}
+    	if(insideExit) {
+    		exitSelect.draw(menuX, menuY+200);
+    	} else {
+    		exit.draw(menuX, menuY+200);
+    	}
     }
  
     public void update(GameContainer gc, StateBasedGame sbg, int delta) throws SlickException {
     	
     	Input input = gc.getInput();
-    	int mouseX = input.getMouseX();
-    	int mouseY = input.getMouseY();
-    	boolean insideStart = false;
-    	boolean insideOptions = false;
-    	boolean insideExit = false;
     	
-    	if( ( mouseX >= menuX && mouseX <= menuX + start.getWidth()) &&
-                ( mouseY >= menuY && mouseY <= menuY + start.getHeight()) )
-            {
-                insideStart = true;
-            }else if( ( mouseX >= menuX && mouseX <= menuX+ options.getWidth()) &&
-                ( mouseY >= menuY+10 && mouseY <= menuY+10 + options.getHeight()) )
-            {
-                insideOptions = true;
-            }else if( ( mouseX >= menuX && mouseX <= menuX+ exit.getWidth()) &&
-                ( mouseY >= menuY+20 && mouseY <= menuY+20 + exit.getHeight()) )
-            {
-                insideExit = true;
-            }
-
-    	if(insideStart)
-        {
-            if ( input.isMouseButtonDown(Input.MOUSE_LEFT_BUTTON) ){
-                sbg.enterState(Kyra.GAMESTATE);
-            }
-        }
-    	if(insideOptions)
-        {
-            if ( input.isMouseButtonDown(Input.MOUSE_LEFT_BUTTON) ){
-                System.out.println("Entered Options");
-            }
-        }
-    	if(insideExit)
-        {
-            if ( input.isMouseButtonDown(Input.MOUSE_LEFT_BUTTON) ){
-                System.exit(1);
-            }
-        }
+    	if(insideStart) {
+    		if(input.isKeyPressed(con.getP1UP())) {
+    			insideStart = false;
+    			insideOptions = false;
+    			insideExit = true;
+    		} else if(input.isKeyPressed(con.getP1DOWN())) {
+    			insideStart = false;
+    			insideOptions = true;
+    			insideExit = false;
+    		} else if(input.isKeyPressed(con.getP1ACTION())) {
+    			sbg.enterState(Kyra.GAMESTATE);
+    		}	
+    	}
+    	if(insideOptions) {
+    		if(input.isKeyPressed(con.getP1UP())) {
+    			insideStart = true;
+    			insideOptions = false;
+    			insideExit = false;
+    		} else if(input.isKeyPressed(con.getP1DOWN())) {
+    			insideStart = false;
+    			insideOptions = false;
+    			insideExit = true;
+    		} else if(input.isKeyPressed(con.getP1ACTION())) {
+    			sbg.enterState(Kyra.OPTIONSTATE);
+    		}	
+    	}
+    	if(insideExit) {
+    		if(input.isKeyPressed(con.getP1UP())) {
+    			insideStart = false;
+    			insideOptions = true;
+    			insideExit = false;
+    		} else if(input.isKeyPressed(con.getP1DOWN())) {
+    			insideStart = true;
+    			insideOptions = false;
+    			insideExit = false;
+    		} else if(input.isKeyPressed(con.getP1ACTION())) {
+    			System.exit(0);
+    		}	
+    	}
     }
 
 

@@ -8,10 +8,12 @@ import org.newdawn.slick.state.StateBasedGame;
 
 public class OptionState extends BasicGameState {
 
-	int stateID = 1;
+	int stateID = 4;
+	Controls con;
 	
-	public OptionState(int stateID) {
+	public OptionState(int stateID, Controls con) {
 		this.stateID = stateID;
+		this.con = con;
 	}
 	
 	@Override

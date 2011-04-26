@@ -1,29 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.0" orientation="orthogonal" width="91" height="54" tilewidth="32" tileheight="32">
  <tileset firstgid="1" name="Collsion" tilewidth="32" tileheight="32">
-  <image source="Collsion.png" width="32" height="32"/>
-  <tile id="0">
-   <properties>
-    <property name="blocked" value="true"/>
-   </properties>
-  </tile>
+  <image source="../img/Collsion.png" width="32" height="32"/>
  </tileset>
  <tileset firstgid="2" name="Random" tilewidth="32" tileheight="32">
-  <image source="Random.png" width="64" height="64"/>
+  <image source="../img/Random.png" width="64" height="64"/>
  </tileset>
  <layer name="Background" width="91" height="54">
-  <data encoding="base64" compression="zlib">
-   eJztwzENAAAMBKEb3r/maugOCaumqqqqqqqqqqqqqqqqqqqqqqqq+nhBQ0zJ
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC+3DMQ0AAAwEoRvev+Zq6A4Jq6aqqqqqqqqqqqqqqqqqqqqqqqr6eOawFjrITAAA
   </data>
  </layer>
  <layer name="Collsion" width="91" height="54">
-  <data encoding="base64" compression="zlib">
-   eJztmMEOwyAMQ7v//+kddhhDQOkIiU38JA49tH240bB2XXt5Hb6QiM4iY9angbgvRCcLEPeF6GQB4r4QnSxA3BeikwWI+yqd6vM7ukM86Rq9ayRGTtEZrvQ61qx3v3/lXsasa6+7uUGAzZ1tNkrY3Nl8S9jc2c7yEjb36NlAOhsRehPSavmxuN/tA231HC3ds/N0rv95trL+cFrWyN/2LusVd831L6fNNTKeWXue71EOKz2EaSnr/cxkvfv9WZiZGWFD9FxnQln7UeZZ/24oa1ui5zrTt2TrfFF9zQKv7qqsuVxbMPkzubZg8h/1EAaYfJlcWzD5M7m2YPKP7g9Pu0bvmoHo/FZ7HVPW0czkpKz96M02Y29CR3Pth7L245QewoDm2o+ZrHd1ymzM9BBlbcPuLJT1F2Xtx6iHWD8/O5prP5S1H5H/I2bDK+s3kpQEGw==
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC+2YwQ7DIAxDu///6R12GENA6QiJTfwkDj20fbjRsHZde3kdvpCIziJj1qeBuC9EJwsQ94XoZAHivhCdLEDcF6KTBYj7Kp3q8zu6QzzpGr1rJEZO0Rmu9DrWrHe/f+Vexqxrr7u5QYDNnW02Stjc2XxL2NzZzvISNvfo2UA6GxF6E9Jq+bG43+0DbfUcLd2z83Su/3m2sv5wWtbI3/Yu6xV3zfUvp801Mp5Ze57vUQ4rPYRpKev9zGS9+/1ZmJkZYUP0XGdCWftR5ln/bihrW6LnOtO3ZOt8UX3NAq/uqqy5XFsw+TO5tmDyH/UQBph8mVxbMPkzubZg8o/uD0+7Ru+agej8VnsdU9bRzOSkrP3ozTZjb0JHc+2HsvbjlB7CgObaj5msd3XKbMz0EGVtw+4slPUXZe3HqIdYPz87mms/lLUfkf8jZsMr6zdIFgqbyEwAAA==
   </data>
  </layer>
  <layer name="Forground" width="91" height="54">
-  <data encoding="base64" compression="zlib">
-   eJztwTEBAAAAwqD1T20Gf6AAAAAAAAAAAAAAAAAAAAAAAAAAPgNMyAAB
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC+3BMQEAAADCoPVPbQZ/oAAAAAAAAAAAAAAAAAAAAAAAAAA+AxFnvZjITAAA
   </data>
  </layer>
 </map>
