@@ -1,3 +1,15 @@
+/**************************************************************
+ *	file:		Kyra.java
+ *	author:		Andrew King, Anthony Mendez
+ *	class:		CS499 - Game Programming
+ *
+ *	assignment:	Class Project
+ *	date last modified:	04/28/2011
+ *
+ *	purpose: This main class this is executed to start the 
+ *	game program.
+**************************************************************/
+
 package edu.csupomona.kyra;
 
 import org.newdawn.slick.AppGameContainer;

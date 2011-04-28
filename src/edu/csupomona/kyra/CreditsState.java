@@ -1,3 +1,15 @@
+/**************************************************************
+ *	file:		CreditsState.java
+ *	author:		Andrew King, Anthony Mendez
+ *	class:		CS499 - Game Programming
+ *
+ *	assignment:	Class Project
+ *	date last modified:	04/28/2011
+ *
+ *	purpose: This class defines the state where the credits are
+ *	being played.
+**************************************************************/
+
 package edu.csupomona.kyra;
 
 import org.newdawn.slick.GameContainer;
