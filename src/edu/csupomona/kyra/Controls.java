@@ -1,3 +1,15 @@
+/**************************************************************
+ *	file:		Controls.java
+ *	author:		Andrew King, Anthony Mendez
+ *	class:		CS499 - Game Programming
+ *
+ *	assignment:	Class Project
+ *	date last modified:	04/28/2011
+ *
+ *	purpose: This class will handle player input and pass button
+ *	presses to classes that need it.
+**************************************************************/
+
 package edu.csupomona.kyra;
 
 import org.newdawn.slick.Input;

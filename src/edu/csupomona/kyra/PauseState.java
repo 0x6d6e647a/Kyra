@@ -1,3 +1,15 @@
+/**************************************************************
+ *	file:		PauseState.java
+ *	author:		Andrew King, Anthony Mendez
+ *	class:		CS499 - Game Programming
+ *
+ *	assignment:	Class Project
+ *	date last modified:	04/28/2011
+ *
+ *	purpose: This class defines the game state when the game is
+ *	paused.
+**************************************************************/
+
 package edu.csupomona.kyra;
 
 import org.newdawn.slick.GameContainer;
