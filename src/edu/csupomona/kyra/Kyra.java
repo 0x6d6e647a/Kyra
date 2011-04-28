@@ -55,7 +55,7 @@ public class Kyra extends StateBasedGame {
         this.getState(PAUSESTATE).init(gameContainer, this);
         this.getState(GAMEOVERSTATE).init(gameContainer, this);
         this.getState(CREDITSSTATE).init(gameContainer, this);
-        this.enterState(MENUSTATE);
+        this.enterState(SPLASHSTATE);
     }
 
 }

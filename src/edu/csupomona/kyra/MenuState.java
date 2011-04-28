@@ -13,6 +13,8 @@ public class MenuState extends BasicGameState {
 	Image background = null;
 	Image start = null;
 	Image startSelect = null;
+	Image load = null;
+	Image loadSelect = null;
 	Image options = null;
 	Image optionsSelect = null;
 	Image exit = null;
@@ -20,6 +22,7 @@ public class MenuState extends BasicGameState {
 	int stateID = 1;
 	Controls con;
 	boolean insideStart = true;
+	boolean insideLoad = false;
 	boolean insideOptions = false;
 	boolean insideExit = false;
 	private static int menuX = 312;
@@ -37,11 +40,14 @@ public class MenuState extends BasicGameState {
 	
 	public void init(GameContainer gc, StateBasedGame sbg) throws SlickException {	
 		Image startLook = new Image("img/menu_start.png");
+		Image loadLook = new Image("img/menu_load.png");
 		Image optionsLook = new Image("img/menu_options.png");
 		Image exitLook = new Image("img/menu_exit.png");
 		background = new Image("img/menu_background.png");
 		start = startLook.getSubImage(0, 0, 400, 100);
 		startSelect = startLook.getSubImage(0, 100, 400, 100);
+		load = loadLook.getSubImage(0, 0, 400, 100);
+		loadSelect = loadLook.getSubImage(0, 100, 400, 100);
 	    options = optionsLook.getSubImage(0, 0, 400, 100);
 	    optionsSelect = optionsLook.getSubImage(0, 100, 400, 100);
 	    exit = exitLook.getSubImage(0, 0, 400, 100);
@@ -56,15 +62,20 @@ public class MenuState extends BasicGameState {
     	} else {
     		start.draw(menuX, menuY);
     	}
-    	if(insideOptions) {
-    		optionsSelect.draw(menuX, menuY+100);
+    	if(insideLoad) {
+    		loadSelect.draw(menuX, menuY+100);
     	} else {
-    		options.draw(menuX, menuY+100);
+    		load.draw(menuX, menuY+100);
+    	}
+    	if(insideOptions) {
+    		optionsSelect.draw(menuX, menuY+200);
+    	} else {
+    		options.draw(menuX, menuY+200);
     	}
     	if(insideExit) {
-    		exitSelect.draw(menuX, menuY+200);
+    		exitSelect.draw(menuX, menuY+300);
     	} else {
-    		exit.draw(menuX, menuY+200);
+    		exit.draw(menuX, menuY+300);
     	}
     }
  
@@ -75,23 +86,42 @@ public class MenuState extends BasicGameState {
     	if(insideStart) {
     		if(input.isKeyPressed(con.getP1UP())) {
     			insideStart = false;
+    			insideLoad = false;
     			insideOptions = false;
     			insideExit = true;
     		} else if(input.isKeyPressed(con.getP1DOWN())) {
     			insideStart = false;
-    			insideOptions = true;
+    			insideLoad = true;
+    			insideOptions = false;
     			insideExit = false;
     		} else if(input.isKeyPressed(con.getP1ACTION())) {
     			sbg.enterState(Kyra.GAMESTATE);
     		}	
     	}
-    	if(insideOptions) {
+    	if(insideLoad) {
     		if(input.isKeyPressed(con.getP1UP())) {
     			insideStart = true;
+    			insideLoad = false;
     			insideOptions = false;
     			insideExit = false;
     		} else if(input.isKeyPressed(con.getP1DOWN())) {
     			insideStart = false;
+    			insideLoad = false;
+    			insideOptions = true;
+    			insideExit = false;
+    		} else if(input.isKeyPressed(con.getP1ACTION())) {
+    			//sbg.enterState(Kyra.GAMESTATE);
+    		}	
+    	}
+    	if(insideOptions) {
+    		if(input.isKeyPressed(con.getP1UP())) {
+    			insideStart = false;
+    			insideLoad = true;
+    			insideOptions = false;
+    			insideExit = false;
+    		} else if(input.isKeyPressed(con.getP1DOWN())) {
+    			insideStart = false;
+    			insideLoad = false;
     			insideOptions = false;
     			insideExit = true;
     		} else if(input.isKeyPressed(con.getP1ACTION())) {
@@ -101,10 +131,12 @@ public class MenuState extends BasicGameState {
     	if(insideExit) {
     		if(input.isKeyPressed(con.getP1UP())) {
     			insideStart = false;
+    			insideLoad = false;
     			insideOptions = true;
     			insideExit = false;
     		} else if(input.isKeyPressed(con.getP1DOWN())) {
     			insideStart = true;
+    			insideLoad = false;
     			insideOptions = false;
     			insideExit = false;
     		} else if(input.isKeyPressed(con.getP1ACTION())) {
