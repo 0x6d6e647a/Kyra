@@ -17,6 +17,16 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
 
+import edu.csupomona.kyra.state.CreditsState;
+import edu.csupomona.kyra.state.GameOverState;
+import edu.csupomona.kyra.state.GameState;
+import edu.csupomona.kyra.state.LoadGameState;
+import edu.csupomona.kyra.state.MenuState;
+import edu.csupomona.kyra.state.OptionState;
+import edu.csupomona.kyra.state.PauseState;
+import edu.csupomona.kyra.state.PlayerSelectState;
+import edu.csupomona.kyra.state.SplashState;
+
 public class Kyra extends StateBasedGame {
 	
 	public Controls con = new Controls();

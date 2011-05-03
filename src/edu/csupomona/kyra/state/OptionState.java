@@ -10,7 +10,7 @@
  *	various game options.
 **************************************************************/
 
-package edu.csupomona.kyra;
+package edu.csupomona.kyra.state;
 
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -19,6 +19,10 @@ import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
+
+import edu.csupomona.kyra.Controls;
+import edu.csupomona.kyra.Kyra;
+
 
 public class OptionState extends BasicGameState {
 

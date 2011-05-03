@@ -1,31 +1,31 @@
 /**************************************************************
- *	file:		SplashState.java
+ *	file:		LoadGameState.java
  *	author:		Andrew King, Anthony Mendez
  *	class:		CS499 - Game Programming
  *
  *	assignment:	Class Project
  *	date last modified:	04/28/2011
  *
- *	purpose: This class defines the splash screen game state.
+ *	purpose: This class will display saved games and load them
+ *	into the GameState class.
 **************************************************************/
 
-package edu.csupomona.kyra;
+package edu.csupomona.kyra.state;
 
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
-import org.newdawn.slick.Image;
-import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
-public class SplashState extends BasicGameState {
+import edu.csupomona.kyra.Controls;
 
-	Image background = null;
-	int stateID = 0;
+public class LoadGameState extends BasicGameState {
+
+	int stateID = 3;
 	Controls con;
 	
-	public SplashState(int stateID, Controls con) {
+	public LoadGameState(int stateID, Controls con) {
 		this.stateID = stateID;
 		this.con = con;
 	}
@@ -36,19 +36,14 @@ public class SplashState extends BasicGameState {
     }
 	
 	public void init(GameContainer gc, StateBasedGame sbg) throws SlickException {
-		background = new Image("img/splash_background.png");
+	
     }
  
     public void render(GameContainer gc, StateBasedGame sbg, Graphics gc1) throws SlickException {
-    	background.draw(0, 0);
+    	
     }
  
     public void update(GameContainer gc, StateBasedGame sbg, int delta) throws SlickException {
-    	Input input = gc.getInput();
-    	
-    	if(input.isKeyPressed(con.getP1PAUSE())) {
-    		sbg.enterState(Kyra.MENUSTATE);
-    	}
+ 
     }
 }
-

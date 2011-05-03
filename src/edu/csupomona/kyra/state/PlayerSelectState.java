@@ -1,16 +1,16 @@
 /**************************************************************
- *	file:		PauseState.java
+ *	file:		PlayerSelectState.java
  *	author:		Andrew King, Anthony Mendez
  *	class:		CS499 - Game Programming
  *
  *	assignment:	Class Project
  *	date last modified:	04/28/2011
  *
- *	purpose: This class defines the game state when the game is
- *	paused.
+ *	purpose: This class defines the game state where you select
+ *	your player.
 **************************************************************/
 
-package edu.csupomona.kyra;
+package edu.csupomona.kyra.state;
 
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -18,12 +18,14 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
-public class PauseState extends BasicGameState {
+import edu.csupomona.kyra.Controls;
 
-	int stateID = 6;
+public class PlayerSelectState extends BasicGameState {
+
+	int stateID = 2;
 	Controls con;
 	
-	public PauseState(int stateID, Controls con) {
+	public PlayerSelectState(int stateID, Controls con) {
 		this.stateID = stateID;
 		this.con = con;
 	}
@@ -45,4 +47,3 @@ public class PauseState extends BasicGameState {
  
     }
 }
-

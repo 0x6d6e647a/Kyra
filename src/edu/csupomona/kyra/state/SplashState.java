@@ -1,16 +1,15 @@
 /**************************************************************
- *	file:		CreditsState.java
+ *	file:		SplashState.java
  *	author:		Andrew King, Anthony Mendez
  *	class:		CS499 - Game Programming
  *
  *	assignment:	Class Project
  *	date last modified:	04/28/2011
  *
- *	purpose: This class defines the state where the credits are
- *	being played.
+ *	purpose: This class defines the splash screen game state.
 **************************************************************/
 
-package edu.csupomona.kyra;
+package edu.csupomona.kyra.state;
 
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -20,13 +19,17 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
-public class CreditsState extends BasicGameState {
+import edu.csupomona.kyra.Controls;
+import edu.csupomona.kyra.Kyra;
+
+
+public class SplashState extends BasicGameState {
 
 	Image background = null;
-	int stateID = 8;
+	int stateID = 0;
 	Controls con;
 	
-	public CreditsState(int stateID, Controls con) {
+	public SplashState(int stateID, Controls con) {
 		this.stateID = stateID;
 		this.con = con;
 	}
@@ -37,7 +40,7 @@ public class CreditsState extends BasicGameState {
     }
 	
 	public void init(GameContainer gc, StateBasedGame sbg) throws SlickException {
-		background = new Image("img/credits_background.png");
+		background = new Image("img/splash_background.png");
     }
  
     public void render(GameContainer gc, StateBasedGame sbg, Graphics gc1) throws SlickException {
@@ -48,7 +51,8 @@ public class CreditsState extends BasicGameState {
     	Input input = gc.getInput();
     	
     	if(input.isKeyPressed(con.getP1PAUSE())) {
-    		sbg.enterState(Kyra.GAMEOVERSTATE);
+    		sbg.enterState(Kyra.MENUSTATE);
     	}
     }
 }
+
