@@ -26,21 +26,21 @@ import edu.csupomona.kyra.Kyra;
 
 public class MenuState extends BasicGameState {
 
-	Image background = null;
-	Image start = null;
-	Image startSelect = null;
-	Image load = null;
-	Image loadSelect = null;
-	Image options = null;
-	Image optionsSelect = null;
-	Image exit = null;
-	Image exitSelect = null;
-	int stateID = 1;
-	Controls con;
-	boolean insideStart = true;
-	boolean insideLoad = false;
-	boolean insideOptions = false;
-	boolean insideExit = false;
+	private Image background = null;
+	private Image start = null;
+	private Image startSelect = null;
+	private Image load = null;
+	private Image loadSelect = null;
+	private Image options = null;
+	private Image optionsSelect = null;
+	private Image exit = null;
+	private Image exitSelect = null;
+	private int stateID = 1;
+	private Controls con;
+	private boolean insideStart = true;
+	private boolean insideLoad = false;
+	private boolean insideOptions = false;
+	private boolean insideExit = false;
 	private static int menuX = 312;
 	private static int menuY = 334;
 	
@@ -68,7 +68,6 @@ public class MenuState extends BasicGameState {
 	    optionsSelect = optionsLook.getSubImage(0, 100, 400, 100);
 	    exit = exitLook.getSubImage(0, 0, 400, 100);
 	    exitSelect = exitLook.getSubImage(0, 100, 400, 100);
-
     }
  
     public void render(GameContainer gc, StateBasedGame sbg, Graphics gc1) throws SlickException {
@@ -95,8 +94,7 @@ public class MenuState extends BasicGameState {
     	}
     }
  
-    public void update(GameContainer gc, StateBasedGame sbg, int delta) throws SlickException {
-    	
+    public void update(GameContainer gc, StateBasedGame sbg, int delta) throws SlickException {	
     	Input input = gc.getInput();
     	
     	if(insideStart) {
@@ -111,6 +109,7 @@ public class MenuState extends BasicGameState {
     			insideOptions = false;
     			insideExit = false;
     		} else if(input.isKeyPressed(con.getP1ACTION())) {
+    			input.clearKeyPressedRecord();
     			sbg.enterState(Kyra.GAMESTATE);
     		}	
     	}
@@ -126,6 +125,7 @@ public class MenuState extends BasicGameState {
     			insideOptions = true;
     			insideExit = false;
     		} else if(input.isKeyPressed(con.getP1ACTION())) {
+    			input.clearKeyPressedRecord();
     			//sbg.enterState(Kyra.GAMESTATE);
     		}	
     	}
@@ -141,6 +141,7 @@ public class MenuState extends BasicGameState {
     			insideOptions = false;
     			insideExit = true;
     		} else if(input.isKeyPressed(con.getP1ACTION())) {
+    			input.clearKeyPressedRecord();
     			sbg.enterState(Kyra.OPTIONSTATE);
     		}	
     	}

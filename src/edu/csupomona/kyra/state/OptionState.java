@@ -26,13 +26,13 @@ import edu.csupomona.kyra.Kyra;
 
 public class OptionState extends BasicGameState {
 
-	Image background = null;
-	Image fullscreen = null;
-	Image fullscreenSelect = null;
-	Image back = null;
-	Image backSelect = null;
-	int stateID = 4;
-	Controls con;
+	private Image background = null;
+	private Image fullscreen = null;
+	private Image fullscreenSelect = null;
+	private Image back = null;
+	private Image backSelect = null;
+	private int stateID = 4;
+	private Controls con;
 	boolean insideFullscreen = false;
 	boolean insideBack = true;
 	private static int menuX = 312;
@@ -98,6 +98,7 @@ public class OptionState extends BasicGameState {
     			insideFullscreen = true;
     			insideBack = false;
     		} else if(input.isKeyPressed(con.getP1ACTION())) {
+    			input.clearKeyPressedRecord();
     			sbg.enterState(Kyra.MENUSTATE);
     		}	
     	}

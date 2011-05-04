@@ -22,8 +22,8 @@ import edu.csupomona.kyra.Controls;
 
 public class PauseState extends BasicGameState {
 
-	int stateID = 6;
-	Controls con;
+	private int stateID = 6;
+	private Controls con;
 	
 	public PauseState(int stateID, Controls con) {
 		this.stateID = stateID;

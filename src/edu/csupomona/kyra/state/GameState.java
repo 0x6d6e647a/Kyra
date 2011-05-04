@@ -69,6 +69,7 @@ public class GameState extends BasicGameState {
     	player.update(gc, sb, delta);
     	
     	if(input.isKeyPressed(con.getP1PAUSE())) {
+    		input.clearKeyPressedRecord();
     		sb.enterState(Kyra.CREDITSSTATE);
     	}
     }

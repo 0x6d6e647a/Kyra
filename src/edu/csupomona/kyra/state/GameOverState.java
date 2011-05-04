@@ -26,9 +26,9 @@ import edu.csupomona.kyra.Kyra;
 
 public class GameOverState extends BasicGameState {
 
-	Image background = null;
-	int stateID = 7;
-	Controls con;
+	private Image background = null;
+	private int stateID = 7;
+	private Controls con;
 	
 	public GameOverState(int stateID, Controls con) {
 		this.stateID = stateID;
@@ -52,6 +52,7 @@ public class GameOverState extends BasicGameState {
     	Input input = gc.getInput();
     	
     	if(input.isKeyPressed(con.getP1PAUSE())) {
+    		input.clearKeyPressedRecord();
     		sbg.enterState(Kyra.MENUSTATE);
     	}
     }

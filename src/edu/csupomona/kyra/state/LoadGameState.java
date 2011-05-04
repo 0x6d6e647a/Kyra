@@ -22,8 +22,8 @@ import edu.csupomona.kyra.Controls;
 
 public class LoadGameState extends BasicGameState {
 
-	int stateID = 3;
-	Controls con;
+	private int stateID = 3;
+	private Controls con;
 	
 	public LoadGameState(int stateID, Controls con) {
 		this.stateID = stateID;

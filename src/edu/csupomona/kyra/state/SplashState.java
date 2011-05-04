@@ -25,9 +25,9 @@ import edu.csupomona.kyra.Kyra;
 
 public class SplashState extends BasicGameState {
 
-	Image background = null;
-	int stateID = 0;
-	Controls con;
+	private Image background = null;
+	private int stateID = 0;
+	private Controls con;
 	
 	public SplashState(int stateID, Controls con) {
 		this.stateID = stateID;
@@ -51,6 +51,7 @@ public class SplashState extends BasicGameState {
     	Input input = gc.getInput();
     	
     	if(input.isKeyPressed(con.getP1PAUSE())) {
+    		input.clearKeyPressedRecord();
     		sbg.enterState(Kyra.MENUSTATE);
     	}
     }

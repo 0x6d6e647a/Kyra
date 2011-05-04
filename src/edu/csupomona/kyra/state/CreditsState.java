@@ -25,9 +25,9 @@ import edu.csupomona.kyra.Kyra;
 
 public class CreditsState extends BasicGameState {
 
-	Image background = null;
-	int stateID = 8;
-	Controls con;
+	private Image background = null;
+	private int stateID = 8;
+	private Controls con;
 	
 	public CreditsState(int stateID, Controls con) {
 		this.stateID = stateID;
@@ -51,6 +51,7 @@ public class CreditsState extends BasicGameState {
     	Input input = gc.getInput();
     	
     	if(input.isKeyPressed(con.getP1PAUSE())) {
+    		input.clearKeyPressedRecord();
     		sbg.enterState(Kyra.GAMEOVERSTATE);
     	}
     }
