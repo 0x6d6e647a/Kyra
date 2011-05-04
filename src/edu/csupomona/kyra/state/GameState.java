@@ -17,7 +17,6 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
-import org.newdawn.slick.geom.Polygon;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 import org.newdawn.slick.tiled.TiledMap;
@@ -48,7 +47,7 @@ public class GameState extends BasicGameState {
     }
 	
 	public void init(GameContainer gc, StateBasedGame sbg) throws SlickException {
-		TiledMap tiledMap = new TiledMap("lvl/testroom00.tmx");
+		TiledMap tiledMap = new TiledMap("lvl/test2.tmx");
 		map = new Entity("map");
 		map.addComponent(new Level("lvl1", tiledMap));
 		
@@ -56,15 +55,19 @@ public class GameState extends BasicGameState {
 		player.addComponent(new PlayerInput("p1input"));
 		player.addComponent(new PlayerPhysics("p1physics", 32, 32, tiledMap));
 		player.addComponent(new ImageRenderComponent("p1Sprite", new Image("img/glow0.png")));
+		
     }
  
     public void render(GameContainer gc, StateBasedGame sb, Graphics gr) throws SlickException {
+    	
     	map.render(gc, sb, gr);
     	player.render(gc, sb, gr);
     }
  
     public void update(GameContainer gc, StateBasedGame sb, int delta) throws SlickException {
     	Input input = gc.getInput();
+    	
+    	
     	
     	player.update(gc, sb, delta);
     	

@@ -17,7 +17,6 @@ import java.util.ArrayList;
 
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
-import org.newdawn.slick.geom.Shape;
 import org.newdawn.slick.geom.Vector2f;
 import org.newdawn.slick.state.StateBasedGame;
 
@@ -45,7 +44,7 @@ public class Entity {
 		
 		components = new ArrayList<Component>();
 		
-		position = new Vector2f(0,0);
+		position = new Vector2f(50,50);
 		scale = 1;
 		rotation = 0;
 	}

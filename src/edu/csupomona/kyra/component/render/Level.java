@@ -12,6 +12,8 @@ import edu.csupomona.kyra.component.render.RenderComponent;
 
 public class Level extends RenderComponent {
 	TiledMap map = null;
+	float xPos = 0;
+	float yPos = 0;
 	
 	public Level(String id, String filename) throws SlickException{
 		super(id);
@@ -26,6 +28,7 @@ public class Level extends RenderComponent {
 	public void render(GameContainer gc, StateBasedGame sb, Graphics gr) {
 		Vector2f pos = owner.getPosition();
 		float scale = owner.getScale();
+		//gr.translate(xPos - 20, yPos - 20);
 		map.render(0, 0, map.getLayerIndex("tiles"));
 	}
 	
@@ -34,6 +37,6 @@ public class Level extends RenderComponent {
 	}
 	
 	public void update(GameContainer gc, StateBasedGame sb, int delta) {
-		
+
 	}
 }
