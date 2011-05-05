@@ -48,13 +48,15 @@ public class GameState extends BasicGameState {
 	
 	public void init(GameContainer gc, StateBasedGame sbg) throws SlickException {
 		TiledMap tiledMap = new TiledMap("lvl/test2.tmx");
-		map = new Entity("map");
-		map.addComponent(new Level("lvl1", tiledMap));
+		
 		
 		player = new Entity("player");
 		player.addComponent(new PlayerInput("p1input"));
 		player.addComponent(new PlayerPhysics("p1physics", 32, 32, tiledMap));
 		player.addComponent(new ImageRenderComponent("p1Sprite", new Image("img/glow0.png")));
+		
+		map = new Entity("map");
+		map.addComponent(new Level("lvl1", tiledMap, player));
 		
     }
  
@@ -70,6 +72,7 @@ public class GameState extends BasicGameState {
     	
     	
     	player.update(gc, sb, delta);
+    	map.update(gc, sb, delta);
     	
     	if(input.isKeyPressed(con.getP1PAUSE())) {
     		input.clearKeyPressedRecord();

@@ -8,16 +8,19 @@ import org.newdawn.slick.state.StateBasedGame;
 import org.newdawn.slick.tiled.TiledMap;
 
 import edu.csupomona.kyra.component.render.RenderComponent;
+import edu.csupomona.kyra.entity.Entity;
 
 
 public class Level extends RenderComponent {
 	TiledMap map = null;
+	Entity player = null;
 	float xPos = 0;
 	float yPos = 0;
 	
-	public Level(String id, String filename) throws SlickException{
+	public Level(String id, TiledMap map, Entity player) throws SlickException{
 		super(id);
-		map = new TiledMap(filename);
+		this.map = map;
+		this.player = player;
 	}
 	
 	public Level(String id, TiledMap map) {
@@ -28,7 +31,7 @@ public class Level extends RenderComponent {
 	public void render(GameContainer gc, StateBasedGame sb, Graphics gr) {
 		Vector2f pos = owner.getPosition();
 		float scale = owner.getScale();
-		//gr.translate(xPos - 20, yPos - 20);
+		gr.translate(xPos, yPos);
 		map.render(0, 0, map.getLayerIndex("tiles"));
 	}
 	
@@ -37,6 +40,7 @@ public class Level extends RenderComponent {
 	}
 	
 	public void update(GameContainer gc, StateBasedGame sb, int delta) {
-
+		xPos = -player.getPosition().x+(gc.getWidth()/2);
+		yPos = -player.getPosition().y+(gc.getHeight()/2);
 	}
 }

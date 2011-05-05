@@ -101,7 +101,8 @@ public class Camera {
     * draws the part of the map which is currently focussed by the camera on the screen
     */
    public void drawMap() {
-      this.drawMap(0, 0);
+	   map.render(0, 0);
+      //this.drawMap(0, 0);
    }
    
    /**
