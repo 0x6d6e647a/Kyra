@@ -21,7 +21,6 @@ import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 import org.newdawn.slick.tiled.TiledMap;
 
-import edu.csupomona.kyra.Controls;
 import edu.csupomona.kyra.Kyra;
 import edu.csupomona.kyra.entity.Entity;
 import edu.csupomona.kyra.component.physics.PlayerPhysics;
@@ -33,12 +32,11 @@ public class GameState extends BasicGameState {
 	Entity map = null;
 	Entity player = null;
 	
-	int stateID = 5;
-	Controls con;
+	private int stateID = 4;
+	//private boolean vs;
 	
-	public GameState(int stateID, Controls con) {
+	public GameState(int stateID) {
 		this.stateID = stateID;
-		this.con = con;
 	}
 	
 	@Override
@@ -60,23 +58,26 @@ public class GameState extends BasicGameState {
 		
     }
  
-    public void render(GameContainer gc, StateBasedGame sb, Graphics gr) throws SlickException {
+    public void render(GameContainer gc, StateBasedGame sbg, Graphics gr) throws SlickException {
     	
-    	map.render(gc, sb, gr);
-    	player.render(gc, sb, gr);
+    	map.render(gc, sbg, gr);
+    	player.render(gc, sbg, gr);
     }
  
-    public void update(GameContainer gc, StateBasedGame sb, int delta) throws SlickException {
+    public void update(GameContainer gc, StateBasedGame sbg, int delta) throws SlickException {
     	Input input = gc.getInput();
     	
     	
     	
-    	player.update(gc, sb, delta);
-    	map.update(gc, sb, delta);
+    	player.update(gc, sbg, delta);
+    	map.update(gc, sbg, delta);
     	
-    	if(input.isKeyPressed(con.getP1PAUSE())) {
+    	if(input.isKeyPressed(Input.KEY_ENTER)) {
     		input.clearKeyPressedRecord();
-    		sb.enterState(Kyra.CREDITSSTATE);
+    		sbg.getCurrentState().leave(gc, sbg);
+    		sbg.getState(Kyra.CREDITSSTATE).init(gc, sbg);
+    		sbg.getState(Kyra.CREDITSSTATE).enter(gc, sbg);
+    		sbg.enterState(Kyra.CREDITSSTATE);
     	}
     }
 }

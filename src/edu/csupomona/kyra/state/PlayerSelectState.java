@@ -20,7 +20,6 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
-import edu.csupomona.kyra.Controls;
 import edu.csupomona.kyra.Kyra;
 
 public class PlayerSelectState extends BasicGameState {
@@ -31,15 +30,13 @@ public class PlayerSelectState extends BasicGameState {
 	private Image twoPlayer = null;
 	private Image twoPlayerSelect = null;
 	private int stateID = 2;
-	private Controls con;
 	private boolean insideOnePlayer = true;
 	private boolean insideTwoPlayer = false;
 	private static int menuX = 312;
 	private static int menuY = 334;
 	
-	public PlayerSelectState(int stateID, Controls con) {
+	public PlayerSelectState(int stateID) {
 		this.stateID = stateID;
-		this.con = con;
 	}
 	
 	@Override
@@ -75,26 +72,32 @@ public class PlayerSelectState extends BasicGameState {
     	Input input = gc.getInput();
     	
     	if(insideOnePlayer) {
-    		if(input.isKeyPressed(con.getP1UP())) {
+    		if(input.isKeyPressed(Input.KEY_UP)) {
     			insideOnePlayer = false;
     			insideTwoPlayer = true;
-    		} else if(input.isKeyPressed(con.getP1DOWN())) {
+    		} else if(input.isKeyPressed(Input.KEY_DOWN)) {
     			insideOnePlayer = false;
     			insideTwoPlayer = true;
-    		} else if(input.isKeyPressed(con.getP1ACTION())) {
+    		} else if(input.isKeyPressed(Input.KEY_ENTER)) {
     			input.clearKeyPressedRecord();
+    			sbg.getCurrentState().leave(gc, sbg);
+    			sbg.getState(Kyra.GAMESTATE).init(gc, sbg);
+        		sbg.getState(Kyra.GAMESTATE).enter(gc, sbg);
     			sbg.enterState(Kyra.GAMESTATE);
     		}	
     	}
     	if(insideTwoPlayer) {
-    		if(input.isKeyPressed(con.getP1UP())) {
+    		if(input.isKeyPressed(Input.KEY_UP)) {
     			insideOnePlayer = true;
     			insideTwoPlayer = false;
-    		} else if(input.isKeyPressed(con.getP1DOWN())) {
+    		} else if(input.isKeyPressed(Input.KEY_DOWN)) {
     			insideOnePlayer = true;
     			insideTwoPlayer = false;
-    		} else if(input.isKeyPressed(con.getP1ACTION())) {
+    		} else if(input.isKeyPressed(Input.KEY_ENTER)) {
     			input.clearKeyPressedRecord();
+    			sbg.getCurrentState().leave(gc, sbg);
+    			sbg.getState(Kyra.GAMESTATE).init(gc, sbg);
+        		sbg.getState(Kyra.GAMESTATE).enter(gc, sbg);
     			sbg.enterState(Kyra.GAMESTATE);
     		}	
     	}

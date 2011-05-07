@@ -20,7 +20,6 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
-import edu.csupomona.kyra.Controls;
 import edu.csupomona.kyra.Kyra;
 
 
@@ -36,7 +35,6 @@ public class MenuState extends BasicGameState {
 	private Image exit = null;
 	private Image exitSelect = null;
 	private int stateID = 1;
-	private Controls con;
 	private boolean insideStart = true;
 	private boolean insideLoad = false;
 	private boolean insideOptions = false;
@@ -44,9 +42,8 @@ public class MenuState extends BasicGameState {
 	private static int menuX = 312;
 	private static int menuY = 334;
 	
-	public MenuState(int stateID, Controls con) {
+	public MenuState(int stateID) {
 		this.stateID = stateID;
-		this.con = con;
 	}
 	
 	@Override
@@ -98,65 +95,68 @@ public class MenuState extends BasicGameState {
     	Input input = gc.getInput();
     	
     	if(insideStart) {
-    		if(input.isKeyPressed(con.getP1UP())) {
+    		if(input.isKeyPressed(Input.KEY_UP)) {
     			insideStart = false;
     			insideLoad = false;
     			insideOptions = false;
     			insideExit = true;
-    		} else if(input.isKeyPressed(con.getP1DOWN())) {
+    		} else if(input.isKeyPressed(Input.KEY_DOWN)) {
     			insideStart = false;
     			insideLoad = true;
     			insideOptions = false;
     			insideExit = false;
-    		} else if(input.isKeyPressed(con.getP1ACTION())) {
+    		} else if(input.isKeyPressed(Input.KEY_ENTER)) {
     			input.clearKeyPressedRecord();
-    			sbg.enterState(Kyra.GAMESTATE);
+    			sbg.getCurrentState().leave(gc, sbg);
+        		sbg.getState(Kyra.PLAYERSELECTSTATE).enter(gc, sbg);
+    			sbg.enterState(Kyra.PLAYERSELECTSTATE);
     		}	
     	}
     	if(insideLoad) {
-    		if(input.isKeyPressed(con.getP1UP())) {
+    		if(input.isKeyPressed(Input.KEY_UP)) {
     			insideStart = true;
     			insideLoad = false;
     			insideOptions = false;
     			insideExit = false;
-    		} else if(input.isKeyPressed(con.getP1DOWN())) {
+    		} else if(input.isKeyPressed(Input.KEY_DOWN)) {
     			insideStart = false;
     			insideLoad = false;
     			insideOptions = true;
     			insideExit = false;
-    		} else if(input.isKeyPressed(con.getP1ACTION())) {
+    		} else if(input.isKeyPressed(Input.KEY_ENTER)) {
     			input.clearKeyPressedRecord();
-    			//sbg.enterState(Kyra.GAMESTATE);
     		}	
     	}
     	if(insideOptions) {
-    		if(input.isKeyPressed(con.getP1UP())) {
+    		if(input.isKeyPressed(Input.KEY_UP)) {
     			insideStart = false;
     			insideLoad = true;
     			insideOptions = false;
     			insideExit = false;
-    		} else if(input.isKeyPressed(con.getP1DOWN())) {
+    		} else if(input.isKeyPressed(Input.KEY_DOWN)) {
     			insideStart = false;
     			insideLoad = false;
     			insideOptions = false;
     			insideExit = true;
-    		} else if(input.isKeyPressed(con.getP1ACTION())) {
+    		} else if(input.isKeyPressed(Input.KEY_ENTER)) {
     			input.clearKeyPressedRecord();
+    			sbg.getCurrentState().leave(gc, sbg);
+        		sbg.getState(Kyra.OPTIONSTATE).enter(gc, sbg);
     			sbg.enterState(Kyra.OPTIONSTATE);
     		}	
     	}
     	if(insideExit) {
-    		if(input.isKeyPressed(con.getP1UP())) {
+    		if(input.isKeyPressed(Input.KEY_UP)) {
     			insideStart = false;
     			insideLoad = false;
     			insideOptions = true;
     			insideExit = false;
-    		} else if(input.isKeyPressed(con.getP1DOWN())) {
+    		} else if(input.isKeyPressed(Input.KEY_DOWN)) {
     			insideStart = true;
     			insideLoad = false;
     			insideOptions = false;
     			insideExit = false;
-    		} else if(input.isKeyPressed(con.getP1ACTION())) {
+    		} else if(input.isKeyPressed(Input.KEY_ENTER)) {
     			System.exit(0);
     		}	
     	}

@@ -20,7 +20,6 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
-import edu.csupomona.kyra.Controls;
 import edu.csupomona.kyra.Kyra;
 
 
@@ -31,16 +30,14 @@ public class OptionState extends BasicGameState {
 	private Image fullscreenSelect = null;
 	private Image back = null;
 	private Image backSelect = null;
-	private int stateID = 4;
-	private Controls con;
+	private int stateID = 3;
 	boolean insideFullscreen = false;
 	boolean insideBack = true;
 	private static int menuX = 312;
 	private static int menuY = 334;
 	
-	public OptionState(int stateID, Controls con) {
+	public OptionState(int stateID) {
 		this.stateID = stateID;
-		this.con = con;
 	}
 	
 	@Override
@@ -76,13 +73,13 @@ public class OptionState extends BasicGameState {
     	Input input = gc.getInput();
     	
     	if(insideFullscreen) {
-    		if(input.isKeyPressed(con.getP1UP())) {
+    		if(input.isKeyPressed(Input.KEY_UP)) {
     			insideFullscreen = false;
     			insideBack = true;
-    		} else if(input.isKeyPressed(con.getP1DOWN())) {
+    		} else if(input.isKeyPressed(Input.KEY_DOWN)) {
     			insideFullscreen = false;
     			insideBack = true;
-    		} else if(input.isKeyPressed(con.getP1ACTION())) {
+    		} else if(input.isKeyPressed(Input.KEY_ENTER)) {
     			if(gc.isFullscreen()) {
         			gc.setFullscreen(false);
         		} else {
@@ -91,14 +88,16 @@ public class OptionState extends BasicGameState {
     		}	
     	}
     	if(insideBack) {
-    		if(input.isKeyPressed(con.getP1UP())) {
+    		if(input.isKeyPressed(Input.KEY_UP)) {
     			insideFullscreen = true;
     			insideBack = false;
-    		} else if(input.isKeyPressed(con.getP1DOWN())) {
+    		} else if(input.isKeyPressed(Input.KEY_DOWN)) {
     			insideFullscreen = true;
     			insideBack = false;
-    		} else if(input.isKeyPressed(con.getP1ACTION())) {
+    		} else if(input.isKeyPressed(Input.KEY_ENTER)) {
     			input.clearKeyPressedRecord();
+    			sbg.getCurrentState().leave(gc, sbg);
+        		sbg.getState(Kyra.MENUSTATE).enter(gc, sbg);
     			sbg.enterState(Kyra.MENUSTATE);
     		}	
     	}

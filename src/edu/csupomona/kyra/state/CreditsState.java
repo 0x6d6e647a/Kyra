@@ -20,18 +20,15 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
-import edu.csupomona.kyra.Controls;
 import edu.csupomona.kyra.Kyra;
 
 public class CreditsState extends BasicGameState {
 
 	private Image background = null;
-	private int stateID = 8;
-	private Controls con;
+	private int stateID = 6;
 	
-	public CreditsState(int stateID, Controls con) {
+	public CreditsState(int stateID) {
 		this.stateID = stateID;
-		this.con = con;
 	}
 	
 	@Override
@@ -50,8 +47,11 @@ public class CreditsState extends BasicGameState {
     public void update(GameContainer gc, StateBasedGame sbg, int delta) throws SlickException {
     	Input input = gc.getInput();
     	
-    	if(input.isKeyPressed(con.getP1PAUSE())) {
+    	if(input.isKeyPressed(Input.KEY_ENTER)) {
     		input.clearKeyPressedRecord();
+    		sbg.getCurrentState().leave(gc, sbg);
+    		sbg.getState(Kyra.GAMEOVERSTATE).init(gc, sbg);
+    		sbg.getState(Kyra.GAMEOVERSTATE).enter(gc, sbg);
     		sbg.enterState(Kyra.GAMEOVERSTATE);
     	}
     }
