@@ -17,6 +17,7 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.Sound;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
@@ -30,6 +31,8 @@ public class OptionState extends BasicGameState {
 	private Image fullscreenSelect = null;
 	private Image back = null;
 	private Image backSelect = null;
+	private Sound buttonSelect = null;
+	private Sound buttonAccept = null;
 	private int stateID = 3;
 	boolean insideFullscreen = false;
 	boolean insideBack = true;
@@ -46,6 +49,8 @@ public class OptionState extends BasicGameState {
     }
 	
 	public void init(GameContainer gc, StateBasedGame sbg) throws SlickException {
+		buttonSelect = new Sound("audio/menu_select.ogg");
+		buttonAccept = new Sound("audio/menu_accept.ogg");
 		Image fullscreenLook = new Image("img/options_fullscreen.png");
 		Image backLook = new Image("img/options_back.png");
 		background = new Image("img/menu_background.png");
@@ -74,12 +79,15 @@ public class OptionState extends BasicGameState {
     	
     	if(insideFullscreen) {
     		if(input.isKeyPressed(Input.KEY_UP)) {
+    			buttonSelect.play();
     			insideFullscreen = false;
     			insideBack = true;
     		} else if(input.isKeyPressed(Input.KEY_DOWN)) {
+    			buttonSelect.play();
     			insideFullscreen = false;
     			insideBack = true;
     		} else if(input.isKeyPressed(Input.KEY_ENTER)) {
+    			buttonAccept.play();
     			if(gc.isFullscreen()) {
         			gc.setFullscreen(false);
         		} else {
@@ -89,12 +97,15 @@ public class OptionState extends BasicGameState {
     	}
     	if(insideBack) {
     		if(input.isKeyPressed(Input.KEY_UP)) {
+    			buttonSelect.play();
     			insideFullscreen = true;
     			insideBack = false;
     		} else if(input.isKeyPressed(Input.KEY_DOWN)) {
+    			buttonSelect.play();
     			insideFullscreen = true;
     			insideBack = false;
     		} else if(input.isKeyPressed(Input.KEY_ENTER)) {
+    			buttonAccept.play();
     			input.clearKeyPressedRecord();
     			sbg.getCurrentState().leave(gc, sbg);
         		sbg.getState(Kyra.MENUSTATE).enter(gc, sbg);
