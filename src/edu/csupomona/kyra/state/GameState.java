@@ -50,7 +50,7 @@ public class GameState extends BasicGameState {
 		
 		player = new Entity("player");
 		player.addComponent(new PlayerInput("p1input"));
-		player.addComponent(new PlayerPhysics("p1physics", 32, 32, tiledMap));
+		player.addComponent(new PlayerPhysics("p1physics", 31, 31, tiledMap));
 		player.addComponent(new ImageRenderComponent("p1Sprite", new Image("img/glow0.png")));
 		
 		map = new Entity("map");
