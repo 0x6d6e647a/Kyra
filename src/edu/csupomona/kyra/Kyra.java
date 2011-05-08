@@ -63,5 +63,4 @@ public class Kyra extends StateBasedGame {
     	this.getState(SPLASHSTATE).init(gameContainer, this);
         this.enterState(SPLASHSTATE);
     }
-
 }

@@ -45,7 +45,7 @@ public class GameState extends BasicGameState {
     }
 	
 	public void init(GameContainer gc, StateBasedGame sbg) throws SlickException {
-		TiledMap tiledMap = new TiledMap("lvl/test2.tmx");
+		TiledMap tiledMap = new TiledMap("lvl/level1map.tmx");
 		
 		
 		player = new Entity("player");
