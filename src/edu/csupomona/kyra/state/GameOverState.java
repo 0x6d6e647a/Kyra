@@ -51,9 +51,9 @@ public class GameOverState extends BasicGameState {
     	if(input.isKeyPressed(Input.KEY_ENTER)) {
     		input.clearKeyPressedRecord();
     		sbg.getCurrentState().leave(gc, sbg);
-    		sbg.getState(Kyra.SPLASHSTATE).init(gc, sbg);
-    		sbg.getState(Kyra.SPLASHSTATE).enter(gc, sbg);
-    		sbg.enterState(Kyra.SPLASHSTATE);
+    		sbg.getState(Kyra.MENUSTATE).init(gc, sbg);
+    		sbg.getState(Kyra.MENUSTATE).enter(gc, sbg);
+    		sbg.enterState(Kyra.MENUSTATE);
     	}
     }
 }
