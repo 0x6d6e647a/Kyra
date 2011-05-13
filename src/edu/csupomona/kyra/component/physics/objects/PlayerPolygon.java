@@ -10,19 +10,26 @@ public class PlayerPolygon {
 	Polygon polygon;
 	Line top;
 	Line bottom;
+	Line left;
+	Line right;
 	
 	public PlayerPolygon(float[] points) {
 		this.points = points;
 		polygon = new Polygon(points);
+		setLines();
+	}
+	
+	private void setLines() {
 		top = new Line(points[0], points[1], points[2], points[3]);
 		bottom = new Line(points[4], points[5], points[6], points[7]);
+		left = new Line(points[0], points[1], points[6], points[7]);
+		right = new Line(points[2], points[3], points[4], points[5]);
 	}
 	
 	public void setLocation(Vector2f position) {
 		polygon.setLocation(position);
 		points = polygon.getPoints();
-		top = new Line(points[0], points[1], points[2], points[3]);
-		bottom = new Line(points[4], points[5], points[6], points[7]);
+		setLines();
 	}
 	
 	public void setLocation(float x, float y) {
@@ -39,6 +46,14 @@ public class PlayerPolygon {
 	
 	public Line getBottom() {
 		return bottom;
+	}
+	
+	public Line getLeft() {
+		return left;
+	}
+	
+	public Line getRight() {
+		return right;
 	}
 	
 	public Polygon getPolygon() {
