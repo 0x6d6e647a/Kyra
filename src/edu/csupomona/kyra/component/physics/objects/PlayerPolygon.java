@@ -32,6 +32,10 @@ public class PlayerPolygon {
 		setLines();
 	}
 	
+	public PlayerPolygon clone() {
+		return new PlayerPolygon(points);
+	}
+	
 	public void setLocation(float x, float y) {
 		setLocation(new Vector2f(x, y));
 	}
