@@ -47,26 +47,28 @@ public class GameState extends BasicGameState {
 	
 	public void init(GameContainer gc, StateBasedGame sbg) throws SlickException {
 		TiledMap tiledMap = new TiledMap("lvl/level1map.tmx");
-		Image[] rightmovement = {new Image("img/player1-move-right_001.png"), new Image("img/player1-move-right_004.png"),
-				new Image("img/player1-move-right_003.png"),new Image("img/player1-move-right_001.png"),new Image("img/player1-move-right_005.png"),
-				new Image("img/player1-move-right_002.png")};
-		Image[] leftmovement = {new Image("img/player1-move-left_001.png"), new Image("img/player1-move-left_004.png"),
-				new Image("img/player1-move-left_003.png"),new Image("img/player1-move-left_001.png"),new Image("img/player1-move-left_005.png"),
-				new Image("img/player1-move-left_002.png")};
-		Image[] jumpleftmovement = {new Image("img/player1-jump-left.png"),new Image("img/player1-move-left_001.png")};
-		Image[] jumprightmovement = {new Image("img/player1-jump-right.png"),new Image("img/player1-move-right_001.png")};	
-        int[] duration = {175,175,175,175,175,175};
-        int[] duration2 = {500,175};
-        animations = new Animation[4];
-        animations[0] = new Animation(rightmovement,duration,false);
-        animations[1] = new Animation(leftmovement,duration,false);
-        animations[2] = new Animation(jumpleftmovement,duration2,false);
-        animations[3] = new Animation(jumprightmovement,duration2,false);
+//		Image[] rightmovement = {new Image("img/player1-move-right_001.png"), new Image("img/player1-move-right_004.png"),
+//				new Image("img/player1-move-right_003.png"),new Image("img/player1-move-right_001.png"),new Image("img/player1-move-right_005.png"),
+//				new Image("img/player1-move-right_002.png")};
+//		Image[] leftmovement = {new Image("img/player1-move-left_001.png"), new Image("img/player1-move-left_004.png"),
+//				new Image("img/player1-move-left_003.png"),new Image("img/player1-move-left_001.png"),new Image("img/player1-move-left_005.png"),
+//				new Image("img/player1-move-left_002.png")};
+//		Image[] jumpleftmovement = {new Image("img/player1-jump-left.png"),new Image("img/player1-move-left_001.png")};
+//		Image[] jumprightmovement = {new Image("img/player1-jump-right.png"),new Image("img/player1-move-right_001.png")};	
+//        int[] duration = {175,175,175,175,175,175};
+//        int[] duration2 = {500,175};
+//        animations = new Animation[4];
+//        animations[0] = new Animation(rightmovement,duration,false);
+//        animations[1] = new Animation(leftmovement,duration,false);
+//        animations[2] = new Animation(jumpleftmovement,duration2,false);
+//        animations[3] = new Animation(jumprightmovement,duration2,false);
+		Image playerImage = new Image("img/glow0.png");
         
 		player = new Entity("player");
 		player.addComponent(new PlayerInput("p1input"));
 		player.addComponent(new PlayerPhysics("p1physics", 31, 31, tiledMap));
-		player.addComponent(new ImageRenderComponent("p1Sprite", animations));
+		//player.addComponent(new ImageRenderComponent("p1Sprite", animations));
+		player.addComponent(new ImageRenderComponent("p1Sprite", playerImage));
 		
 		map = new Entity("map");
 		map.addComponent(new Level("lvl1", tiledMap, player));

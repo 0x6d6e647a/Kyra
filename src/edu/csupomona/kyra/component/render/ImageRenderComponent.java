@@ -23,34 +23,40 @@ public class ImageRenderComponent extends RenderComponent{
 		direction = true;
 	}
 	
+	public ImageRenderComponent(String id, Image image) {
+		super(id);
+		this.image = image;
+	}
+	
 	public void render(GameContainer gc, StateBasedGame sb, Graphics gr) {
 		Vector2f pos = owner.getPosition();
 		float scale = owner.getScale();
 		
-		sprite.draw(pos.x, pos.y);
+//		sprite.draw(pos.x, pos.y);
+		image.draw(pos.x, pos.y);
 	}
 	
 	public void update(GameContainer gc, StateBasedGame sb, int delta) {
 		//image.rotate(owner.getRotation() - image.getRotation());
 		
-		InputComponent inputComponent = owner.getInputComponent();
-		
-		if(inputComponent.isPressed("right")) {
-			sprite = animations[0];
-			direction = true;
-			sprite.update(delta);
-		}
-		if(inputComponent.isPressed("left")) {
-			sprite = animations[1];
-			direction = false;
-			sprite.update(delta);
-		}
-		if(inputComponent.isPressed("jump")) {
-			if(direction)
-				sprite = animations[3];
-			else
-				sprite = animations[2];
-			sprite.update(delta);
-		}
+//		InputComponent inputComponent = owner.getInputComponent();
+//		
+//		if(inputComponent.isPressed("right")) {
+//			sprite = animations[0];
+//			direction = true;
+//			sprite.update(delta);
+//		}
+//		if(inputComponent.isPressed("left")) {
+//			sprite = animations[1];
+//			direction = false;
+//			sprite.update(delta);
+//		}
+//		if(inputComponent.isPressed("jump")) {
+//			if(direction)
+//				sprite = animations[3];
+//			else
+//				sprite = animations[2];
+//			sprite.update(delta);
+//		}
 	}
 }
