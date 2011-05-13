@@ -7,7 +7,7 @@ import org.newdawn.slick.Image;
 import org.newdawn.slick.geom.Vector2f;
 import org.newdawn.slick.state.StateBasedGame;
 
-import edu.csupomona.kyra.component.input.InputComponent;
+//import edu.csupomona.kyra.component.input.InputComponent;
 
 
 public class ImageRenderComponent extends RenderComponent{
@@ -30,7 +30,7 @@ public class ImageRenderComponent extends RenderComponent{
 	
 	public void render(GameContainer gc, StateBasedGame sb, Graphics gr) {
 		Vector2f pos = owner.getPosition();
-		float scale = owner.getScale();
+//		float scale = owner.getScale();
 		
 //		sprite.draw(pos.x, pos.y);
 		image.draw(pos.x, pos.y);

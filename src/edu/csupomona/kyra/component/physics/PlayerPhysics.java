@@ -1,12 +1,7 @@
 package edu.csupomona.kyra.component.physics;
 
-import java.util.ArrayList;
-
-import javax.annotation.PostConstruct;
-
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.SlickException;
-import org.newdawn.slick.geom.Line;
 import org.newdawn.slick.geom.Vector2f;
 import org.newdawn.slick.state.StateBasedGame;
 import org.newdawn.slick.tiled.TiledMap;
@@ -66,19 +61,14 @@ public class PlayerPhysics extends PhysicsComponent{
 		return false;
 	}
 	
-	public boolean collisionWithCeiling(Vector2f position, ForceVector jump) {
-		ArrayList<Block> blocks = blockMap.getBlocks();
-		Line playerTop = playerPolygon.getTop();
-		for (int i = 0; i < blocks.size(); i++) {
-			Block block = blocks.get(i);
-			Line blockBottom = block.getBottom();
-			if (playerTop.getCenterY() > blockBottom.getCenterY()) {
-				PlayerPolygon testPlayerPolygon = new PlayerPolygon(playerPolygon.getPolygon().getPoints());
-				testPlayerPolygon.setLocation(jump.shiftPosition(position));
-				if (testPlayerPolygon.intersects(block.getPolygon())) {
-					return true;
-				}
-			}
+	private boolean testCollisionWithCeiling(ForceVector up) {
+		float playerTop = playerPolygon.getTop().getCenterY();
+		PlayerPolygon testPoly = playerPolygon.clone();
+		testPoly.setLocation(up.shiftPosition(owner.getPosition()));
+		for (Block block : blockMap.getBlocks()) {
+			float blockBottom = block.getBottom().getCenterY();
+			if ((playerTop > blockBottom) && testPoly.intersects(block.getPolygon()))
+				return true;
 		}
 		return false;
 	}
@@ -127,10 +117,9 @@ public class PlayerPhysics extends PhysicsComponent{
 			forceVector.setYComponent(0);
 			if (inputComponent.isPressed("jump")) {
 				ForceVector jump = new ForceVector(delta * 100.0f, Math.toRadians(270));
-				if (!collisionWithCeiling(position, jump)) {
-					//forceVector.add(jump);
+				if (!testCollisionWithCeiling(jump)) {
 					position = jump.shiftPosition(position);
-					playerPolygon.setLocation(position);
+					setPositions(position);
 				}
 			}
 			if (inputComponent.isPressed("left")) {
@@ -150,8 +139,11 @@ public class PlayerPhysics extends PhysicsComponent{
 		}
 		
 		if (inputComponent.isPressed("up")) {
-			position.y -= delta * 1.5f;
-			playerPolygon.setY(position.y);
+			ForceVector up = new ForceVector(delta * 1.5f, Math.toRadians(270));
+			if (!testCollisionWithCeiling(up)) {
+				position = up.shiftPosition(position);
+				setPositions(position);
+			}
 		}
 		owner.setPosition(position);
 	}
