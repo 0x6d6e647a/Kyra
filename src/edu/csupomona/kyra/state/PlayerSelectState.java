@@ -87,13 +87,14 @@ public class PlayerSelectState extends BasicGameState {
     			insideTwoPlayer = true;
     		} else if(input.isKeyPressed(Input.KEY_ENTER)) {
     			buttonAccept.play();
+    			Kyra.vs = false;
 	    		input.clearKeyPressedRecord();
 	    		sbg.getCurrentState().leave(gc, sbg);
-	    		sbg.getState(Kyra.GAMESTATE).init(gc, sbg);
-	        	sbg.getState(Kyra.GAMESTATE).enter(gc, sbg);
+	    		sbg.getState(Kyra.GAMESTATEONE).init(gc, sbg);
+	        	sbg.getState(Kyra.GAMESTATEONE).enter(gc, sbg);
 	        	buttonAccept.stop();
 	        	MenuState.backSound.stop();
-	    		sbg.enterState(Kyra.GAMESTATE);
+	    		sbg.enterState(Kyra.GAMESTATEONE);
     		}	
     	}
     	if(insideTwoPlayer) {
@@ -107,12 +108,13 @@ public class PlayerSelectState extends BasicGameState {
     			insideTwoPlayer = false;
     		} else if(input.isKeyPressed(Input.KEY_ENTER)) {
     			buttonAccept.play();
+    			Kyra.vs = true;
     			sbg.getCurrentState().leave(gc, sbg);
-	    		sbg.getState(Kyra.GAMESTATE).init(gc, sbg);
-	        	sbg.getState(Kyra.GAMESTATE).enter(gc, sbg);
+	    		sbg.getState(Kyra.GAMESTATEONE).init(gc, sbg);
+	        	sbg.getState(Kyra.GAMESTATEONE).enter(gc, sbg);
 	        	buttonAccept.stop();
 	        	MenuState.backSound.stop();
-	    		sbg.enterState(Kyra.GAMESTATE);
+	    		sbg.enterState(Kyra.GAMESTATEONE);
     		}	
     	}
     }

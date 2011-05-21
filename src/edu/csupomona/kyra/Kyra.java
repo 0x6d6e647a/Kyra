@@ -19,7 +19,8 @@ import org.newdawn.slick.state.StateBasedGame;
 
 import edu.csupomona.kyra.state.CreditsState;
 import edu.csupomona.kyra.state.GameOverState;
-import edu.csupomona.kyra.state.GameState;
+import edu.csupomona.kyra.state.GameStateLevel1;
+import edu.csupomona.kyra.state.GameStateLevel2;
 import edu.csupomona.kyra.state.MenuState;
 import edu.csupomona.kyra.state.OptionState;
 import edu.csupomona.kyra.state.PlayerSelectState;
@@ -31,9 +32,11 @@ public class Kyra extends StateBasedGame {
 	public static final int MENUSTATE = 1;
 	public static final int PLAYERSELECTSTATE = 2;
 	public static final int OPTIONSTATE = 3;
-	public static final int GAMESTATE = 4;
-	public static final int GAMEOVERSTATE = 5;
-	public static final int CREDITSSTATE = 6;
+	public static final int GAMESTATEONE = 4;
+	public static final int GAMESTATETWO = 5;
+	public static final int GAMEOVERSTATE = 6;
+	public static final int CREDITSSTATE = 7;
+	public static boolean vs = false;
 	
 	public Kyra() {
 		super("Kyra");
@@ -41,7 +44,8 @@ public class Kyra extends StateBasedGame {
 		this.addState(new MenuState(MENUSTATE));
 		this.addState(new PlayerSelectState(PLAYERSELECTSTATE));
 		this.addState(new OptionState(OPTIONSTATE));
-		this.addState(new GameState(GAMESTATE));
+		this.addState(new GameStateLevel1(GAMESTATEONE));
+		this.addState(new GameStateLevel2(GAMESTATETWO));
 		this.addState(new GameOverState(GAMEOVERSTATE));
 		this.addState(new CreditsState(CREDITSSTATE));
 	}

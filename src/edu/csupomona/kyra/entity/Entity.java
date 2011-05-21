@@ -44,7 +44,7 @@ public class Entity {
 		
 		components = new ArrayList<Component>();
 		
-		position = new Vector2f(33, 1535);
+		position = new Vector2f(0, 0);
 		scale = 1;
 		rotation = 0;
 	}
