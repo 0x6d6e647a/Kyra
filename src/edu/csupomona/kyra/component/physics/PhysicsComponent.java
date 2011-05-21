@@ -1,6 +1,5 @@
 package edu.csupomona.kyra.component.physics;
 
-import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Line;
 import org.newdawn.slick.geom.Polygon;
 import org.newdawn.slick.geom.Shape;
@@ -8,6 +7,7 @@ import org.newdawn.slick.geom.Vector2f;
 import org.newdawn.slick.tiled.TiledMap;
 
 import edu.csupomona.kyra.component.Component;
+import edu.csupomona.kyra.component.physics.objects.BlockMap;
 import edu.csupomona.kyra.component.physics.objects.ForceVector;
 
 public abstract class PhysicsComponent extends Component {
@@ -15,21 +15,17 @@ public abstract class PhysicsComponent extends Component {
 	float[] points;
 	float height, width;
 	Line top, bottom, left, right;
-	BlockMap map;
+	BlockMap blockMap;
 	ForceVector forceVector;
 	
-	public PhysicsComponent(String id, float height, float width, TiledMap map) throws SlickException{
-		if (points.length != 8)
-			throw new SlickException("Physics polygons consist of 4 points!");
+	public PhysicsComponent(String id, float height, float width, TiledMap map)  {
 		super.id = id;
 		this.height = height;
 		this.width = width;
-		this.map = new BlockMap(map);
-		setPolygon();
-		setLines();
+		blockMap = new BlockMap(map);
 	}
 	
-	private void setPolygon() {
+	protected void setPolygon() {
 		Vector2f position = owner.getPosition();
 		points = new float[] {
 				position.x, position.y,
@@ -38,6 +34,7 @@ public abstract class PhysicsComponent extends Component {
 				position.x, position.y+height
 		};
 		polygon = new Polygon(points);
+		setLines();
 	}
 	
 	private void setLines() {
@@ -51,15 +48,21 @@ public abstract class PhysicsComponent extends Component {
 		return polygon.intersects(shape);
 	}
 	
-	public abstract PhysicsComponent clone();
+	protected abstract boolean testFloorCollision(ForceVector gravity);
 	
-	/*
-	 * -- Setters --
-	 */
+	protected abstract boolean testCeilingCollision(ForceVector jump);
+	
+	protected abstract boolean testLeftWallCollision(ForceVector right);
+	
+	protected abstract boolean testRightWallCollision(ForceVector left);
+	
+	
+	/* -- Setters -- */
 	
 	public void setLocation(Vector2f position) {
 		owner.setPosition(position);
 		polygon.setLocation(position);
+		points = polygon.getPoints();
 		setLines();
 	}
 	
@@ -71,9 +74,7 @@ public abstract class PhysicsComponent extends Component {
 		setLocation(new Vector2f(polygon.getX(), y));
 	}
 	
-	/*
-	 * -- Getters --
-	 */
+	/* -- Getters -- */
 	
 	public Polygon getPolygon() {
 		return polygon;

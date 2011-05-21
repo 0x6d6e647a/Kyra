@@ -1,33 +1,36 @@
 package edu.csupomona.kyra.component.physics;
 
 import org.newdawn.slick.GameContainer;
-import org.newdawn.slick.SlickException;
-import org.newdawn.slick.geom.Vector2f;
+import org.newdawn.slick.geom.Polygon;
 import org.newdawn.slick.state.StateBasedGame;
 import org.newdawn.slick.tiled.TiledMap;
-
 import edu.csupomona.kyra.component.input.InputComponent;
 import edu.csupomona.kyra.component.physics.objects.Block;
-import edu.csupomona.kyra.component.physics.objects.BlockMap;
 import edu.csupomona.kyra.component.physics.objects.ForceVector;
-import edu.csupomona.kyra.component.physics.objects.PlayerPolygon;
 
 public class PlayerPhysics extends PhysicsComponent{
-	PlayerPolygon playerPolygon;
-	BlockMap blockMap;
-	ForceVector forceVector;
 
-	public PlayerPhysics(String id, float height, float width, TiledMap map) throws SlickException {
-		super(id);
-		this.height = height;
-		this.width = width;
-		this.blockMap = new BlockMap(map);
-		forceVector = new ForceVector(0, 0);
+	public PlayerPhysics(String id, float height, float width, TiledMap map) {
+		super(id, height, width, map);
 	}
 	
-	private boolean testCollisionWithFloor(ForceVector gravity) {
-		float playerBottom = playerPolygon.getBottom().getCenterY();
-		PlayerPolygon testPoly = playerPolygon.clone();
+	@Override
+	protected boolean testCeilingCollision(ForceVector jump) {
+		float playerTop = top.getCenterY();
+		Polygon testPoly = new Polygon(polygon.getPoints());
+		testPoly.setLocation(jump.shiftPosition(owner.getPosition()));
+		for (Block block : blockMap.getBlocks()) {
+			float blockBottom = block.getBottom().getCenterY();
+			if ((playerTop > blockBottom) && testPoly.intersects(block.getPolygon()))
+				return true;
+		}
+		return false;
+	}
+	
+	@Override
+	protected boolean testFloorCollision(ForceVector gravity) {
+		float playerBottom = bottom.getCenterY();
+		Polygon testPoly = new Polygon(polygon.getPoints());
 		testPoly.setLocation(gravity.shiftPosition(owner.getPosition()));
 		for (Block block : blockMap.getBlocks()) {
 			float blockTop = block.getTop().getCenterY();
@@ -36,10 +39,24 @@ public class PlayerPhysics extends PhysicsComponent{
 		}
 		return false;
 	}
-	
-	private boolean testCollisionWithRightWall(ForceVector left) {
-		float playerLeft = playerPolygon.getLeft().getCenterX();
-		PlayerPolygon testPoly = playerPolygon.clone();
+
+	@Override
+	protected boolean testLeftWallCollision(ForceVector right) {
+		float playerRight = this.right.getCenterX();
+		Polygon testPoly = new Polygon(polygon.getPoints());
+		testPoly.setLocation(right.shiftPosition(owner.getPosition()));
+		for (Block block : blockMap.getBlocks()) {
+			float blockLeft = block.getLeft().getCenterX();
+			if ((playerRight < blockLeft) && testPoly.intersects(block.getPolygon()))
+				return true;
+		}
+		return false;
+	}
+
+	@Override
+	protected boolean testRightWallCollision(ForceVector left) {
+		float playerLeft = this.left.getCenterX();
+		Polygon testPoly = new Polygon(polygon.getPoints());
 		testPoly.setLocation(left.shiftPosition(owner.getPosition()));
 		for (Block block : blockMap.getBlocks()) {
 			float blockRight = block.getRight().getCenterX();
@@ -49,102 +66,50 @@ public class PlayerPhysics extends PhysicsComponent{
 		return false;
 	}
 	
-	private boolean testCollisionWithLeftWall(ForceVector right) {
-		float playerRight = playerPolygon.getRight().getCenterX();
-		PlayerPolygon testPoly = playerPolygon.clone();
-		testPoly.setLocation(right.shiftPosition(owner.getPosition()));
-		for (Block block : blockMap.getBlocks()) {
-			float blockLeft = block.getLeft().getCenterX();
-			if ((playerRight < blockLeft) && testPoly.intersects(block.getPolygon()))
-				return true;
-		}
-		return false;
-	}
-	
-	private boolean testCollisionWithCeiling(ForceVector up) {
-		float playerTop = playerPolygon.getTop().getCenterY();
-		PlayerPolygon testPoly = playerPolygon.clone();
-		testPoly.setLocation(up.shiftPosition(owner.getPosition()));
-		for (Block block : blockMap.getBlocks()) {
-			float blockBottom = block.getBottom().getCenterY();
-			if ((playerTop > blockBottom) && testPoly.intersects(block.getPolygon()))
-				return true;
-		}
-		return false;
-	}
-	
-	private void setPositions(Vector2f position) {
-		owner.setPosition(position);
-		playerPolygon.setLocation(position);
-	}
-
 	@Override
-	public void update(GameContainer gc, StateBasedGame sb, int delta) { 
-		Vector2f position = owner.getPosition();
-		float[] points = {
-				position.x, position.y,
-				position.x+width, position.y,
-				position.x+width, position.y+height,
-				position.x, position.y+height
-		};
-		playerPolygon = new PlayerPolygon(points);
+	public void update(GameContainer gc, StateBasedGame sb, int delta) {
+		setPolygon();
 				
 		InputComponent inputComponent = owner.getInputComponent();
 		
 		ForceVector gravity = new ForceVector(delta * 0.3f, Math.toRadians(90));
-		boolean floorCollision = testCollisionWithFloor(gravity);
+		boolean floorCollision = testFloorCollision(gravity);
 		
-		if (!floorCollision) { //In-Air Actions
-			position = gravity.shiftPosition(position);
-			setPositions(position);
-			if (inputComponent.isPressed("left")) {
-				ForceVector left = new ForceVector(delta * 0.2f, Math.toRadians(180));
-				if (!testCollisionWithRightWall(left)) {
-					position = left.shiftPosition(position);
-					setPositions(position);
-				}
-			}
-			if (inputComponent.isPressed("right")) {
-				ForceVector right = new ForceVector(delta * 0.2f, 0);
-				if (!testCollisionWithLeftWall(right)) {
-					position = right.shiftPosition(position);
-					setPositions(position);
-				}
-			}
-			
-		}
-		else { //On Ground Actions
-			forceVector.setYComponent(0);
-			if (inputComponent.isPressed("jump")) {
-				ForceVector jump = new ForceVector(delta * 100.0f, Math.toRadians(270));
-				if (!testCollisionWithCeiling(jump)) {
-					position = jump.shiftPosition(position);
-					setPositions(position);
-				}
-			}
+		
+		if (floorCollision) {
 			if (inputComponent.isPressed("left")) {
 				ForceVector left = new ForceVector(delta * 0.5f, Math.toRadians(180));
-				if (!testCollisionWithRightWall(left)) {
-					position = left.shiftPosition(position);
-					setPositions(position);
-				}
+				if (!testRightWallCollision(left))
+					setLocation(left.shiftPosition(owner.getPosition()));
 			}
 			if (inputComponent.isPressed("right")) {
 				ForceVector right = new ForceVector(delta * 0.5f, 0);
-				if (!testCollisionWithLeftWall(right)) {
-					position = right.shiftPosition(position);
-					setPositions(position);
-				}
+				if (!testLeftWallCollision(right))
+					setLocation(right.shiftPosition(owner.getPosition()));
+			}
+			if (inputComponent.isPressed("jump")) {
+				ForceVector jump = new ForceVector(delta * 100.0f, Math.toRadians(270));
+				if (!testCeilingCollision(jump))
+					setLocation(jump.shiftPosition(owner.getPosition()));
 			}
 		}
-		
+		else {
+			setLocation(gravity.shiftPosition(owner.getPosition()));
+			if (inputComponent.isPressed("left")) {
+				ForceVector left = new ForceVector(delta * 0.2f, Math.toRadians(180));
+				if (!testRightWallCollision(left))
+					setLocation(left.shiftPosition(owner.getPosition()));
+			}
+			if (inputComponent.isPressed("right")) {
+				ForceVector right = new ForceVector(delta * 0.2f, 0);
+				if (!testLeftWallCollision(right))
+					setLocation(right.shiftPosition(owner.getPosition()));
+			}
+		}
+
 		if (inputComponent.isPressed("up")) {
 			ForceVector up = new ForceVector(delta * 1.5f, Math.toRadians(270));
-			if (!testCollisionWithCeiling(up)) {
-				position = up.shiftPosition(position);
-				setPositions(position);
-			}
+			setLocation(up.shiftPosition(owner.getPosition()));
 		}
-		owner.setPosition(position);
 	}
 }
