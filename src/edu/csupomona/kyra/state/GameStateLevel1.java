@@ -37,7 +37,16 @@ public class GameStateLevel1 extends BasicGameState {
 	Entity map = null;
 	Entity player1 = null;
 	Entity player2 = null;
-	Entity enemy = null;
+	Entity enemy1 = null;
+	Entity enemy2 = null;
+	Entity enemy3 = null;
+	Entity enemy4 = null;
+	Entity enemy5 = null;
+	Entity enemy6 = null;
+	Entity enemy7 = null;
+	Entity enemy8 = null;
+	Entity enemy9 = null;
+	Entity enemy10 = null;
 	Image intro = null;
 	Image pause = null;
 	boolean displayIntro = true;
@@ -90,17 +99,20 @@ public class GameStateLevel1 extends BasicGameState {
         animationsP1[2] = new Animation(p1Jumpleftmovement,duration2,false);
         animationsP1[3] = new Animation(p1Jumprightmovement,duration2,false);
 		
-		Vector2f p1Position = new Vector2f(33, 1535);
+		Vector2f p1Position = new Vector2f(33, 1503);
 		player1 = new Entity("player");
 		player1.setPosition(p1Position);
 		player1.addComponent(new PlayerInput("p1input"));
-		player1.addComponent(new PlayerPhysics("p1physics", 31, 31, tiledMap));
+		player1.addComponent(new PlayerPhysics("p1physics", 60, 31, tiledMap));
 		player1.addComponent(new ImageRenderComponent("p1Sprite", animationsP1));
 		player1.addComponent(new SoundEffects("p1Fx", fx));
 		
         animationsEnemy = new Animation[2];
         animationsEnemy[0] = new Animation(bERightmovement,duration3,false);
         animationsEnemy[1] = new Animation(bELefttmovement,duration3,false);
+        
+        //Vector2f e1Position = new Vector2f(,);
+        //en
         
 		if(Kyra.vs) {
 			//player 2 frames, 4-7
@@ -118,11 +130,11 @@ public class GameStateLevel1 extends BasicGameState {
 	        animationsP2[1] = new Animation(p2Leftmovement,duration,false);
 	        animationsP2[2] = new Animation(p2Jumpleftmovement,duration2,false);
 	        animationsP2[3] = new Animation(p2Jumprightmovement,duration2,false);
-			Vector2f p2Position = new Vector2f(83, 1535);
+			Vector2f p2Position = new Vector2f(83, 1503);
 			player2 = new Entity("player2");
 			player2.setPosition(p2Position);
 			player2.addComponent(new PlayerInput("p2input"));
-			player2.addComponent(new PlayerPhysics("p2physics", 31, 31, tiledMap));
+			player2.addComponent(new PlayerPhysics("p2physics", 60, 31, tiledMap));
 			player2.addComponent(new ImageRenderComponent("p2Sprite", animationsP2));
 			player2.addComponent(new SoundEffects("p2Fx", fx));
 			player2.getInputComponent().changebutton("left", Input.KEY_K);
@@ -152,6 +164,7 @@ public class GameStateLevel1 extends BasicGameState {
     public void update(GameContainer gc, StateBasedGame sbg, int delta) throws SlickException {
     	Input input = gc.getInput();
     	
+    	
     	if(!displayIntro){
     		if(!gc.isPaused()) {
     			player1.update(gc, sbg, delta);
@@ -171,6 +184,12 @@ public class GameStateLevel1 extends BasicGameState {
         		}
         	}
         	if(gc.isPaused()) {
+        		SoundComponent sounds = player1.getSoundComponent();
+        		sounds.stopAll();
+        		if(Kyra.vs) {
+        			sounds = player2.getSoundComponent();
+        			sounds.stopAll();
+        		}
         		if(input.isKeyPressed(Input.KEY_P)){
         			input.clearKeyPressedRecord();
         			gc.resume();

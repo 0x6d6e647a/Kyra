@@ -27,7 +27,8 @@ public class SoundEffects extends SoundComponent {
 	
 	@Override
 	public void update(GameContainer gc, StateBasedGame sb, int delta) { 
-		InputComponent inputComponent = owner.getInputComponent();		
+		InputComponent inputComponent = owner.getInputComponent();
+		
 		
 		if(inputComponent.isPressed("jump"))
 			if(jumpFx != null)
@@ -48,7 +49,7 @@ public class SoundEffects extends SoundComponent {
 					pauseFx.play();
 		
 	}
-	public void stopAllFx() {
+	public void stopAll() {
 		if(jumpFx != null)
 			jumpFx.stop();
 		if(attackFx != null)

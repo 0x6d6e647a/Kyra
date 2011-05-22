@@ -30,6 +30,7 @@ import edu.csupomona.kyra.component.physics.PlayerPhysics;
 import edu.csupomona.kyra.component.render.ImageRenderComponent;
 import edu.csupomona.kyra.component.input.PlayerInput;
 import edu.csupomona.kyra.component.render.Level;
+import edu.csupomona.kyra.component.sound.SoundComponent;
 import edu.csupomona.kyra.component.sound.SoundEffects;
 
 public class GameStateLevel2 extends BasicGameState {
@@ -90,11 +91,11 @@ public class GameStateLevel2 extends BasicGameState {
         animationsP1[2] = new Animation(p1Jumpleftmovement,duration2,false);
         animationsP1[3] = new Animation(p1Jumprightmovement,duration2,false);
         
-		Vector2f p1Position = new Vector2f(33, 1248);
+		Vector2f p1Position = new Vector2f(33, 1216);
 		player1 = new Entity("player");
 		player1.setPosition(p1Position);
 		player1.addComponent(new PlayerInput("p1input"));
-		player1.addComponent(new PlayerPhysics("p1physics", 31, 31, tiledMap));
+		player1.addComponent(new PlayerPhysics("p1physics", 60, 31, tiledMap));
 		player1.addComponent(new ImageRenderComponent("p1Sprite", animationsP1));
 		player1.addComponent(new SoundEffects("p1Fx", fx));
 		
@@ -102,7 +103,7 @@ public class GameStateLevel2 extends BasicGameState {
         animationsEnemy[0] = new Animation(bERightmovement,duration3,false);
         animationsEnemy[1] = new Animation(bELefttmovement,duration3,false);
         
-        Vector2f ePosition = new Vector2f(165, 1248);
+        Vector2f ePosition = new Vector2f(165, 1216);
         //enemy = new Entity("enemy");
         //enemy.setPosition(ePosition);
         //enemy.addComponent(new PlayerInput("einput"));
@@ -125,11 +126,11 @@ public class GameStateLevel2 extends BasicGameState {
 	        animationsP2[1] = new Animation(p2Leftmovement,duration,false);
 	        animationsP2[2] = new Animation(p2Jumpleftmovement,duration2,false);
 	        animationsP2[3] = new Animation(p2Jumprightmovement,duration2,false);
-			Vector2f p2Position = new Vector2f(83, 1248);
+			Vector2f p2Position = new Vector2f(83, 1216);
 			player2 = new Entity("player2");
 			player2.setPosition(p2Position);
 			player2.addComponent(new PlayerInput("p2input"));
-			player2.addComponent(new PlayerPhysics("p2physics", 31, 31, tiledMap));
+			player2.addComponent(new PlayerPhysics("p2physics", 60, 31, tiledMap));
 			player2.addComponent(new ImageRenderComponent("p2Sprite", animationsP2));
 			player2.addComponent(new SoundEffects("p2Fx", fx));
 			player2.getInputComponent().changebutton("left", Input.KEY_K);
@@ -175,6 +176,12 @@ public class GameStateLevel2 extends BasicGameState {
     		}
     	}
     	if(gc.isPaused()) {
+    		SoundComponent sound = player1.getSoundComponent();
+    		sound.stopAll();
+    		if(Kyra.vs) {
+    			sound = player2.getSoundComponent();
+    			sound.stopAll();
+    		}
     		if(input.isKeyPressed(Input.KEY_P)){
     			input.clearKeyPressedRecord();
     			gc.resume();

@@ -1,58 +1,89 @@
 package edu.csupomona.kyra.component.physics.objects;
 
-import java.lang.Math;
-
 import org.newdawn.slick.geom.Line;
 import org.newdawn.slick.geom.Vector2f;
 
 public class ForceVector {
-	double magnitude;
-	double direction;
-	double xComponent;
-	double yComponent;
+	float xComponent;
+	float yComponent;
 	
-	public ForceVector(double magnitude, double direction) {
-		this.magnitude = magnitude;
-		this.direction = direction;
-		xComponent = magnitude * Math.cos(direction);
-		yComponent = magnitude * Math.sin(direction);
+	public ForceVector() {
+		xComponent = 0.0f;
+		yComponent = 0.0f;
+	}
+	
+	public ForceVector(float xComponent, float yComponent) {
+		this.xComponent = xComponent;
+		this.yComponent = yComponent;
+	}
+	
+	public String toString() {
+		return "xComp: " + xComponent + ", yComp: " + yComponent;
+	}
+	
+	public ForceVector clone() {
+		return new ForceVector(xComponent, yComponent);
 	}
 	
 	public ForceVector add(ForceVector f) {
-		double resultXComponent = this.xComponent + f.xComponent;
-		double resultYComponent = this.yComponent + f.yComponent;
-		double resultMagnitude = Math.sqrt(Math.pow(resultXComponent, 2) + Math.pow(resultYComponent, 2));
-		double resultDirection = Math.atan(resultYComponent / resultXComponent);
-		return new ForceVector(resultMagnitude, resultDirection);
+		this.xComponent += f.xComponent;
+		this.yComponent += f.yComponent;
+		return this;
 	}
 	
-	public ForceVector addVectors(ForceVector[] vectors) {
-		ForceVector result = new ForceVector(0, 0);
-		for (int i = 0; i < vectors.length; i++) {
-			result = result.add(vectors[i]);
-		}
-		return result;
+	public ForceVector mult(float factor) {
+		this.xComponent *= factor;
+		this.yComponent *= factor;
+		return this;
+	}
+	
+	public ForceVector multX(float factor) {
+		this.xComponent *= factor;
+		return this;
+	}
+	
+	public ForceVector multY(float factor) {
+		this.yComponent *= factor;
+		return this;
 	}
 	
 	public Vector2f shiftPosition(Vector2f position) {
-		return new Vector2f(position.x + (float)xComponent, position.y + (float)yComponent);
+		return new Vector2f(position.x + xComponent, position.y + yComponent);
 	}
 	
 	public Line getLine(Vector2f currPos) {
 		return new Line(currPos, shiftPosition(currPos));
 	}
 	
-	public void setYComponent(double yComponent) {
-		this.yComponent = yComponent;
-		this.magnitude = Math.sqrt(Math.pow(xComponent, 2) + Math.pow(yComponent, 2));
-		this.direction = Math.atan(yComponent / xComponent);
-	}
-	
-	public double getXComponent() {
+	public float getXComponent() {
 		return xComponent;
 	}
 	
-	public double getYComponent() {
+	public ForceVector setXComponent(float xComponent) {
+		this.xComponent = xComponent;
+		return this;
+	}
+	
+	public float getYComponent() {
 		return yComponent;
+	}
+	
+	public ForceVector setYComponent(float yComponent) {
+		this.yComponent = yComponent;
+		return this;
+	}
+	
+	public void clampX(float minX, float maxX) {
+		if (xComponent > maxX)
+			xComponent = maxX;
+		else if (xComponent < minX)
+			xComponent = minX;
+	}
+	
+	public void clampY(float minY, float maxY) {
+		if (yComponent > maxY)
+			yComponent = maxY;
+		else if (yComponent < minY)
+			yComponent = minY;
 	}
 }

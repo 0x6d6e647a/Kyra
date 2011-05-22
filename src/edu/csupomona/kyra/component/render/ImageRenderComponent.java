@@ -25,7 +25,6 @@ public class ImageRenderComponent extends RenderComponent{
 	
 	public void render(GameContainer gc, StateBasedGame sb, Graphics gr) {
 		Vector2f pos = owner.getPosition();
-		float scale = owner.getScale();
 		
 		sprite.draw(pos.x, pos.y);
 	}

@@ -24,6 +24,7 @@ import edu.csupomona.kyra.component.Component;
 import edu.csupomona.kyra.component.input.InputComponent;
 import edu.csupomona.kyra.component.physics.PhysicsComponent;
 import edu.csupomona.kyra.component.render.RenderComponent;
+import edu.csupomona.kyra.component.sound.SoundComponent;
 
 public class Entity {
 	String id;
@@ -35,6 +36,7 @@ public class Entity {
 	RenderComponent renderComponent = null;
 	PhysicsComponent physicsComponent = null;
 	InputComponent inputComponent = null;
+	SoundComponent soundComponent = null;
 	
 	
 	protected ArrayList<Component> components = null;
@@ -56,6 +58,8 @@ public class Entity {
 			physicsComponent = (PhysicsComponent)component;
 		else if (InputComponent.class.isInstance(component))
 			inputComponent = (InputComponent)component;
+		else if (SoundComponent.class.isInstance(component))
+			soundComponent = (SoundComponent)component;
 		
 		component.setOwnerEntity(this);
 		components.add(component);
@@ -103,6 +107,10 @@ public class Entity {
 	
 	public InputComponent getInputComponent() {
 		return inputComponent;
+	}
+	
+	public SoundComponent getSoundComponent() {
+		return soundComponent;
 	}
 	
 	public void update(GameContainer gc, StateBasedGame sb, int delta) {

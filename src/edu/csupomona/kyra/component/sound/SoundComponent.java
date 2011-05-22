@@ -6,4 +6,7 @@ public abstract class SoundComponent extends Component {
 	public SoundComponent(String id) {
 		super.id = id;
 	}
+	public void stopAll() {
+		
+	}
 }
