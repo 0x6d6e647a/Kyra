@@ -47,7 +47,7 @@ public class CreditsState extends BasicGameState {
     public void update(GameContainer gc, StateBasedGame sbg, int delta) throws SlickException {
     	Input input = gc.getInput();
     	
-    	if(input.isKeyPressed(Input.KEY_ENTER)) {
+    	if(input.isKeyPressed(Input.KEY_SPACE)) {
     		input.clearKeyPressedRecord();
     		sbg.getCurrentState().leave(gc, sbg);
     		sbg.getState(Kyra.GAMEOVERSTATE).init(gc, sbg);

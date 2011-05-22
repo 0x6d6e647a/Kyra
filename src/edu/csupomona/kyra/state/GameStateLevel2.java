@@ -37,6 +37,8 @@ public class GameStateLevel2 extends BasicGameState {
 	Entity player1 = null;
 	Entity player2 = null;
 	Entity enemy = null;
+	Image pause = null;
+	boolean displayPause = false;
 	Animation[] animationsP1 = null;
 	Animation[] animationsP2 = null;
 	Animation[] animationsEnemy = null;
@@ -54,6 +56,7 @@ public class GameStateLevel2 extends BasicGameState {
 	
 	public void init(GameContainer gc, StateBasedGame sbg) throws SlickException {
 		TiledMap tiledMap = new TiledMap("lvl/level2map.tmx");
+		pause = new Image("img/pause.png");
 		Sound[] fx = {new Sound("audio/player_jump.ogg"), new Sound("audio/player_attack.ogg"), new Sound("audio/player_hit.ogg"), new Sound("audio/player_random.ogg"),new Sound("audio/player_pause.ogg")};
 		//player 1 frames, 0-3
 		Image[] p1Rightmovement = {new Image("img/player1-move-right_001.png"), new Image("img/player1-move-right_004.png"),
@@ -100,12 +103,11 @@ public class GameStateLevel2 extends BasicGameState {
         animationsEnemy[1] = new Animation(bELefttmovement,duration3,false);
         
         Vector2f ePosition = new Vector2f(165, 1248);
-        enemy = new Entity("enemy");
-        enemy.setPosition(ePosition);
-        enemy.addComponent(new PlayerInput("einput"));
-		enemy.addComponent(new PlayerPhysics("ephysics", 31, 31, tiledMap));
-        enemy.addComponent(new PlayerPhysics("ephysics", 31, 31, tiledMap));
-        enemy.addComponent(new ImageRenderComponent("eSprite", animationsEnemy));
+        //enemy = new Entity("enemy");
+        //enemy.setPosition(ePosition);
+        //enemy.addComponent(new PlayerInput("einput"));
+		//enemy.addComponent(new PlayerPhysics("ephysics", 31, 31, tiledMap));
+        //aenemy.addComponent(new ImageRenderComponent("eSprite", animationsEnemy));
         
 		if(Kyra.vs) {
 			//player 2 frames, 4-7
@@ -142,29 +144,46 @@ public class GameStateLevel2 extends BasicGameState {
     }
  
     public void render(GameContainer gc, StateBasedGame sbg, Graphics gr) throws SlickException {
-    	
-    	map.render(gc, sbg, gr);
-    	player1.render(gc, sbg, gr);
-    	enemy.render(gc, sbg, gr);
-    	if(Kyra.vs)
-    		player2.render(gc, sbg, gr);
+    	if(displayPause)
+    		pause.drawCentered(512, 384);
+    	if(!gc.isPaused()) {
+	    map.render(gc, sbg, gr);
+	    player1.render(gc, sbg, gr);
+	    if(Kyra.vs)
+	    	player2.render(gc, sbg, gr);
+    	}
     }
  
     public void update(GameContainer gc, StateBasedGame sbg, int delta) throws SlickException {
     	Input input = gc.getInput();
     	
-    	player1.update(gc, sbg, delta);
-    	enemy.update(gc, sbg, delta);
-    	if(Kyra.vs)
-    		player2.update(gc, sbg, delta);
-    	map.update(gc, sbg, delta);
-    	
+    	if(!gc.isPaused()) {
+			player1.update(gc, sbg, delta);
+			if(Kyra.vs)
+				player2.update(gc, sbg, delta);
+			map.update(gc, sbg, delta);
+		}
     	if(input.isKeyPressed(Input.KEY_ENTER)) {
-    		input.clearKeyPressedRecord();
-    		sbg.getCurrentState().leave(gc, sbg);
-    		sbg.getState(Kyra.CREDITSSTATE).init(gc, sbg);
-    		sbg.getState(Kyra.CREDITSSTATE).enter(gc, sbg);
-    		sbg.enterState(Kyra.CREDITSSTATE);
+    		if(gc.isPaused()) {
+    			input.clearKeyPressedRecord();
+    			gc.resume();
+    			displayPause = false;
+    		} else if(!gc.isPaused()) {
+    			input.clearKeyPressedRecord();
+    			gc.pause();
+    			displayPause = true;
+    		}
+    	}
+    	if(gc.isPaused()) {
+    		if(input.isKeyPressed(Input.KEY_P)){
+    			input.clearKeyPressedRecord();
+    			gc.resume();
+        		displayPause = false;
+        		sbg.getCurrentState().leave(gc, sbg);
+        		sbg.getState(Kyra.CREDITSSTATE).init(gc, sbg);
+        		sbg.getState(Kyra.CREDITSSTATE).enter(gc, sbg);
+        		sbg.enterState(Kyra.CREDITSSTATE);
+    		}
     	}
     }
 }

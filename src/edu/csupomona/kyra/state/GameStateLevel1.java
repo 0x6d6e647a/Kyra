@@ -38,6 +38,10 @@ public class GameStateLevel1 extends BasicGameState {
 	Entity player1 = null;
 	Entity player2 = null;
 	Entity enemy = null;
+	Image intro = null;
+	Image pause = null;
+	boolean displayIntro = true;
+	boolean displayPause = false;
 	Animation[] animationsP1 = null;
 	Animation[] animationsP2 = null;
 	Animation[] animationsEnemy = null;	
@@ -55,6 +59,8 @@ public class GameStateLevel1 extends BasicGameState {
 	
 	public void init(GameContainer gc, StateBasedGame sbg) throws SlickException {
 		TiledMap tiledMap = new TiledMap("lvl/level1map.tmx");
+		intro = new Image("img/intro.png");
+		pause = new Image("img/pause.png");
 		Sound[] fx = {new Sound("audio/player_jump.ogg"), new Sound("audio/player_attack.ogg"), new Sound("audio/player_hit.ogg"), null,new Sound("audio/player_pause.ogg")};
 		//player 1 frames, 0-3
 		Image[] p1Rightmovement = {new Image("img/player1-move-right_001.png"), new Image("img/player1-move-right_004.png"),
@@ -131,29 +137,56 @@ public class GameStateLevel1 extends BasicGameState {
     }
  
     public void render(GameContainer gc, StateBasedGame sbg, Graphics gr) throws SlickException {
-    	
-    	map.render(gc, sbg, gr);
-    	player1.render(gc, sbg, gr);
-    	if(Kyra.vs)
-    		player2.render(gc, sbg, gr);
+    	if(displayIntro)
+    		intro.drawCentered(512, 384);
+    	if(displayPause)
+    		pause.drawCentered(512, 384);
+    	if(!gc.isPaused()) {
+	    map.render(gc, sbg, gr);
+	    player1.render(gc, sbg, gr);
+	    if(Kyra.vs)
+	    	player2.render(gc, sbg, gr);
+    	}
     }
  
     public void update(GameContainer gc, StateBasedGame sbg, int delta) throws SlickException {
     	Input input = gc.getInput();
     	
-    	
-    	
-    	player1.update(gc, sbg, delta);
-    	if(Kyra.vs)
-    		player2.update(gc, sbg, delta);
-    	map.update(gc, sbg, delta);
-    	
-    	if(input.isKeyPressed(Input.KEY_ENTER)) {
-    		input.clearKeyPressedRecord();
-    		sbg.getCurrentState().leave(gc, sbg);
-    		sbg.getState(Kyra.GAMESTATETWO).init(gc, sbg);
-    		sbg.getState(Kyra.GAMESTATETWO).enter(gc, sbg);
-    		sbg.enterState(Kyra.GAMESTATETWO);
+    	if(!displayIntro){
+    		if(!gc.isPaused()) {
+    			player1.update(gc, sbg, delta);
+    			if(Kyra.vs)
+    				player2.update(gc, sbg, delta);
+    			map.update(gc, sbg, delta);
+    		}
+        	if(input.isKeyPressed(Input.KEY_ENTER)) {
+        		if(gc.isPaused()) {
+        			input.clearKeyPressedRecord();
+        			gc.resume();
+        			displayPause = false;
+        		} else if(!gc.isPaused()) {
+        			input.clearKeyPressedRecord();
+        			gc.pause();
+        			displayPause = true;
+        		}
+        	}
+        	if(gc.isPaused()) {
+        		if(input.isKeyPressed(Input.KEY_P)){
+        			input.clearKeyPressedRecord();
+        			gc.resume();
+            		displayIntro = true;
+            		displayPause = false;
+            		sbg.getCurrentState().leave(gc, sbg);
+            		sbg.getState(Kyra.GAMESTATETWO).init(gc, sbg);
+            		sbg.getState(Kyra.GAMESTATETWO).enter(gc, sbg);
+            		sbg.enterState(Kyra.GAMESTATETWO);
+        		}
+        	}
+    	}
+
+    	if(input.isKeyPressed(Input.KEY_SPACE) && displayIntro) {
+    			displayIntro = false;
+    			input.clearKeyPressedRecord();
     	}
     }
 }

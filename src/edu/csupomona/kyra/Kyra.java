@@ -55,6 +55,7 @@ public class Kyra extends StateBasedGame {
 		{
 			AppGameContainer app = new AppGameContainer(new Kyra());
 			app.setDisplayMode(1024, 768, false);
+			app.setShowFPS(false);
 			app.start();
 		}
 		catch (SlickException e) {

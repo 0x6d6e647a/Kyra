@@ -17,7 +17,7 @@ public class PlayerInput extends InputComponent{
 		buttonMappings.put("right", Input.KEY_S);
 		//buttonMappings.put("action", Input.KEY_X);
 		buttonMappings.put("jump", Input.KEY_D);
-		buttonMappings.put("pause", Input.KEY_P);
+		buttonMappings.put("pause", Input.KEY_ENTER);
 		buttonMappings.put("attack", Input.KEY_F);
 	}
 
