@@ -1,10 +1,10 @@
-package edu.csupomona.kyra.component.render;
+package edu.csupomona.kyra.component.render.player;
 
 import org.newdawn.slick.Animation;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 
-public class Player1Render extends SpriteRender {	
+public class Player1Render extends PlayerRender {	
 	public Player1Render(String id) throws SlickException {
         super(id);
 		Image[] p1Rightmovement = {

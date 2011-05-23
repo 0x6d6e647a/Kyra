@@ -16,7 +16,7 @@ public abstract class AIComponent extends Component {
 	ArrayList<String> actions;
 
 	public AIComponent(String id, Entity player, TiledMap map) {
-		super.id = id;
+		super(id);
 		this.player = player;
 		this.map = new BlockMap(map);
 	}

@@ -18,7 +18,6 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
-import org.newdawn.slick.Sound;
 import org.newdawn.slick.geom.Vector2f;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
@@ -27,14 +26,14 @@ import org.newdawn.slick.tiled.TiledMap;
 import edu.csupomona.kyra.Kyra;
 import edu.csupomona.kyra.entity.Entity;
 import edu.csupomona.kyra.component.physics.PlayerPhysics;
-import edu.csupomona.kyra.component.render.ImageRenderComponent;
-import edu.csupomona.kyra.component.render.Player1Render;
-import edu.csupomona.kyra.component.render.Player2Render;
+import edu.csupomona.kyra.component.render.player.Player1Render;
+import edu.csupomona.kyra.component.render.player.Player2Render;
+import edu.csupomona.kyra.component.input.Player1Input;
+import edu.csupomona.kyra.component.input.Player2Input;
 import edu.csupomona.kyra.component.input.PlayerInput;
 import edu.csupomona.kyra.component.render.Level;
 import edu.csupomona.kyra.component.sound.PlayerSounds;
 import edu.csupomona.kyra.component.sound.SoundComponent;
-import edu.csupomona.kyra.component.sound.SoundEffects;
 
 public class GameStateLevel1 extends BasicGameState {
 	Entity map = null;
@@ -73,49 +72,26 @@ public class GameStateLevel1 extends BasicGameState {
 		TiledMap tiledMap = new TiledMap("lvl/level1map.tmx");
 		intro = new Image("img/intro.png");
 		pause = new Image("img/pause.png");
-		//basic enemy frames, 8-9
-		Image[] bERightmovement = {
-				new Image("img/basic-enemy-move-right_001.png"),
-				new Image("img/basic-enemy-move-right_002.png"),
-				new Image("img/basic-enemy-move-right_001.png"),
-				new Image("img/basic-enemy-move-right_003.png")
-		};
-		Image[] bELefttmovement = {
-				new Image("img/basic-enemy-move-left_001.png"),
-				new Image("img/basic-enemy-move-left_002.png"),
-				new Image("img/basic-enemy-move-left_001.png"),
-				new Image("img/basic-enemy-move-left_003.png")
-		};
-		//boss 1, 10-11
-		Image[] boss1Leftmovement = {new Image("img/boss-1-left.png")};
-		Image[] boss1Rightmovement = {new Image("img/boss-1-right.png")};
-        int[] duration3 = {500,500,500,500}; //basic enemy movement
-        int[] duration4 = {}; //boss 1
+
+//		Image[] boss1Leftmovement = {new Image("img/boss-1-left.png")};
+//		Image[] boss1Rightmovement = {new Image("img/boss-1-right.png")};
 		
 		Vector2f p1Position = new Vector2f(33, 1503);
 		player1 = new Entity("player");
 		player1.setPosition(p1Position);
-		player1.addComponent(new PlayerInput("p1input"));
+		player1.addComponent(new Player1Input("p1Input"));
 		player1.addComponent(new PlayerPhysics("p1physics", 60, 31, tiledMap));
 		player1.addComponent(new Player1Render("p1Sprite"));
 		player1.addComponent(new PlayerSounds("p1Fx"));
-		
-        animationsEnemy = new Animation[2];
-        animationsEnemy[0] = new Animation(bERightmovement,duration3,false);
-        animationsEnemy[1] = new Animation(bELefttmovement,duration3,false);
         
 		if(Kyra.vs) {
 			Vector2f p2Position = new Vector2f(83, 1503);
 			player2 = new Entity("player2");
 			player2.setPosition(p2Position);
-			player2.addComponent(new PlayerInput("p2input"));
+			player2.addComponent(new Player2Input("p2Input"));
 			player2.addComponent(new PlayerPhysics("p2physics", 60, 31, tiledMap));
 			player2.addComponent(new Player2Render("p2Sprite"));
-			player2.addComponent(new SoundEffects("p2Fx", fx));
-			player2.getInputComponent().changebutton("left", Input.KEY_K);
-			player2.getInputComponent().changebutton("right", Input.KEY_L);
-			player2.getInputComponent().changebutton("jump", Input.KEY_SEMICOLON);
-			player2.getInputComponent().changebutton("attack", Input.KEY_APOSTROPHE);
+			player2.addComponent(new PlayerSounds("p2Fx"));
 		}
 		
 		map = new Entity("map");
@@ -137,7 +113,6 @@ public class GameStateLevel1 extends BasicGameState {
  
     public void update(GameContainer gc, StateBasedGame sbg, int delta) throws SlickException {
     	Input input = gc.getInput();
-    	
     	
     	if(!displayIntro){
     		if(!gc.isPaused()) {

@@ -3,18 +3,13 @@ package edu.csupomona.kyra.component.render;
 import org.newdawn.slick.Animation;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
-import org.newdawn.slick.Image;
 import org.newdawn.slick.geom.Vector2f;
 import org.newdawn.slick.state.StateBasedGame;
 
-import edu.csupomona.kyra.component.input.InputComponent;
-
-
-public class SpriteRender extends RenderComponent{
-	Image image;
-	Animation[] animations;
-	Animation sprite;
-	boolean direction;
+public abstract class SpriteRender extends RenderComponent{
+	protected Animation[] animations;
+	protected Animation sprite;
+	protected boolean direction;
 	
 	public SpriteRender(String id) {
 		super(id);
@@ -35,31 +30,6 @@ public class SpriteRender extends RenderComponent{
 	
 	public void render(GameContainer gc, StateBasedGame sb, Graphics gr) {
 		Vector2f pos = owner.getPosition();
-		
 		sprite.draw(pos.x, pos.y);
-	}
-	
-	public void update(GameContainer gc, StateBasedGame sb, int delta) {
-		//image.rotate(owner.getRotation() - image.getRotation());
-		
-		InputComponent inputComponent = owner.getInputComponent();
-		
-		if(inputComponent.isPressed("right")) {
-			sprite = animations[0];
-			direction = true;
-			sprite.update(delta);
-		}
-		if(inputComponent.isPressed("left")) {
-			sprite = animations[1];
-			direction = false;
-			sprite.update(delta);
-		}
-		if(inputComponent.isPressed("jump")) {
-			if(direction)
-				sprite = animations[3];
-			else
-				sprite = animations[2];
-			sprite.update(delta);
-		}
 	}
 }

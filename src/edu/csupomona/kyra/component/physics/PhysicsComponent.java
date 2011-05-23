@@ -20,7 +20,7 @@ public abstract class PhysicsComponent extends Component {
 	ForceVector forceVector;
 	
 	public PhysicsComponent(String id, float height, float width, TiledMap map)  {
-		super.id = id;
+		super(id);
 		this.height = height;
 		this.width = width;
 		blockMap = new BlockMap(map);
