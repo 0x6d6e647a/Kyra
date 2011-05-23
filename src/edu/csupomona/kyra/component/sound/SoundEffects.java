@@ -11,14 +11,22 @@ import edu.csupomona.kyra.component.physics.PhysicsComponent;
 
 public class SoundEffects extends SoundComponent {
 	
-	Sound jumpFx = null;
-	Sound attackFx = null;
-	Sound hitFx = null;
-	Sound periodicFx = null;
-	Sound pauseFx = null;
+	Sound jumpFx, attackFx, hitFx, periodicFx, pauseFx;
+	
+	public SoundEffects(String id) {
+		super(id);
+	}
 	
 	public SoundEffects(String id, Sound[] fx) {
 		super(id);
+		jumpFx = fx[0];
+		attackFx = fx[1];
+		hitFx = fx[2];
+		periodicFx = fx[3];
+		pauseFx = fx[4];
+	}
+	
+	public void setSoundFx(Sound[] fx) {
 		jumpFx = fx[0];
 		attackFx = fx[1];
 		hitFx = fx[2];

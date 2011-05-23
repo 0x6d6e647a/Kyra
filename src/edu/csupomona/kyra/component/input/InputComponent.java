@@ -8,13 +8,13 @@ public abstract class InputComponent extends Component {
 	protected Hashtable<String, Boolean> buttonStates = null;
 	
 	public InputComponent(String id) {
-		super.id = id;
+		super(id);
 		buttonMappings = new Hashtable<String, Integer>();
 		buttonStates = new Hashtable<String, Boolean>();
 	}
 	
 	public InputComponent(String id, Hashtable<String, Integer> buttonMappings) {
-		super.id = id;
+		super(id);
 		this.buttonMappings = buttonMappings;
 	}
 	

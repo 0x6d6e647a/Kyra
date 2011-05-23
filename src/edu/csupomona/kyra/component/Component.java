@@ -9,6 +9,10 @@ public abstract class Component {
 	protected String id;
 	protected Entity owner;
 	
+	public Component(String id) {
+		this.id = id;
+	}
+	
 	public String getId() {
 		return id;
 	}

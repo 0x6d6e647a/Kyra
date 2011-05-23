@@ -21,7 +21,7 @@ public abstract class PhysicsComponent extends Component {
 	public boolean onFloor;
 	
 	public PhysicsComponent(String id, float height, float width, TiledMap map)  {
-		super.id = id;
+		super(id);
 		this.height = height;
 		this.width = width;
 		blockMap = new BlockMap(map);

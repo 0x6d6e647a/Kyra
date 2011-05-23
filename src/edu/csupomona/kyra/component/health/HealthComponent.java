@@ -10,7 +10,7 @@ public abstract class HealthComponent extends Component {
 	boolean recentHit;
 	
 	public HealthComponent(String id, int health) {
-		super.id = id;
+		super(id);
 		this.health = health;
 		recentHit = false;
 	}

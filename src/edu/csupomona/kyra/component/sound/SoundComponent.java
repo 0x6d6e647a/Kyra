@@ -4,7 +4,7 @@ import edu.csupomona.kyra.component.Component;
 
 public abstract class SoundComponent extends Component {
 	public SoundComponent(String id) {
-		super.id = id;
+		super(id);
 	}
 	public void stopAll() {
 		
