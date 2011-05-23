@@ -8,7 +8,7 @@ import edu.csupomona.kyra.component.Component;
 
 public abstract class RenderComponent extends Component {
 	public RenderComponent(String id) {
-		this.id = id;
+		super(id);
 	}
 	
 	public abstract void render(GameContainer gc, StateBasedGame sb, Graphics gr);

@@ -19,7 +19,7 @@ public class PlayerPhysics extends PhysicsComponent{
 
 	public PlayerPhysics(String id, float height, float width, TiledMap map) {
 		super(id, height, width, map);
-		forceVector = new ForceVector(0, 0);
+		forceVector = new ForceVector();
 	}
 	
 	@Override
