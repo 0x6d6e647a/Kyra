@@ -18,6 +18,7 @@ public abstract class PhysicsComponent extends Component {
 	Line top, bottom, left, right;
 	BlockMap blockMap;
 	ForceVector forceVector;
+	public boolean onFloor;
 	
 	public PhysicsComponent(String id, float height, float width, TiledMap map)  {
 		super.id = id;

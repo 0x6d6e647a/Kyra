@@ -21,6 +21,7 @@ import org.newdawn.slick.geom.Vector2f;
 import org.newdawn.slick.state.StateBasedGame;
 
 import edu.csupomona.kyra.component.Component;
+import edu.csupomona.kyra.component.health.HealthComponent;
 import edu.csupomona.kyra.component.input.InputComponent;
 import edu.csupomona.kyra.component.physics.PhysicsComponent;
 import edu.csupomona.kyra.component.render.RenderComponent;
@@ -37,6 +38,7 @@ public class Entity {
 	PhysicsComponent physicsComponent = null;
 	InputComponent inputComponent = null;
 	SoundComponent soundComponent = null;
+	HealthComponent healthComponent = null;
 	
 	
 	protected ArrayList<Component> components = null;
@@ -60,6 +62,8 @@ public class Entity {
 			inputComponent = (InputComponent)component;
 		else if (SoundComponent.class.isInstance(component))
 			soundComponent = (SoundComponent)component;
+		else if (HealthComponent.class.isInstance(component))
+			healthComponent = (HealthComponent)component;
 		
 		component.setOwnerEntity(this);
 		components.add(component);
@@ -111,6 +115,10 @@ public class Entity {
 	
 	public SoundComponent getSoundComponent() {
 		return soundComponent;
+	}
+	
+	public HealthComponent getHealthComponent() {
+		return healthComponent;
 	}
 	
 	public void update(GameContainer gc, StateBasedGame sb, int delta) {
