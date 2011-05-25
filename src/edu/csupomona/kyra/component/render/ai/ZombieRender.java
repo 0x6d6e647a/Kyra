@@ -13,17 +13,17 @@ public class ZombieRender extends AIRender {
 				new Image("img/basic-enemy-move-right_001.png"),
 				new Image("img/basic-enemy-move-right_003.png")
 		};
-		Image[] bELefttmovement = {
+		Image[] bELeftmovement = {
 				new Image("img/basic-enemy-move-left_001.png"),
 				new Image("img/basic-enemy-move-left_002.png"),
 				new Image("img/basic-enemy-move-left_001.png"),
 				new Image("img/basic-enemy-move-left_003.png")
 		};
-		int[] movementDuration = {500, 500, 500, 500};
+		int[] movementDuration = {200, 200, 200, 200};
 		
 		animations = new Animation[2];
-		animations[0] = new Animation(bERightmovement, movementDuration, false);
-		animations[1] = new Animation(bELefttmovement, movementDuration, false);
+		animations[0] = new Animation(bELeftmovement, movementDuration, false);
+		animations[1] = new Animation(bERightmovement, movementDuration, false);
 		
 		super.setAnimations(animations);
 	}

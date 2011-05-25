@@ -15,12 +15,22 @@ public abstract class AIRender extends SpriteRender {
 			if (action.equals("left")) {
 				sprite = animations[0];
 				direction = true;
+				sprite.update(delta);
+
 			}
 			else if (action.equals("right")) {
 				sprite = animations[1];
 				direction = false;
+				sprite.update(delta);
 			}
-			sprite.update(delta);
+			else {
+				if (direction)
+					sprite = animations[0];
+				else
+					sprite = animations[1];
+				sprite.update(delta);
+				
+			}
 		}
 	}
 }

@@ -38,7 +38,7 @@ public class Kyra extends StateBasedGame {
 	public static final int CREDITSSTATE = 7;
 	public static boolean vs = false;
 	
-	public Kyra() {
+	public Kyra() throws SlickException {
 		super("Kyra");
 		this.addState(new SplashState(SPLASHSTATE));
 		this.addState(new MenuState(MENUSTATE));

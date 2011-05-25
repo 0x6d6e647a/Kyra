@@ -12,7 +12,8 @@
 
 package edu.csupomona.kyra.state;
 
-import org.newdawn.slick.Animation;
+import java.util.ArrayList;
+
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
@@ -26,36 +27,25 @@ import org.newdawn.slick.tiled.TiledMap;
 import edu.csupomona.kyra.Kyra;
 import edu.csupomona.kyra.entity.Entity;
 import edu.csupomona.kyra.component.physics.PlayerPhysics;
+import edu.csupomona.kyra.component.physics.ZombiePhysics;
+import edu.csupomona.kyra.component.render.ai.ZombieRender;
 import edu.csupomona.kyra.component.render.player.Player1Render;
 import edu.csupomona.kyra.component.render.player.Player2Render;
+import edu.csupomona.kyra.component.ai.ZombieAI;
 import edu.csupomona.kyra.component.input.Player1Input;
 import edu.csupomona.kyra.component.input.Player2Input;
-import edu.csupomona.kyra.component.input.PlayerInput;
-import edu.csupomona.kyra.component.render.Level;
+import edu.csupomona.kyra.component.render.LevelRender;
 import edu.csupomona.kyra.component.sound.PlayerSounds;
 import edu.csupomona.kyra.component.sound.SoundComponent;
 
 public class GameStateLevel1 extends BasicGameState {
-	Entity map = null;
-	Entity player1 = null;
-	Entity player2 = null;
-	Entity enemy1 = null;
-	Entity enemy2 = null;
-	Entity enemy3 = null;
-	Entity enemy4 = null;
-	Entity enemy5 = null;
-	Entity enemy6 = null;
-	Entity enemy7 = null;
-	Entity enemy8 = null;
-	Entity enemy9 = null;
-	Entity enemy10 = null;
+	Entity map;
+	Entity player1, player2;
+	ArrayList<Entity> enemies;
 	Image intro = null;
 	Image pause = null;
 	boolean displayIntro = true;
 	boolean displayPause = false;
-	Animation[] animationsP1 = null;
-	Animation[] animationsP2 = null;
-	Animation[] animationsEnemy = null;
 	
 	private int stateID = 4;
 	
@@ -68,13 +58,20 @@ public class GameStateLevel1 extends BasicGameState {
         return stateID;
     }
 	
+	private void addZombie(Vector2f position, TiledMap map) throws SlickException {
+		String name = "zombie" + enemies.size();
+		Entity zombie = new Entity(name);
+		zombie.setPosition(position);
+		zombie.addComponent(new ZombieAI("ai_" + name, player1, player2, map));
+		zombie.addComponent(new ZombiePhysics("physics_" + name, 60, 31, map));
+		zombie.addComponent(new ZombieRender("render_" + name));
+		enemies.add(zombie);
+	}
+	
 	public void init(GameContainer gc, StateBasedGame sbg) throws SlickException {
 		TiledMap tiledMap = new TiledMap("lvl/level1map.tmx");
 		intro = new Image("img/intro.png");
 		pause = new Image("img/pause.png");
-
-//		Image[] boss1Leftmovement = {new Image("img/boss-1-left.png")};
-//		Image[] boss1Rightmovement = {new Image("img/boss-1-right.png")};
 		
 		Vector2f p1Position = new Vector2f(33, 1503);
 		player1 = new Entity("player");
@@ -95,7 +92,10 @@ public class GameStateLevel1 extends BasicGameState {
 		}
 		
 		map = new Entity("map");
-		map.addComponent(new Level("lvl1", tiledMap, player1));	
+		map.addComponent(new LevelRender("lvl1", tiledMap, player1));
+		
+		enemies = new ArrayList<Entity>();
+		addZombie(new Vector2f(33, 1503), tiledMap);
     }
  
     public void render(GameContainer gc, StateBasedGame sbg, Graphics gr) throws SlickException {
@@ -104,10 +104,12 @@ public class GameStateLevel1 extends BasicGameState {
     	if(displayPause)
     		pause.drawCentered(512, 384);
     	if(!gc.isPaused()) {
-	    map.render(gc, sbg, gr);
-	    player1.render(gc, sbg, gr);
-	    if(Kyra.vs)
-	    	player2.render(gc, sbg, gr);
+    		map.render(gc, sbg, gr);
+    		player1.render(gc, sbg, gr);
+    		for (Entity enemy : enemies)
+    			enemy.render(gc, sbg, gr);
+    		if(Kyra.vs)
+    			player2.render(gc, sbg, gr);
     	}
     }
  
@@ -119,6 +121,8 @@ public class GameStateLevel1 extends BasicGameState {
     			player1.update(gc, sbg, delta);
     			if(Kyra.vs)
     				player2.update(gc, sbg, delta);
+    			for (Entity enemy : enemies)
+    				enemy.update(gc, sbg, delta);
     			map.update(gc, sbg, delta);
     		}
         	if(input.isKeyPressed(Input.KEY_ENTER)) {

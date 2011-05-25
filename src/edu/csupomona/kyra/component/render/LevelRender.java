@@ -10,19 +10,19 @@ import edu.csupomona.kyra.component.render.RenderComponent;
 import edu.csupomona.kyra.entity.Entity;
 
 
-public class Level extends RenderComponent {
+public class LevelRender extends RenderComponent {
 	TiledMap map = null;
 	Entity player = null;
 	float xPos = 0;
 	float yPos = 0;
 	
-	public Level(String id, TiledMap map, Entity player) throws SlickException{
+	public LevelRender(String id, TiledMap map, Entity player) throws SlickException{
 		super(id);
 		this.map = map;
 		this.player = player;
 	}
 	
-	public Level(String id, TiledMap map) {
+	public LevelRender(String id, TiledMap map) {
 		super(id);
 		this.map = map;
 	}

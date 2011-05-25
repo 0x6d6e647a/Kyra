@@ -29,7 +29,7 @@ import edu.csupomona.kyra.entity.Entity;
 import edu.csupomona.kyra.component.physics.PlayerPhysics;
 import edu.csupomona.kyra.component.render.ImageRenderComponent;
 import edu.csupomona.kyra.component.input.PlayerInput;
-import edu.csupomona.kyra.component.render.Level;
+import edu.csupomona.kyra.component.render.LevelRender;
 import edu.csupomona.kyra.component.sound.SoundComponent;
 import edu.csupomona.kyra.component.sound.SoundEffects;
 
@@ -140,7 +140,7 @@ public class GameStateLevel2 extends BasicGameState {
 		}
 		
 		map = new Entity("map");
-		map.addComponent(new Level("lvl1", tiledMap, player1));
+		map.addComponent(new LevelRender("lvl1", tiledMap, player1));
 		
     }
  

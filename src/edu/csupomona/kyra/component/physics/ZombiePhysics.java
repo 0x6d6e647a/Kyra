@@ -41,6 +41,8 @@ public class ZombiePhysics extends PhysicsComponent {
 					forceVector.add(right);
 				}
 			}
+			forceVector.setXComponent(forceVector.getXComponent() * FRICTION);
+
 		}
 		else {
 			forceVector.add(gravity);
