@@ -6,25 +6,19 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Sound;
 import org.newdawn.slick.state.StateBasedGame;
 
+import edu.csupomona.kyra.component.health.HealthComponent;
 import edu.csupomona.kyra.component.input.InputComponent;
 import edu.csupomona.kyra.component.physics.PhysicsComponent;
 
 public class SoundEffects extends SoundComponent {
 	
 	Sound jumpFx, attackFx, hitFx, periodicFx, pauseFx;
+	boolean playHit;
 	
 	public SoundEffects(String id) {
 		super(id);
-	}
-	
-	public SoundEffects(String id, Sound[] fx) {
-		super(id);
-		jumpFx = fx[0];
-		attackFx = fx[1];
-		hitFx = fx[2];
-		periodicFx = fx[3];
-		pauseFx = fx[4];
-	}
+		playHit = true;
+	}	
 	
 	public void setSoundFx(Sound[] fx) {
 		jumpFx = fx[0];
@@ -38,7 +32,8 @@ public class SoundEffects extends SoundComponent {
 	public void update(GameContainer gc, StateBasedGame sb, int delta) { 
 		InputComponent inputComponent = owner.getInputComponent();
 		PhysicsComponent physicsComponent = owner.getPhysicsComponent();
-		
+		HealthComponent healthComponent = owner.getHealthComponent();
+
 		if(inputComponent.isPressed("jump"))
 			if(jumpFx != null)
 				if(physicsComponent.onFloor)
@@ -48,7 +43,16 @@ public class SoundEffects extends SoundComponent {
 			if(attackFx != null)
 				if(!attackFx.playing())
 					attackFx.play();
-		//When hit fx
+		if(healthComponent.getRecentHit() && playHit) {
+			if(hitFx != null) {
+				if(!hitFx.playing()) {
+					hitFx.play();
+					playHit = false;
+				}
+			}
+		} else if(!healthComponent.getRecentHit()) {
+			playHit = true;
+		}
 		if(periodicFx != null)
 			if(randomPlay())
 				if(!periodicFx.playing())

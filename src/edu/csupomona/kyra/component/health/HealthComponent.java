@@ -23,13 +23,17 @@ public abstract class HealthComponent extends Component {
 		if(owner.getPhysicsComponent().getPolygon().intersects(polygon)) {
 			if(enemy) {
 				health -= 1;
-				recentHit = true;
+				recentHit = true;					
 			}
 		}
 	}
 	
 	public int getHealth() {
 		return health;
+	}
+	
+	public boolean getRecentHit() {
+		return recentHit;
 	}
 	
 	public boolean zeroHealth() {

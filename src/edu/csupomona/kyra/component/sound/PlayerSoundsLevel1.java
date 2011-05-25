@@ -3,8 +3,8 @@ package edu.csupomona.kyra.component.sound;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.Sound;
 
-public class PlayerSounds extends SoundEffects {
-	public PlayerSounds(String id) throws SlickException {
+public class PlayerSoundsLevel1 extends SoundEffects {
+	public PlayerSoundsLevel1(String id) throws SlickException {
 		super(id);
 		Sound[] fx = {
 				new Sound("audio/player_jump.ogg"),

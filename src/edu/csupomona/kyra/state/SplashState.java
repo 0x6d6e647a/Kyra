@@ -14,7 +14,6 @@ package edu.csupomona.kyra.state;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
-import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
@@ -44,18 +43,25 @@ public class SplashState extends BasicGameState {
     	background.draw(0, 0);
     }
  
-    public void update(GameContainer gc, StateBasedGame sbg, int delta) throws SlickException {
-    	Input input = gc.getInput();
-    	
-    	if(input.isKeyPressed(Input.KEY_SPACE)) {
-    		input.clearKeyPressedRecord();
-    		sbg.getCurrentState().leave(gc, sbg);
-    		sbg.getState(Kyra.MENUSTATE).init(gc, sbg);
-    		sbg.getState(Kyra.OPTIONSTATE).init(gc, sbg);
-    		sbg.getState(Kyra.PLAYERSELECTSTATE).init(gc, sbg);
-    		sbg.getState(Kyra.MENUSTATE).enter(gc, sbg);
-    		sbg.enterState(Kyra.MENUSTATE);
-    	}
+    public void update(GameContainer gc, StateBasedGame sbg, int delta) throws SlickException {    	
+    	sbg.addState(new MenuState(Kyra.MENUSTATE));
+    	sbg.getState(Kyra.MENUSTATE).init(gc, sbg);
+		sbg.addState(new PlayerSelectState(Kyra.PLAYERSELECTSTATE));
+		sbg.getState(Kyra.PLAYERSELECTSTATE).init(gc, sbg);
+		sbg.addState(new OptionState(Kyra.OPTIONSTATE));
+		sbg.getState(Kyra.OPTIONSTATE).init(gc, sbg);
+		sbg.addState(new GameStateLevel1(Kyra.GAMESTATEONE));
+		sbg.getState(Kyra.GAMESTATEONE).init(gc, sbg);
+		sbg.addState(new GameStateLevel2(Kyra.GAMESTATETWO));
+		sbg.getState(Kyra.GAMESTATETWO).init(gc, sbg);
+		sbg.addState(new GameOverState(Kyra.GAMEOVERSTATE));
+		sbg.getState(Kyra.GAMEOVERSTATE).init(gc, sbg);
+		sbg.addState(new CreditsState(Kyra.CREDITSSTATE));
+		sbg.getState(Kyra.CREDITSSTATE).init(gc, sbg);
+		
+    	sbg.getCurrentState().leave(gc, sbg);
+		sbg.getState(Kyra.MENUSTATE).enter(gc, sbg);
+		sbg.enterState(Kyra.MENUSTATE);
     }
 }
 
