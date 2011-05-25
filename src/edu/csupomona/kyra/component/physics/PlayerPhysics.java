@@ -30,6 +30,7 @@ public class PlayerPhysics extends PhysicsComponent{
 		ForceVector gravity = new ForceVector(0, delta * GRAVITY);
 		
 		if (testFloorCollision(forceVector.clone().add(gravity))) {
+			onFloor = true;
 			forceVector.setYComponent(0.0f);
 			if (inputComponent.isPressed("left")) {
 				ForceVector left = new ForceVector(delta * -ONGROUND_X, 0.0f);
@@ -48,6 +49,7 @@ public class PlayerPhysics extends PhysicsComponent{
 			}
 		}
 		else {
+			onFloor = false;
 			forceVector.add(gravity);
 			if (inputComponent.isPressed("left")) {
 				ForceVector left = new ForceVector(delta * -INAIR_X, 0.0f);

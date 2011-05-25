@@ -45,10 +45,13 @@ public class ImageRenderComponent extends RenderComponent{
 			sprite.update(delta);
 		}
 		if(inputComponent.isPressed("jump")) {
-			if(direction)
-				sprite = animations[3];
-			else
-				sprite = animations[2];
+			if(direction) {
+				if(animations.length > 2)
+					sprite = animations[3];
+			} else {
+				if(animations.length > 2)
+					sprite = animations[2];
+			}
 			sprite.update(delta);
 		}
 	}

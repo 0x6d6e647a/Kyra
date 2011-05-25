@@ -7,6 +7,7 @@ import org.newdawn.slick.Sound;
 import org.newdawn.slick.state.StateBasedGame;
 
 import edu.csupomona.kyra.component.input.InputComponent;
+import edu.csupomona.kyra.component.physics.PhysicsComponent;
 
 public class SoundEffects extends SoundComponent {
 	
@@ -36,12 +37,13 @@ public class SoundEffects extends SoundComponent {
 	@Override
 	public void update(GameContainer gc, StateBasedGame sb, int delta) { 
 		InputComponent inputComponent = owner.getInputComponent();
-		
+		PhysicsComponent physicsComponent = owner.getPhysicsComponent();
 		
 		if(inputComponent.isPressed("jump"))
 			if(jumpFx != null)
-				if(!jumpFx.playing())
-					jumpFx.play();
+				if(physicsComponent.onFloor)
+					if(!jumpFx.playing())
+						jumpFx.play();
 		if(inputComponent.isPressed("attack"))
 			if(attackFx != null)
 				if(!attackFx.playing())

@@ -29,6 +29,7 @@ import edu.csupomona.kyra.entity.Entity;
 import edu.csupomona.kyra.component.physics.PlayerPhysics;
 import edu.csupomona.kyra.component.physics.ZombiePhysics;
 import edu.csupomona.kyra.component.render.ai.ZombieRender;
+import edu.csupomona.kyra.component.health.PlayerHealth;
 import edu.csupomona.kyra.component.render.player.Player1Render;
 import edu.csupomona.kyra.component.render.player.Player2Render;
 import edu.csupomona.kyra.component.ai.ZombieAI;
@@ -80,6 +81,8 @@ public class GameStateLevel1 extends BasicGameState {
 		player1.addComponent(new PlayerPhysics("p1physics", 60, 31, tiledMap));
 		player1.addComponent(new Player1Render("p1Sprite"));
 		player1.addComponent(new PlayerSounds("p1Fx"));
+		//Entity[] enemies = {enemy1};
+		//player1.addComponent(new PlayerHealth("p1health", 4, enemies));
         
 		if(Kyra.vs) {
 			Vector2f p2Position = new Vector2f(83, 1503);
@@ -89,6 +92,11 @@ public class GameStateLevel1 extends BasicGameState {
 			player2.addComponent(new PlayerPhysics("p2physics", 60, 31, tiledMap));
 			player2.addComponent(new Player2Render("p2Sprite"));
 			player2.addComponent(new PlayerSounds("p2Fx"));
+			//player2.addComponent(new PlayerHealth("p2health", 4, enemies));
+			player2.getInputComponent().changebutton("left", Input.KEY_K);
+			player2.getInputComponent().changebutton("right", Input.KEY_L);
+			player2.getInputComponent().changebutton("jump", Input.KEY_SEMICOLON);
+			player2.getInputComponent().changebutton("attack", Input.KEY_APOSTROPHE);
 		}
 		
 		map = new Entity("map");
@@ -154,6 +162,29 @@ public class GameStateLevel1 extends BasicGameState {
             		sbg.enterState(Kyra.GAMESTATETWO);
         		}
         	}
+        	/*if(Kyra.vs) {
+        		if(player1.getHealthComponent().zeroHealth() || player2.getHealthComponent().zeroHealth()) {
+        			input.clearKeyPressedRecord();
+        			gc.resume();
+        			displayIntro = true;
+        			displayPause = false;
+        			sbg.getCurrentState().leave(gc, sbg);
+        			sbg.getState(Kyra.GAMEOVERSTATE).init(gc, sbg);
+        			sbg.getState(Kyra.GAMEOVERSTATE).enter(gc, sbg);
+        			sbg.enterState(Kyra.GAMEOVERSTATE);
+        		}
+        	} else {
+        		if(player1.getHealthComponent().zeroHealth()) {
+        			input.clearKeyPressedRecord();
+        			gc.resume();
+        			displayIntro = true;
+        			displayPause = false;
+        			sbg.getCurrentState().leave(gc, sbg);
+        			sbg.getState(Kyra.GAMEOVERSTATE).init(gc, sbg);
+        			sbg.getState(Kyra.GAMEOVERSTATE).enter(gc, sbg);
+        			sbg.enterState(Kyra.GAMEOVERSTATE);
+        		}
+        	}*/
     	}
 
     	if(input.isKeyPressed(Input.KEY_SPACE) && displayIntro) {
