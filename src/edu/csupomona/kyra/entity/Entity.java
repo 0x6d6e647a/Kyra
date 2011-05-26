@@ -36,11 +36,11 @@ public class Entity {
 	float rotation;
 	
 	ArrayList<RenderComponent> renderComponents;
-	PhysicsComponent physicsComponent = null;
-	InputComponent inputComponent = null;
-	AIComponent aiComponent = null;
-	SoundComponent soundComponent = null;
-	HealthComponent healthComponent = null;
+	PhysicsComponent physicsComponent;
+	InputComponent inputComponent;
+	AIComponent aiComponent;
+	SoundComponent soundComponent;
+	HealthComponent healthComponent;
 	
 	
 	protected ArrayList<Component> components = null;
@@ -49,6 +49,7 @@ public class Entity {
 		this.id = id;
 		
 		components = new ArrayList<Component>();
+		renderComponents = new ArrayList<RenderComponent>();
 		
 		position = new Vector2f(0, 0);
 		scale = 1;
@@ -136,7 +137,7 @@ public class Entity {
 	}
 	
 	public void render(GameContainer gc, StateBasedGame sb, Graphics gr) {
-		if (renderComponent != null)
+		for (RenderComponent renderComponent : renderComponents)
 			renderComponent.render(gc, sb, gr);
 	}
 }

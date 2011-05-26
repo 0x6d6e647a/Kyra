@@ -8,6 +8,7 @@ import org.newdawn.slick.geom.Vector2f;
 import org.newdawn.slick.state.StateBasedGame;
 
 import edu.csupomona.kyra.component.input.InputComponent;
+import edu.csupomona.kyra.component.physics.objects.Direction;
 
 
 public class ImageRenderComponent extends RenderComponent{
@@ -17,10 +18,9 @@ public class ImageRenderComponent extends RenderComponent{
 	boolean direction;
 	
 	public ImageRenderComponent(String id, Animation[] animations) {
-		super(id);
+		super(id, Direction.RIGHT);
 		this.animations = animations;
 		sprite = animations[0];
-		direction = true;
 	}
 	
 	public void render(GameContainer gc, StateBasedGame sb, Graphics gr) {
