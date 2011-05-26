@@ -23,6 +23,7 @@ import edu.csupomona.kyra.component.render.HealthRender;
 import edu.csupomona.kyra.component.render.LevelRender;
 import edu.csupomona.kyra.component.render.ai.ZombieRender;
 import edu.csupomona.kyra.component.render.player.Player1Render;
+import edu.csupomona.kyra.component.render.player.Player2Render;
 import edu.csupomona.kyra.entity.Entity;
 
 public abstract class Level extends BasicGameState {
@@ -93,6 +94,7 @@ public abstract class Level extends BasicGameState {
 			player2.setPosition(p2Pos);
 			player2.addComponent(new Player2Input("p2Input"));
 			player2.addComponent(new PlayerPhysics("p1Physics", 60, 31, tiledMap));
+			player2.addComponent(new Player2Render("p2Sprite"));
 			player2.addComponent(new PlayerHealth("p2Health", 3, enemies, hearts));
 			player2.addComponent(new HealthRender("p2HealthInfo"));
 		}

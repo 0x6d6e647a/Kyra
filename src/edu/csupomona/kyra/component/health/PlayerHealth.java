@@ -36,7 +36,6 @@ public class PlayerHealth extends HealthComponent {
 
 	@Override
 	public void update(GameContainer gc, StateBasedGame sb, int delta) {
-		System.out.println("Health check: vulnerable? " + isVulnerable());
 		if (isVulnerable()) {
 			Polygon polygon = owner.getPhysicsComponent().getPolygon();
 			for (Entity enemy : enemies) {

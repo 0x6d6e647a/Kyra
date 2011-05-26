@@ -1,8 +1,5 @@
 package edu.csupomona.kyra.component.health;
 
-import org.newdawn.slick.GameContainer;
-import org.newdawn.slick.state.StateBasedGame;
-
 import edu.csupomona.kyra.component.Component;
 
 public abstract class HealthComponent extends Component {
