@@ -36,7 +36,7 @@ public abstract class AIComponent extends Component {
 		return true;
 	}
 	
-	protected Line getLineToTarget() {
+	public Line getLineToTarget() {
 		Line p1Line = getLineToPlayer(player1);
 		if (Kyra.vs) {
 			Line p2Line = getLineToPlayer(player2);
