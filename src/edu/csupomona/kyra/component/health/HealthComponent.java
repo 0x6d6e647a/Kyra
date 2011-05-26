@@ -1,41 +1,77 @@
 package edu.csupomona.kyra.component.health;
 
-import org.newdawn.slick.geom.Polygon;
+import org.newdawn.slick.GameContainer;
+import org.newdawn.slick.state.StateBasedGame;
 
 import edu.csupomona.kyra.component.Component;
 
 public abstract class HealthComponent extends Component {
 	
-	int health;
-	boolean recentHit;
+	int currHealth;
+	final int maxHealth;
+	boolean vulnerable, badHit, goodHit;
 	
 	public HealthComponent(String id, int health) {
 		super(id);
-		this.health = health;
-		recentHit = false;
+		this.currHealth = health;
+		this.maxHealth = health;
+		vulnerable = true;
+		badHit = false;
 	}
 	
-	public void setHealth(int health) {
-		this.health = health;
+	public int getCurrHealth() {
+		return currHealth;
 	}
 	
-	public void intersect(Polygon polygon, boolean enemy) {
-		if(owner.getPhysicsComponent().getPolygon().intersects(polygon)) {
-			if(enemy) {
-				health -= 1;
-				recentHit = true;
-			}
+	public int getMaxHealth() {
+		return maxHealth;
+	}
+	
+	public boolean getBadHit() {
+		if (badHit) {
+			badHit = false;
+			return true;
 		}
+		return false;
 	}
 	
-	public int getHealth() {
-		return health;
+	public boolean getGoodHit() {
+		if (goodHit) {
+			goodHit = false;
+			return true;
+		}
+		return false;
+	}
+	
+	protected void addHealth(int health) {
+		if ((currHealth + health) > maxHealth)
+			currHealth = maxHealth;
+		else
+			currHealth += health;
+		System.out.println(owner.getId() + "Health: " + currHealth + "/" + maxHealth + ".");
+	}
+	
+	public boolean isVulnerable() {
+		return vulnerable;
+	}
+	
+	protected void makeInvulnerable() {
+		vulnerable = false;
+	}
+	
+	protected void makeVulnerable() {
+		vulnerable = true;
+	}
+	
+	protected void setBadHit() {
+		badHit = true;
+	}
+	
+	protected void setGoodHit() {
+		goodHit = true;
 	}
 	
 	public boolean zeroHealth() {
-		if(health <= 0)
-			return true;
-		else
-			return false;
+		return currHealth <= 0;
 	}
 }

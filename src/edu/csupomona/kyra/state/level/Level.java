@@ -14,6 +14,7 @@ import org.newdawn.slick.tiled.TiledMap;
 
 import edu.csupomona.kyra.Kyra;
 import edu.csupomona.kyra.component.ai.ZombieAI;
+import edu.csupomona.kyra.component.health.PlayerHealth;
 import edu.csupomona.kyra.component.input.Player1Input;
 import edu.csupomona.kyra.component.input.Player2Input;
 import edu.csupomona.kyra.component.physics.PlayerPhysics;
@@ -21,7 +22,6 @@ import edu.csupomona.kyra.component.physics.ZombiePhysics;
 import edu.csupomona.kyra.component.render.LevelRender;
 import edu.csupomona.kyra.component.render.ai.ZombieRender;
 import edu.csupomona.kyra.component.render.player.Player1Render;
-import edu.csupomona.kyra.component.sound.PlayerSounds;
 import edu.csupomona.kyra.entity.Entity;
 
 public abstract class Level extends BasicGameState {
@@ -30,6 +30,8 @@ public abstract class Level extends BasicGameState {
 	TiledMap tiledMap;
 	Entity map, player1, player2;
 	ArrayList<Entity> entities;
+	ArrayList<Entity> enemies;
+	ArrayList<Entity> hearts;
 	Vector2f p1Pos, p2Pos;
 	Image intro, pause;
 	boolean drawIntro;
@@ -50,6 +52,7 @@ public abstract class Level extends BasicGameState {
 		zombie.addComponent(new ZombiePhysics("physics"+name, 60, 31, tiledMap));
 		zombie.addComponent(new ZombieRender("render"+name));
 		entities.add(zombie);
+		enemies.add(zombie);
 	}
 	
 	protected void nextLevel(GameContainer gc, StateBasedGame sbg) throws SlickException {
@@ -72,25 +75,29 @@ public abstract class Level extends BasicGameState {
 		intro = new Image("img/intro.png");
 		pause = new Image("img/pause.png");
 		
+		entities = new ArrayList<Entity>();
+		enemies = new ArrayList<Entity>();
+		hearts = new ArrayList<Entity>();
+		
 		player1 = new Entity("player1");
 		player1.setPosition(p1Pos);
 		player1.addComponent(new Player1Input("p1Input"));
 		player1.addComponent(new PlayerPhysics("p1Physics", 60, 31, tiledMap));
 		player1.addComponent(new Player1Render("p1Sprite"));
-		player1.addComponent(new PlayerSounds("p1SFX"));
+		player1.addComponent(new PlayerHealth("p1Health", 3, enemies, hearts));
 		
 		if (Kyra.vs) {
 			player2 = new Entity("player2");
 			player2.setPosition(p2Pos);
 			player2.addComponent(new Player2Input("p2Input"));
 			player2.addComponent(new PlayerPhysics("p1Physics", 60, 31, tiledMap));
-			player2.addComponent(new PlayerSounds("p1SFX"));
+			player2.addComponent(new PlayerHealth("p2Health", 3, enemies, hearts));
 		}
 		
 		map = new Entity("map");
 		map.addComponent(new LevelRender("level", tiledMap, player1));
 		
-		entities = new ArrayList<Entity>();
+		
 	}
 
 	@Override

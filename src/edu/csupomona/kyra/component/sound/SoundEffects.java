@@ -6,25 +6,19 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Sound;
 import org.newdawn.slick.state.StateBasedGame;
 
+import edu.csupomona.kyra.component.health.HealthComponent;
 import edu.csupomona.kyra.component.input.InputComponent;
 import edu.csupomona.kyra.component.physics.PhysicsComponent;
 
 public class SoundEffects extends SoundComponent {
 	
 	Sound jumpFx, attackFx, hitFx, periodicFx, pauseFx;
+	boolean playHit;
 	
 	public SoundEffects(String id) {
 		super(id);
-	}
-	
-	public SoundEffects(String id, Sound[] fx) {
-		super(id);
-		jumpFx = fx[0];
-		attackFx = fx[1];
-		hitFx = fx[2];
-		periodicFx = fx[3];
-		pauseFx = fx[4];
-	}
+		playHit = true;
+	}	
 	
 	public void setSoundFx(Sound[] fx) {
 		jumpFx = fx[0];
@@ -38,44 +32,35 @@ public class SoundEffects extends SoundComponent {
 	public void update(GameContainer gc, StateBasedGame sb, int delta) { 
 		InputComponent inputComponent = owner.getInputComponent();
 		PhysicsComponent physicsComponent = owner.getPhysicsComponent();
-		
-		if(inputComponent.isPressed("jump"))
-			if(jumpFx != null)
-				if(physicsComponent.onFloor)
-					if(!jumpFx.playing())
-						jumpFx.play();
-		if(inputComponent.isPressed("attack"))
-			if(attackFx != null)
-				if(!attackFx.playing())
-					attackFx.play();
-		//When hit fx
-		if(periodicFx != null)
-			if(randomPlay())
-				if(!periodicFx.playing())
-					periodicFx.play();
-		if(inputComponent.isPressed("pause"))
-			if(pauseFx != null)
-				if(!pauseFx.playing())
-					pauseFx.play();
-		
+		HealthComponent healthComponent = owner.getHealthComponent();
+
+		if(inputComponent.isPressed("jump") &&	jumpFx != null &&
+				physicsComponent.onFloor &&	!jumpFx.playing())
+			jumpFx.play();
+		if(inputComponent.isPressed("attack") && attackFx != null && !attackFx.playing())
+			attackFx.play();
+		if(healthComponent.getBadHit() && (hitFx != null) && !hitFx.playing())
+			hitFx.play();
+		if(periodicFx != null && randomPlay() && !periodicFx.playing())
+			periodicFx.play();
+		if(inputComponent.isPressed("pause") && (pauseFx != null) && !pauseFx.playing())
+			pauseFx.play();
 	}
 	public void stopAll() {
-		if(jumpFx != null)
+		if (jumpFx != null)
 			jumpFx.stop();
-		if(attackFx != null)
+		if (attackFx != null)
 			attackFx.stop();
-		if(hitFx != null)
+		if (hitFx != null)
 			hitFx.stop();
-		if(periodicFx != null)
+		if (periodicFx != null)
 			periodicFx.stop();
-		if(pauseFx != null)
+		if (pauseFx != null)
 			pauseFx.stop();
 	}
 	private boolean randomPlay(){
 		Random rand = new Random();
 		int num = rand.nextInt(100);
-		if(num >= 20 && num <= 25)
-			return true;
-		return false;
+		return num >= 20 && num <= 25;
 	}
 }

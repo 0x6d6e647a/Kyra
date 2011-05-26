@@ -42,6 +42,7 @@ public class MenuState extends BasicGameState {
 	private boolean insideLoad = false;
 	private boolean insideOptions = false;
 	private boolean insideExit = false;
+	private boolean first = true;
 	private static int menuX = 312;
 	private static int menuY = 334;
 	public static Sound backSound = null;
@@ -100,6 +101,11 @@ public class MenuState extends BasicGameState {
  
     public void update(GameContainer gc, StateBasedGame sbg, int delta) throws SlickException {	
     	Input input = gc.getInput();
+    	
+    	if(first) {
+    		input.clearKeyPressedRecord();
+    		first = false;
+    	}
     	
     	if(!backSound.playing())
     		backSound.play();

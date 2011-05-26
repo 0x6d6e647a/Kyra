@@ -7,6 +7,7 @@ import org.newdawn.slick.geom.Vector2f;
 import org.newdawn.slick.state.StateBasedGame;
 
 import edu.csupomona.kyra.Kyra;
+import edu.csupomona.kyra.component.sound.PlayerSoundsLevel1;
 
 public class Level1 extends Level {
 	final static Vector2f P1_POS = new Vector2f(33, 1503);
@@ -19,7 +20,10 @@ public class Level1 extends Level {
 	@Override
 	public void init(GameContainer gc, StateBasedGame sbg) throws SlickException {
 		super.init(gc, sbg);
-		addZombie(new Vector2f(33, 1503));
+		player1.addComponent(new PlayerSoundsLevel1("player1_SFX_lvl1"));
+		if (Kyra.vs)
+			player2.addComponent(new PlayerSoundsLevel1("player2_SFX_lvl1"));
+		addZombie(new Vector2f(1200, 1503));
 	}
 	
 	@Override
