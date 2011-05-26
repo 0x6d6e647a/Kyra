@@ -14,6 +14,10 @@ public abstract class RenderComponent extends Component {
 		super(id);
 		this.direction = direction;
 	}
+	
+	public Direction getDirection() {
+		return direction;
+	}
 
 	public abstract void render(GameContainer gc, StateBasedGame sb, Graphics gr);
 

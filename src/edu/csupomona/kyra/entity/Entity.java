@@ -110,6 +110,10 @@ public class Entity {
 		this.scale = scale;
 	}
 	
+	public ArrayList<RenderComponent> getRenderComponents() {
+		return renderComponents;
+	}
+	
 	public PhysicsComponent getPhysicsComponent() {
 		return physicsComponent;
 	}
@@ -118,16 +122,16 @@ public class Entity {
 		return inputComponent;
 	}
 	
+	public AIComponent getAIComponent() {
+		return aiComponent;
+	}
+	
 	public SoundComponent getSoundComponent() {
 		return soundComponent;
 	}
 	
 	public HealthComponent getHealthComponent() {
 		return healthComponent;
-	}
-	
-	public AIComponent getAIComponent() {
-		return aiComponent;
 	}
 	
 	public void update(GameContainer gc, StateBasedGame sb, int delta) {
