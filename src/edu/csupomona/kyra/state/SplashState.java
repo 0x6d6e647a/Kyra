@@ -52,10 +52,8 @@ public class SplashState extends BasicGameState {
 		sbg.getState(Kyra.PLAYERSELECTSTATE).init(gc, sbg);
 		sbg.addState(new OptionState(Kyra.OPTIONSTATE));
 		sbg.getState(Kyra.OPTIONSTATE).init(gc, sbg);
-//		sbg.addState(new GameStateLevel1(Kyra.GAMESTATEONE));
 		sbg.addState(new Level1());
 		sbg.getState(Kyra.GAMESTATEONE).init(gc, sbg);
-//		sbg.addState(new GameStateLevel2(Kyra.GAMESTATETWO));
 		sbg.addState(new Level2());
 		sbg.getState(Kyra.GAMESTATETWO).init(gc, sbg);
 		sbg.addState(new GameOverState(Kyra.GAMEOVERSTATE));

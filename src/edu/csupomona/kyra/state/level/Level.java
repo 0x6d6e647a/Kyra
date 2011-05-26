@@ -19,6 +19,7 @@ import edu.csupomona.kyra.component.input.Player1Input;
 import edu.csupomona.kyra.component.input.Player2Input;
 import edu.csupomona.kyra.component.physics.PlayerPhysics;
 import edu.csupomona.kyra.component.physics.ZombiePhysics;
+import edu.csupomona.kyra.component.render.HealthRender;
 import edu.csupomona.kyra.component.render.LevelRender;
 import edu.csupomona.kyra.component.render.ai.ZombieRender;
 import edu.csupomona.kyra.component.render.player.Player1Render;
@@ -85,6 +86,7 @@ public abstract class Level extends BasicGameState {
 		player1.addComponent(new PlayerPhysics("p1Physics", 60, 31, tiledMap));
 		player1.addComponent(new Player1Render("p1Sprite"));
 		player1.addComponent(new PlayerHealth("p1Health", 3, enemies, hearts));
+		//player1.addComponent(new HealthRender("p1HealthInfo"));
 		
 		if (Kyra.vs) {
 			player2 = new Entity("player2");
@@ -92,6 +94,7 @@ public abstract class Level extends BasicGameState {
 			player2.addComponent(new Player2Input("p2Input"));
 			player2.addComponent(new PlayerPhysics("p1Physics", 60, 31, tiledMap));
 			player2.addComponent(new PlayerHealth("p2Health", 3, enemies, hearts));
+			//player2.addComponent(new HealthRender("p2HealthInfo"));
 		}
 		
 		map = new Entity("map");
@@ -145,10 +148,29 @@ public abstract class Level extends BasicGameState {
 					input.clearKeyPressedRecord();
 				}
 			}
-			
-			/* -- Player health stuff here??? -- */
-		}
-		else {
+			if(!Kyra.vs) {
+				if(player1.getHealthComponent().zeroHealth()) {
+					input.clearKeyPressedRecord();
+        			player1.getSoundComponent().stopAll();
+        			gc.resume();
+        			sbg.getCurrentState().leave(gc, sbg);
+        			sbg.getState(Kyra.GAMEOVERSTATE).init(gc, sbg);
+        			sbg.getState(Kyra.GAMEOVERSTATE).enter(gc, sbg);
+        			sbg.enterState(Kyra.GAMEOVERSTATE);
+				}
+			} else {
+				if(player1.getHealthComponent().zeroHealth() || player2.getHealthComponent().zeroHealth()) {
+					input.clearKeyPressedRecord();
+        			player1.getSoundComponent().stopAll();
+            		player2.getSoundComponent().stopAll();
+        			gc.resume();
+        			sbg.getCurrentState().leave(gc, sbg);
+        			sbg.getState(Kyra.GAMEOVERSTATE).init(gc, sbg);
+        			sbg.getState(Kyra.GAMEOVERSTATE).enter(gc, sbg);
+        			sbg.enterState(Kyra.GAMEOVERSTATE);
+				}
+			}
+		} else {
 			if (input.isKeyPressed(Input.KEY_SPACE)) {
 				drawIntro = false;
 				input.clearKeyPressedRecord();

@@ -35,7 +35,7 @@ public class Entity {
 	float scale;
 	float rotation;
 	
-	RenderComponent renderComponent = null;
+	ArrayList<RenderComponent> renderComponents;
 	PhysicsComponent physicsComponent = null;
 	InputComponent inputComponent = null;
 	AIComponent aiComponent = null;
@@ -57,7 +57,7 @@ public class Entity {
 	
 	public void addComponent(Component component) {
 		if (RenderComponent.class.isInstance(component))
-			renderComponent = (RenderComponent)component;
+			renderComponents.add((RenderComponent)component);
 		else if (PhysicsComponent.class.isInstance(component))
 			physicsComponent = (PhysicsComponent)component;
 		else if (InputComponent.class.isInstance(component))

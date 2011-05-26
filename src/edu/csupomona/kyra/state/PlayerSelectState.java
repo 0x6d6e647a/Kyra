@@ -90,6 +90,7 @@ public class PlayerSelectState extends BasicGameState {
     			Kyra.vs = false;
 	    		input.clearKeyPressedRecord();
 	    		sbg.getCurrentState().leave(gc, sbg);
+	    		sbg.getState(Kyra.GAMESTATEONE).init(gc, sbg);
 	        	sbg.getState(Kyra.GAMESTATEONE).enter(gc, sbg);
 	        	buttonAccept.stop();
 	        	MenuState.backSound.stop();
@@ -109,6 +110,7 @@ public class PlayerSelectState extends BasicGameState {
     			buttonAccept.play();
     			Kyra.vs = true;
     			sbg.getCurrentState().leave(gc, sbg);
+    			sbg.getState(Kyra.GAMESTATEONE).init(gc, sbg);
 	        	sbg.getState(Kyra.GAMESTATEONE).enter(gc, sbg);
 	        	buttonAccept.stop();
 	        	MenuState.backSound.stop();

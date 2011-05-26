@@ -17,14 +17,7 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
 
-import edu.csupomona.kyra.state.CreditsState;
-import edu.csupomona.kyra.state.GameOverState;
-import edu.csupomona.kyra.state.MenuState;
-import edu.csupomona.kyra.state.OptionState;
-import edu.csupomona.kyra.state.PlayerSelectState;
 import edu.csupomona.kyra.state.SplashState;
-import edu.csupomona.kyra.state.level.Level1;
-import edu.csupomona.kyra.state.level.Level2;
 
 public class Kyra extends StateBasedGame {
 	
@@ -41,13 +34,6 @@ public class Kyra extends StateBasedGame {
 	public Kyra() throws SlickException {
 		super("Kyra");
 		this.addState(new SplashState(SPLASHSTATE));
-		this.addState(new MenuState(MENUSTATE));
-		this.addState(new PlayerSelectState(PLAYERSELECTSTATE));
-		this.addState(new OptionState(OPTIONSTATE));
-		this.addState(new Level1());
-		this.addState(new Level2());
-		this.addState(new GameOverState(GAMEOVERSTATE));
-		this.addState(new CreditsState(CREDITSSTATE));
 	}
 	
 	public static void main(String[] arguments) {
