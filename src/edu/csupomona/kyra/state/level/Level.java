@@ -145,8 +145,6 @@ public abstract class Level extends BasicGameState {
 					input.clearKeyPressedRecord();
 				}
 			}
-			
-			/* -- Player health stuff here??? -- */
 		}
 		else {
 			if (input.isKeyPressed(Input.KEY_SPACE)) {

@@ -4,6 +4,7 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.state.StateBasedGame;
 
 import edu.csupomona.kyra.component.input.InputComponent;
+import edu.csupomona.kyra.component.physics.objects.Direction;
 import edu.csupomona.kyra.component.render.SpriteRender;
 
 public abstract class PlayerRender extends SpriteRender {
@@ -16,18 +17,18 @@ public abstract class PlayerRender extends SpriteRender {
 		
 		if(inputComponent.isPressed("right")) {
 			sprite = animations[0];
-			direction = true;
+			direction = Direction.RIGHT;
 			sprite.update(delta);
 
 		}
 		if(inputComponent.isPressed("left")) {
 			super.sprite = animations[1];
-			direction = false;
+			direction = Direction.LEFT;
 			sprite.update(delta);
 
 		}
 		if(inputComponent.isPressed("jump")) {
-			if(direction)
+			if(direction.equals(Direction.RIGHT))
 				sprite = animations[3];
 			else
 				sprite = animations[2];

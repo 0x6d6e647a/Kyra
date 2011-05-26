@@ -5,12 +5,16 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.state.StateBasedGame;
 
 import edu.csupomona.kyra.component.Component;
+import edu.csupomona.kyra.component.physics.objects.Direction;
 
 public abstract class RenderComponent extends Component {
-	public RenderComponent(String id) {
-		super(id);
-	}
+	protected Direction direction;
 	
+	public RenderComponent(String id, Direction direction) {
+		super(id);
+		this.direction = direction;
+	}
+
 	public abstract void render(GameContainer gc, StateBasedGame sb, Graphics gr);
 
 }
