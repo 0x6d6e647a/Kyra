@@ -86,7 +86,7 @@ public abstract class Level extends BasicGameState {
 		player1.addComponent(new PlayerPhysics("p1Physics", 60, 31, tiledMap));
 		player1.addComponent(new Player1Render("p1Sprite"));
 		player1.addComponent(new PlayerHealth("p1Health", 3, enemies, hearts));
-		//player1.addComponent(new HealthRender("p1HealthInfo"));
+		player1.addComponent(new HealthRender("p1HealthInfo"));
 		
 		if (Kyra.vs) {
 			player2 = new Entity("player2");
@@ -94,7 +94,7 @@ public abstract class Level extends BasicGameState {
 			player2.addComponent(new Player2Input("p2Input"));
 			player2.addComponent(new PlayerPhysics("p1Physics", 60, 31, tiledMap));
 			player2.addComponent(new PlayerHealth("p2Health", 3, enemies, hearts));
-			//player2.addComponent(new HealthRender("p2HealthInfo"));
+			player2.addComponent(new HealthRender("p2HealthInfo"));
 		}
 		
 		map = new Entity("map");

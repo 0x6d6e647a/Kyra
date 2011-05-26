@@ -5,12 +5,14 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.state.StateBasedGame;
 
+import edu.csupomona.kyra.component.physics.objects.Direction;
+
 public class HealthRender extends RenderComponent {
 
 	int xPos, yPos;
 	
 	public HealthRender(String id) {
-		super(id);
+		super(id, Direction.NONE);
 	}
 	
 	@Override
@@ -21,7 +23,7 @@ public class HealthRender extends RenderComponent {
 
 	@Override
 	public void update(GameContainer gc, StateBasedGame sb, int delta) {
-		xPos = (int)owner.getPosition().x - 20;
+		xPos = (int)owner.getPosition().x - 7;
 		yPos = (int)owner.getPosition().y - 20;
 	}
 
