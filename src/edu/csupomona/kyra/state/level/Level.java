@@ -24,6 +24,7 @@ import edu.csupomona.kyra.component.render.LevelRender;
 import edu.csupomona.kyra.component.render.ai.ZombieRender;
 import edu.csupomona.kyra.component.render.player.Player1Render;
 import edu.csupomona.kyra.component.render.player.Player2Render;
+import edu.csupomona.kyra.component.sound.ZombieFx;
 import edu.csupomona.kyra.entity.Entity;
 
 public abstract class Level extends BasicGameState {
@@ -53,6 +54,7 @@ public abstract class Level extends BasicGameState {
 		zombie.addComponent(new ZombieAI("ai_"+name, player1, player2, tiledMap));
 		zombie.addComponent(new ZombiePhysics("physics"+name, 60, 31, tiledMap));
 		zombie.addComponent(new ZombieRender("render"+name));
+		zombie.addComponent(new ZombieFx("fx"+name));
 		entities.add(zombie);
 		enemies.add(zombie);
 	}
@@ -100,8 +102,7 @@ public abstract class Level extends BasicGameState {
 		}
 		
 		map = new Entity("map");
-		map.addComponent(new LevelRender("level", tiledMap, player1));
-		
+		map.addComponent(new LevelRender("level", tiledMap, player1));		
 		
 	}
 
@@ -154,6 +155,9 @@ public abstract class Level extends BasicGameState {
 				if(player1.getHealthComponent().zeroHealth()) {
 					input.clearKeyPressedRecord();
         			player1.getSoundComponent().stopAll();
+        			for (Entity entity : entities)
+    					if (entity.getSoundComponent() != null)
+    						entity.getSoundComponent().stopAll();
         			gc.resume();
         			sbg.getCurrentState().leave(gc, sbg);
         			sbg.getState(Kyra.GAMEOVERSTATE).init(gc, sbg);
@@ -165,6 +169,9 @@ public abstract class Level extends BasicGameState {
 					input.clearKeyPressedRecord();
         			player1.getSoundComponent().stopAll();
             		player2.getSoundComponent().stopAll();
+            		for (Entity entity : entities)
+    					if (entity.getSoundComponent() != null)
+    						entity.getSoundComponent().stopAll();
         			gc.resume();
         			sbg.getCurrentState().leave(gc, sbg);
         			sbg.getState(Kyra.GAMEOVERSTATE).init(gc, sbg);
