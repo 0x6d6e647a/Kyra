@@ -65,8 +65,8 @@ public class MenuState extends BasicGameState {
 		Image optionsLook = new Image("img/menu_options.png");
 		Image exitLook = new Image("img/menu_exit.png");
 		background = new Image("img/menu_background.png");
-		start = startLook.getSubImage(0, 0, 400, 100);
-		startSelect = startLook.getSubImage(0, 100, 400, 100);
+		start = startLook.getSubImage(0, 0, 400, 115);
+		startSelect = startLook.getSubImage(0, 115, 400, 115);
 		load = loadLook.getSubImage(0, 0, 400, 100);
 		loadSelect = loadLook.getSubImage(0, 100, 400, 100);
 	    options = optionsLook.getSubImage(0, 0, 400, 100);

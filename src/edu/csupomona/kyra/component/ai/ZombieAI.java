@@ -30,5 +30,4 @@ public class ZombieAI extends AIComponent {
 				actions.add("right");
 		}
 	}
-
 }
