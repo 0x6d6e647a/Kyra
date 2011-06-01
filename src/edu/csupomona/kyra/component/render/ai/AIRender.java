@@ -15,16 +15,15 @@ public abstract class AIRender extends SpriteRender {
 		for (String action : owner.getAIComponent().getActions()) {
 			if (action.equals("left")) {
 				sprite = animations[0];
-				direction = Direction.LEFT;
 				sprite.update(delta);
 
 			}
 			else if (action.equals("right")) {
 				sprite = animations[1];
-				direction = Direction.RIGHT;
 				sprite.update(delta);
 			}
 			else {
+				Direction direction = owner.getXDirection();
 				if (direction.equals(Direction.RIGHT))
 					sprite = animations[0];
 				else

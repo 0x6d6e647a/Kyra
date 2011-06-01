@@ -102,6 +102,13 @@ public abstract class PhysicsComponent extends Component {
 		return testLeftWallCollision(force) || testRightWallCollision(force);
 	}
 	
+	protected boolean testCollisions(ForceVector force) {
+		return testLeftWallCollision(force) ||
+			testRightWallCollision(force) ||
+			testCeilingCollision(force) ||
+			testFloorCollision(force);
+	}
+	
 	/* -- Setters -- */
 	
 	public void setLocation(Vector2f position) {

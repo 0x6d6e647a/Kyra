@@ -17,6 +17,7 @@ import org.newdawn.slick.tiled.TiledMap;
 
 import edu.csupomona.kyra.Kyra;
 import edu.csupomona.kyra.component.ai.ZombieAI;
+import edu.csupomona.kyra.component.gun.PlayerGun;
 import edu.csupomona.kyra.component.health.PlayerHealth;
 import edu.csupomona.kyra.component.input.Player1Input;
 import edu.csupomona.kyra.component.input.Player2Input;
@@ -93,6 +94,7 @@ public abstract class Level extends BasicGameState {
 		player1.addComponent(new Player1Render("p1Sprite"));
 		player1.addComponent(new PlayerHealth("p1Health", 3, enemies, hearts));
 		player1.addComponent(new HealthRender("p1HealthInfo"));
+		player1.addComponent(new PlayerGun("p1Gun", tiledMap));
 		
 		if (Kyra.vs) {
 			player2 = new Entity("player2");

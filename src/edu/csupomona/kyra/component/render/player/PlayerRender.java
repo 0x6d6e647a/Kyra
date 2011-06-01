@@ -17,17 +17,16 @@ public abstract class PlayerRender extends SpriteRender {
 		
 		if(inputComponent.isPressed("right")) {
 			sprite = animations[0];
-			direction = Direction.RIGHT;
 			sprite.update(delta);
 
 		}
 		if(inputComponent.isPressed("left")) {
 			super.sprite = animations[1];
-			direction = Direction.LEFT;
 			sprite.update(delta);
 
 		}
 		if(inputComponent.isPressed("jump")) {
+			Direction direction = owner.getXDirection();
 			if(direction.equals(Direction.RIGHT))
 				sprite = animations[3];
 			else

@@ -21,10 +21,12 @@ import org.newdawn.slick.geom.Vector2f;
 import org.newdawn.slick.state.StateBasedGame;
 
 import edu.csupomona.kyra.component.Component;
+import edu.csupomona.kyra.component.gun.GunComponent;
 import edu.csupomona.kyra.component.health.HealthComponent;
 import edu.csupomona.kyra.component.ai.AIComponent;
 import edu.csupomona.kyra.component.input.InputComponent;
 import edu.csupomona.kyra.component.physics.PhysicsComponent;
+import edu.csupomona.kyra.component.physics.objects.Direction;
 import edu.csupomona.kyra.component.render.RenderComponent;
 import edu.csupomona.kyra.component.sound.SoundComponent;
 
@@ -32,8 +34,10 @@ public class Entity {
 	String id;
 	
 	Vector2f position;
+	Direction xDirection, yDirection;
 	float scale;
 	float rotation;
+	
 	
 	ArrayList<RenderComponent> renderComponents;
 	PhysicsComponent physicsComponent;
@@ -41,6 +45,7 @@ public class Entity {
 	AIComponent aiComponent;
 	SoundComponent soundComponent;
 	HealthComponent healthComponent;
+	GunComponent gunComponent;
 	
 	
 	protected ArrayList<Component> components = null;
@@ -54,6 +59,9 @@ public class Entity {
 		position = new Vector2f(0, 0);
 		scale = 1;
 		rotation = 0;
+		
+		xDirection = Direction.NONE;
+		yDirection = Direction.NONE;
 	}
 	
 	public void addComponent(Component component) {
@@ -69,6 +77,8 @@ public class Entity {
 			healthComponent = (HealthComponent)component;
 		else if (AIComponent.class.isInstance(component))
 			aiComponent = (AIComponent)component;
+		else if (GunComponent.class.isInstance(component))
+			gunComponent = (GunComponent)component;
 		
 		component.setOwnerEntity(this);
 		components.add(component);
@@ -134,6 +144,23 @@ public class Entity {
 		return healthComponent;
 	}
 	
+	
+	public Direction getXDirection() {
+		return xDirection;
+	}
+	
+	public void setXDirection(Direction xDirection) {
+		this.xDirection = xDirection;
+	}
+	
+	public Direction getYDirection() {
+		return yDirection;
+	}
+	
+	public void setYDirection(Direction yDirection) {
+		this.yDirection = yDirection;
+	}
+	
 	public void update(GameContainer gc, StateBasedGame sb, int delta) {
 		for (Component component : components) {
 			component.update(gc, sb, delta);
@@ -143,5 +170,7 @@ public class Entity {
 	public void render(GameContainer gc, StateBasedGame sb, Graphics gr) {
 		for (RenderComponent renderComponent : renderComponents)
 			renderComponent.render(gc, sb, gr);
+		if (gunComponent != null)
+			gunComponent.render(gc, sb, gr);
 	}
 }

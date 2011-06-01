@@ -6,7 +6,6 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
 import org.newdawn.slick.tiled.TiledMap;
 
-import edu.csupomona.kyra.component.physics.objects.Direction;
 import edu.csupomona.kyra.component.render.RenderComponent;
 import edu.csupomona.kyra.entity.Entity;
 
@@ -18,13 +17,13 @@ public class LevelRender extends RenderComponent {
 	float yPos = 0;
 	
 	public LevelRender(String id, TiledMap map, Entity player) throws SlickException{
-		super(id, Direction.NONE);
+		super(id);
 		this.map = map;
 		this.player = player;
 	}
 	
 	public LevelRender(String id, TiledMap map) {
-		super(id, Direction.NONE);
+		super(id);
 		this.map = map;
 	}
 	
