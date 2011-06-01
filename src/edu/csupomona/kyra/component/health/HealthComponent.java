@@ -68,7 +68,11 @@ public abstract class HealthComponent extends Component {
 		goodHit = true;
 	}
 	
-	public boolean zeroHealth() {
+	public boolean isDead() {
 		return currHealth <= 0;
+	}
+	
+	public boolean isHealthFull() {
+		return currHealth == maxHealth;
 	}
 }
