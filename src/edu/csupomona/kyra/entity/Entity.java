@@ -21,6 +21,7 @@ import org.newdawn.slick.geom.Vector2f;
 import org.newdawn.slick.state.StateBasedGame;
 
 import edu.csupomona.kyra.component.Component;
+import edu.csupomona.kyra.component.gun.GunComponent;
 import edu.csupomona.kyra.component.health.HealthComponent;
 import edu.csupomona.kyra.component.ai.AIComponent;
 import edu.csupomona.kyra.component.input.InputComponent;
@@ -42,6 +43,7 @@ public class Entity {
 	AIComponent aiComponent;
 	SoundComponent soundComponent;
 	HealthComponent healthComponent;
+	GunComponent gunComponent;
 	
 	
 	protected ArrayList<Component> components = null;
@@ -70,6 +72,8 @@ public class Entity {
 			healthComponent = (HealthComponent)component;
 		else if (AIComponent.class.isInstance(component))
 			aiComponent = (AIComponent)component;
+		else if (GunComponent.class.isInstance(component))
+			gunComponent = (GunComponent)component;
 		
 		component.setOwnerEntity(this);
 		components.add(component);
@@ -156,5 +160,7 @@ public class Entity {
 	public void render(GameContainer gc, StateBasedGame sb, Graphics gr) {
 		for (RenderComponent renderComponent : renderComponents)
 			renderComponent.render(gc, sb, gr);
+		if (gunComponent != null)
+			gunComponent.render(gc, sb, gr);
 	}
 }
