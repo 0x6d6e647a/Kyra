@@ -30,6 +30,7 @@ public class Level1 extends Level {
 	public void update(GameContainer gc, StateBasedGame sbg, int delta) throws SlickException {
 		super.update(gc, sbg, delta);
 		if (gc.isPaused() && gc.getInput().isKeyPressed(Input.KEY_P)) {
+			drawIntro = true;
 			nextLevel(gc, sbg);
 		}
 	}

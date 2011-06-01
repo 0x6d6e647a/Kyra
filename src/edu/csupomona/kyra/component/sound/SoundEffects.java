@@ -37,7 +37,7 @@ public class SoundEffects extends SoundComponent {
 		if(inputComponent.isPressed("jump") &&	jumpFx != null &&
 				physicsComponent.onFloor &&	!jumpFx.playing())
 			jumpFx.play();
-		if(inputComponent.isPressed("attack") && attackFx != null && !attackFx.playing())
+		if(inputComponent.isPressed("attack") && attackFx != null /*&& !attackFx.playing()*/)
 			attackFx.play();
 		if(healthComponent.getBadHit() && (hitFx != null) && !hitFx.playing())
 			hitFx.play();

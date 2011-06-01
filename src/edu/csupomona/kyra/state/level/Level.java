@@ -104,6 +104,7 @@ public abstract class Level extends BasicGameState {
 			player2.addComponent(new Player2Render("p2Sprite"));
 			player2.addComponent(new PlayerHealth("p2Health", 3, enemies, hearts));
 			player2.addComponent(new HealthRender("p2HealthInfo"));
+			player2.addComponent(new PlayerGun("p2Gun", tiledMap));
 		}
 		
 		map = new Entity("map");
@@ -179,6 +180,7 @@ public abstract class Level extends BasicGameState {
         			sbg.getCurrentState().leave(gc, sbg);
         			sbg.getState(Kyra.GAMEOVERSTATE).init(gc, sbg);
         			sbg.getState(Kyra.GAMEOVERSTATE).enter(gc, sbg);
+        			drawIntro = true;
         			sbg.enterState(Kyra.GAMEOVERSTATE);
 				}
 			} else {
@@ -193,6 +195,7 @@ public abstract class Level extends BasicGameState {
         			sbg.getCurrentState().leave(gc, sbg);
         			sbg.getState(Kyra.GAMEOVERSTATE).init(gc, sbg);
         			sbg.getState(Kyra.GAMEOVERSTATE).enter(gc, sbg);
+        			drawIntro = true;
         			sbg.enterState(Kyra.GAMEOVERSTATE);
 				}
 			}

@@ -53,10 +53,10 @@ public class PlayerSelectState extends BasicGameState {
 		Image onePlayerLook = new Image("img/player_one.png");
 		Image twoPlayerLook = new Image("img/player_two.png");
 		background = new Image("img/menu_background.png");
-		onePlayer = onePlayerLook.getSubImage(0, 0, 400, 100);
-		onePlayerSelect = onePlayerLook.getSubImage(0, 100, 400, 100);
-		twoPlayer = twoPlayerLook.getSubImage(0, 0, 400, 100);
-		twoPlayerSelect = twoPlayerLook.getSubImage(0, 100, 400, 100);
+		onePlayer = onePlayerLook.getSubImage(0, 0, 400, 115);
+		onePlayerSelect = onePlayerLook.getSubImage(0, 115, 400, 115);
+		twoPlayer = twoPlayerLook.getSubImage(0, 0, 400, 115);
+		twoPlayerSelect = twoPlayerLook.getSubImage(0, 115, 400, 115);
     }
  
     public void render(GameContainer gc, StateBasedGame sbg, Graphics gc1) throws SlickException {

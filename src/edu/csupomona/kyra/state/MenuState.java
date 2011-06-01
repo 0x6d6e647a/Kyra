@@ -14,7 +14,6 @@ package edu.csupomona.kyra.state;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.PrintWriter;
 import java.util.Scanner;
 
 import org.newdawn.slick.GameContainer;
@@ -76,8 +75,8 @@ public class MenuState extends BasicGameState {
 		loadSelect = loadLook.getSubImage(0, 115, 400, 115);
 	    options = optionsLook.getSubImage(0, 0, 400, 115);
 	    optionsSelect = optionsLook.getSubImage(0, 115, 400, 115);
-	    exit = exitLook.getSubImage(0, 0, 400, 100);
-	    exitSelect = exitLook.getSubImage(0, 100, 400, 100);
+	    exit = exitLook.getSubImage(0, 0, 400, 115);
+	    exitSelect = exitLook.getSubImage(0, 115, 400, 115);
     }
  
     public void render(GameContainer gc, StateBasedGame sbg, Graphics gc1) throws SlickException {
