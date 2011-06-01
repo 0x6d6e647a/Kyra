@@ -12,7 +12,7 @@ public class HealthRender extends RenderComponent {
 	int xPos, yPos;
 	
 	public HealthRender(String id) {
-		super(id, Direction.NONE);
+		super(id);
 	}
 	
 	@Override

@@ -13,14 +13,13 @@ public abstract class SpriteRender extends RenderComponent{
 	protected Animation sprite;
 	
 	public SpriteRender(String id) {
-		super(id, Direction.RIGHT);
+		super(id);
 	}
 	
 	public SpriteRender(String id, Animation[] animations) {
-		super(id, Direction.RIGHT);
+		super(id);
 		this.animations = animations;
 		sprite = animations[0];
-		direction = Direction.RIGHT;
 	}
 	
 	protected void setAnimations(Animation[] animations) {

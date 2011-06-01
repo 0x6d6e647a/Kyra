@@ -73,6 +73,22 @@ public class ForceVector {
 		return this;
 	}
 	
+	public Direction getXDirection() {
+		if (xComponent < 0)
+			return Direction.LEFT;
+		else if (xComponent > 0)
+			return Direction.RIGHT;
+		return Direction.NONE;
+	}
+	
+	public Direction getYDirection() {
+		if (yComponent < 0)
+			return Direction.UP;
+		else if (yComponent > 0)
+			return Direction.DOWN;
+		return Direction.NONE;
+	}
+	
 	public void clampX(float minX, float maxX) {
 		if (xComponent > maxX)
 			xComponent = maxX;

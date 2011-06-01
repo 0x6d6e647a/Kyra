@@ -25,6 +25,7 @@ import edu.csupomona.kyra.component.health.HealthComponent;
 import edu.csupomona.kyra.component.ai.AIComponent;
 import edu.csupomona.kyra.component.input.InputComponent;
 import edu.csupomona.kyra.component.physics.PhysicsComponent;
+import edu.csupomona.kyra.component.physics.objects.Direction;
 import edu.csupomona.kyra.component.render.RenderComponent;
 import edu.csupomona.kyra.component.sound.SoundComponent;
 
@@ -132,6 +133,18 @@ public class Entity {
 	
 	public HealthComponent getHealthComponent() {
 		return healthComponent;
+	}
+	
+	public Direction getXDirection() {
+		if (physicsComponent != null)
+			return physicsComponent.getForceVector().getXDirection();
+		return Direction.NONE;
+	}
+	
+	public Direction getYDirection() {
+		if (physicsComponent != null)
+			return physicsComponent.getForceVector().getYDirection();
+		return Direction.NONE;
 	}
 	
 	public void update(GameContainer gc, StateBasedGame sb, int delta) {
