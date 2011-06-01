@@ -11,7 +11,6 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
-import org.newdawn.slick.geom.Polygon;
 import org.newdawn.slick.geom.Vector2f;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
@@ -21,6 +20,7 @@ import edu.csupomona.kyra.Kyra;
 import edu.csupomona.kyra.component.ai.ZombieAI;
 import edu.csupomona.kyra.component.gun.HeartRender;
 import edu.csupomona.kyra.component.gun.PlayerGun;
+import edu.csupomona.kyra.component.health.ItemHealth;
 import edu.csupomona.kyra.component.health.PlayerHealth;
 import edu.csupomona.kyra.component.input.Player1Input;
 import edu.csupomona.kyra.component.input.Player2Input;
@@ -73,7 +73,7 @@ public abstract class Level extends BasicGameState {
 		heart.setPosition(position);
 		heart.addComponent(new HeartPhysics("physics"+name, 16, 16, tiledMap));
 		heart.addComponent(new HeartRender("render"+name));
-		entities.add(heart);
+		heart.addComponent(new ItemHealth("item"+name));
 		hearts.add(heart);
 	}
 	
@@ -142,6 +142,8 @@ public abstract class Level extends BasicGameState {
 				player2.render(gc, sbg, gr);
 			for (Entity entity : entities)
 				entity.render(gc, sbg, gr);
+			for (Entity heart : hearts)
+				heart.render(gc, sbg, gr);
 		}
 	}
 
@@ -156,20 +158,14 @@ public abstract class Level extends BasicGameState {
 					player2.update(gc, sbg, delta);
 				for (Entity entity : entities)
 					entity.update(gc, sbg, delta);
+				for (Entity heart : hearts)
+					heart.update(gc, sbg, delta);
 				map.update(gc, sbg, delta);
 				//Remove hearts from the map that have been used
 				for (Iterator<Entity> iter = hearts.iterator(); iter.hasNext();) {
 					Entity heart = iter.next();
-					Polygon heartPoly = heart.getPhysicsComponent().getPolygon();
-					if (Kyra.vs) {
-						if (player1.getPhysicsComponent().intersections(heartPoly) |
-								player2.getPhysicsComponent().intersections(heartPoly))
-							iter.remove();
-					}
-					else {
-						if (player1.getPhysicsComponent().intersections(heartPoly))
-							iter.remove();
-					}
+					if (heart.getHealthComponent().zeroHealth())
+						iter.remove();
 				}
 				//Pause if pause key is pressed
 				if (input.isKeyPressed(Input.KEY_ENTER)) {
