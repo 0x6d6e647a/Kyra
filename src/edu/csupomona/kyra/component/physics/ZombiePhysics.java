@@ -4,6 +4,7 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.state.StateBasedGame;
 import org.newdawn.slick.tiled.TiledMap;
 
+import edu.csupomona.kyra.component.physics.objects.Direction;
 import edu.csupomona.kyra.component.physics.objects.ForceVector;
 
 public class ZombiePhysics extends PhysicsComponent {
@@ -35,10 +36,12 @@ public class ZombiePhysics extends PhysicsComponent {
 				if (action.equals("left")) {
 					ForceVector left = new ForceVector(delta * -ONGROUND_X, 0.0f);
 					forceVector.add(left);	
+					owner.setXDirection(Direction.LEFT);
 				}
 				else if (action.equals("right")) {
 					ForceVector right = new ForceVector(delta * ONGROUND_X, 0.0f);
 					forceVector.add(right);
+					owner.setXDirection(Direction.RIGHT);
 				}
 			}
 			forceVector.setXComponent(forceVector.getXComponent() * FRICTION);
@@ -50,10 +53,12 @@ public class ZombiePhysics extends PhysicsComponent {
 				if (action.equals("left")) {
 					ForceVector left = new ForceVector(delta * -INAIR_X, 0.0f);
 					forceVector.add(left);
+					owner.setXDirection(Direction.LEFT);
 				}
 				else if (action.equals("right")) {
 					ForceVector right = new ForceVector(delta * INAIR_X, 0.0f);
 					forceVector.add(right);
+					owner.setXDirection(Direction.RIGHT);
 				}
 			}
 		}

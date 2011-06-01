@@ -6,8 +6,6 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.geom.Vector2f;
 import org.newdawn.slick.state.StateBasedGame;
 
-import edu.csupomona.kyra.component.physics.objects.Direction;
-
 public abstract class SpriteRender extends RenderComponent{
 	protected Animation[] animations;
 	protected Animation sprite;

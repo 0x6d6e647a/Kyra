@@ -34,8 +34,10 @@ public class Entity {
 	String id;
 	
 	Vector2f position;
+	Direction xDirection, yDirection;
 	float scale;
 	float rotation;
+	
 	
 	ArrayList<RenderComponent> renderComponents;
 	PhysicsComponent physicsComponent;
@@ -57,6 +59,9 @@ public class Entity {
 		position = new Vector2f(0, 0);
 		scale = 1;
 		rotation = 0;
+		
+		xDirection = Direction.NONE;
+		yDirection = Direction.NONE;
 	}
 	
 	public void addComponent(Component component) {
@@ -139,16 +144,21 @@ public class Entity {
 		return healthComponent;
 	}
 	
+	
 	public Direction getXDirection() {
-		if (physicsComponent != null)
-			return physicsComponent.getForceVector().getXDirection();
-		return Direction.NONE;
+		return xDirection;
+	}
+	
+	public void setXDirection(Direction xDirection) {
+		this.xDirection = xDirection;
 	}
 	
 	public Direction getYDirection() {
-		if (physicsComponent != null)
-			return physicsComponent.getForceVector().getYDirection();
-		return Direction.NONE;
+		return yDirection;
+	}
+	
+	public void setYDirection(Direction yDirection) {
+		this.yDirection = yDirection;
 	}
 	
 	public void update(GameContainer gc, StateBasedGame sb, int delta) {

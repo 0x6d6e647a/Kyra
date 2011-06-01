@@ -16,7 +16,7 @@ public class PlayerGun extends GunComponent {
 	final float SPEED = 3.5f;
 
 	public PlayerGun(String id, TiledMap map) {
-		super(id, 300, map);
+		super(id, 200, map);
 	}
 
 	@Override
@@ -37,10 +37,6 @@ public class PlayerGun extends GunComponent {
 	@Override
 	public void update(GameContainer gc, StateBasedGame sb, int delta) {
 		super.update(gc, sb, delta);
-		for (Entity bullet : bullets) {
-			BulletPhysics bulletPhysics = (BulletPhysics)bullet.getPhysicsComponent();
-			
-		}
 	}
 
 }

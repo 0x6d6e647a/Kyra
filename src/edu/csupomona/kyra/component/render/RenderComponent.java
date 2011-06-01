@@ -5,7 +5,6 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.state.StateBasedGame;
 
 import edu.csupomona.kyra.component.Component;
-import edu.csupomona.kyra.component.physics.objects.Direction;
 
 public abstract class RenderComponent extends Component {
 	

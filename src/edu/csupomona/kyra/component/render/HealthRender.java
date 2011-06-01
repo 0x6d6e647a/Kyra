@@ -5,8 +5,6 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.state.StateBasedGame;
 
-import edu.csupomona.kyra.component.physics.objects.Direction;
-
 public class HealthRender extends RenderComponent {
 
 	int xPos, yPos;

@@ -6,7 +6,6 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
 import org.newdawn.slick.tiled.TiledMap;
 
-import edu.csupomona.kyra.component.physics.objects.Direction;
 import edu.csupomona.kyra.component.render.RenderComponent;
 import edu.csupomona.kyra.entity.Entity;
 
