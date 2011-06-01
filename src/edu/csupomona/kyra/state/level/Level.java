@@ -25,12 +25,11 @@ import edu.csupomona.kyra.component.health.PlayerHealth;
 import edu.csupomona.kyra.component.input.Player1Input;
 import edu.csupomona.kyra.component.input.Player2Input;
 import edu.csupomona.kyra.component.physics.HeartPhysics;
-import edu.csupomona.kyra.component.physics.PhysicsComponent;
 import edu.csupomona.kyra.component.physics.PlayerPhysics;
 import edu.csupomona.kyra.component.physics.ZombiePhysics;
-import edu.csupomona.kyra.component.render.HealthRender;
 import edu.csupomona.kyra.component.render.LevelRender;
 import edu.csupomona.kyra.component.render.PositionRender;
+import edu.csupomona.kyra.component.render.MapHealthRender;
 import edu.csupomona.kyra.component.render.ai.ZombieRender;
 import edu.csupomona.kyra.component.render.player.Player1Render;
 import edu.csupomona.kyra.component.render.player.Player2Render;
@@ -63,6 +62,7 @@ public abstract class Level extends BasicGameState {
 		zombie.addComponent(new ZombiePhysics("physics"+name, 60, 31, tiledMap));
 		zombie.addComponent(new ZombieRender("render"+name));
 		zombie.addComponent(new ZombieFx("fx"+name));
+		//zombie.addComponent(new EnemyHealth("hp"+name, 5, player1, player2));
 		entities.add(zombie);
 		enemies.add(zombie);
 	}
@@ -109,7 +109,6 @@ public abstract class Level extends BasicGameState {
 		player1.addComponent(new PlayerPhysics("p1Physics", 60, 31, tiledMap));
 		player1.addComponent(new Player1Render("p1Sprite"));
 		player1.addComponent(new PlayerHealth("p1Health", 3, enemies, hearts));
-		player1.addComponent(new HealthRender("p1HealthInfo"));
 		player1.addComponent(new PlayerGun("p1Gun", tiledMap));
 		player1.addComponent(new PositionRender("p1Pos"));
 		
@@ -120,12 +119,13 @@ public abstract class Level extends BasicGameState {
 			player2.addComponent(new PlayerPhysics("p1Physics", 60, 31, tiledMap));
 			player2.addComponent(new Player2Render("p2Sprite"));
 			player2.addComponent(new PlayerHealth("p2Health", 3, enemies, hearts));
-			player2.addComponent(new HealthRender("p2HealthInfo"));
 			player2.addComponent(new PlayerGun("p2Gun", tiledMap));
 		}
 		
 		map = new Entity("map");
-		map.addComponent(new LevelRender("level", tiledMap, player1));		
+		map.addComponent(new LevelRender("level", tiledMap, player1));
+		map.addComponent(new MapHealthRender("playerHealth", player1, player2));
+		
 		
 	}
 

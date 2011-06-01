@@ -1,7 +1,6 @@
 package edu.csupomona.kyra.component.health;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -9,7 +8,6 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.geom.Polygon;
 import org.newdawn.slick.state.StateBasedGame;
 
-import edu.csupomona.kyra.component.physics.HeartPhysics;
 import edu.csupomona.kyra.entity.Entity;
 
 public class PlayerHealth extends HealthComponent {
