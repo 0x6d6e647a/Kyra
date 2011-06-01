@@ -1,5 +1,8 @@
 package edu.csupomona.kyra.state.level;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 
 import org.newdawn.slick.GameContainer;
@@ -150,6 +153,18 @@ public abstract class Level extends BasicGameState {
 					gc.resume();
 					input.clearKeyPressedRecord();
 				}
+				if(input.isKeyPressed(Input.KEY_Q)) {
+					File f = new File("save.txt");
+					try {
+						PrintWriter pw = new PrintWriter(f);
+						pw.println(Kyra.vs);
+						pw.println(sbg.getCurrentStateID());
+						pw.close();
+					} catch (FileNotFoundException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}		
 			}
 			if(!Kyra.vs) {
 				if(player1.getHealthComponent().zeroHealth()) {

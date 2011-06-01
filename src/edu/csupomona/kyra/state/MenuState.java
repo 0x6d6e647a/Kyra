@@ -12,6 +12,11 @@
 
 package edu.csupomona.kyra.state;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
+import java.util.Scanner;
+
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
@@ -67,10 +72,10 @@ public class MenuState extends BasicGameState {
 		background = new Image("img/menu_background.png");
 		start = startLook.getSubImage(0, 0, 400, 115);
 		startSelect = startLook.getSubImage(0, 115, 400, 115);
-		load = loadLook.getSubImage(0, 0, 400, 100);
-		loadSelect = loadLook.getSubImage(0, 100, 400, 100);
-	    options = optionsLook.getSubImage(0, 0, 400, 100);
-	    optionsSelect = optionsLook.getSubImage(0, 100, 400, 100);
+		load = loadLook.getSubImage(0, 0, 400, 115);
+		loadSelect = loadLook.getSubImage(0, 115, 400, 115);
+	    options = optionsLook.getSubImage(0, 0, 400, 115);
+	    optionsSelect = optionsLook.getSubImage(0, 115, 400, 115);
 	    exit = exitLook.getSubImage(0, 0, 400, 100);
 	    exitSelect = exitLook.getSubImage(0, 100, 400, 100);
     }
@@ -147,6 +152,22 @@ public class MenuState extends BasicGameState {
     		} else if(input.isKeyPressed(Input.KEY_ENTER)) {
     			buttonAccept.play();
     			input.clearKeyPressedRecord();
+    			File f = new File("save.txt");
+    			try {
+					Scanner s = new Scanner(f);
+					Kyra.vs = s.nextBoolean();
+					int tempState = s.nextInt();
+					s.close();
+					sbg.getCurrentState().leave(gc, sbg);
+		    		sbg.getState(tempState).init(gc, sbg);
+		        	sbg.getState(tempState).enter(gc, sbg);
+		        	buttonAccept.stop();
+		        	MenuState.backSound.stop();
+		    		sbg.enterState(tempState);
+				} catch (FileNotFoundException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
     		}	
     	}
     	if(insideOptions) {
