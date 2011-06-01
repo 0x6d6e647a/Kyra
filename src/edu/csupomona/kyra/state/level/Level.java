@@ -4,12 +4,14 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.geom.Polygon;
 import org.newdawn.slick.geom.Vector2f;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
@@ -17,10 +19,13 @@ import org.newdawn.slick.tiled.TiledMap;
 
 import edu.csupomona.kyra.Kyra;
 import edu.csupomona.kyra.component.ai.ZombieAI;
+import edu.csupomona.kyra.component.gun.HeartRender;
 import edu.csupomona.kyra.component.gun.PlayerGun;
 import edu.csupomona.kyra.component.health.PlayerHealth;
 import edu.csupomona.kyra.component.input.Player1Input;
 import edu.csupomona.kyra.component.input.Player2Input;
+import edu.csupomona.kyra.component.physics.HeartPhysics;
+import edu.csupomona.kyra.component.physics.PhysicsComponent;
 import edu.csupomona.kyra.component.physics.PlayerPhysics;
 import edu.csupomona.kyra.component.physics.ZombiePhysics;
 import edu.csupomona.kyra.component.render.HealthRender;
@@ -36,9 +41,7 @@ public abstract class Level extends BasicGameState {
 	String path;
 	TiledMap tiledMap;
 	Entity map, player1, player2;
-	ArrayList<Entity> entities;
-	ArrayList<Entity> enemies;
-	ArrayList<Entity> hearts;
+	ArrayList<Entity> entities, enemies, hearts, playerBullets, enemyBullets;
 	Vector2f p1Pos, p2Pos;
 	Image intro, pause;
 	boolean drawIntro;
@@ -61,6 +64,16 @@ public abstract class Level extends BasicGameState {
 		zombie.addComponent(new ZombieFx("fx"+name));
 		entities.add(zombie);
 		enemies.add(zombie);
+	}
+	
+	protected void addHeart(Vector2f position) throws SlickException {
+		String name = "heart" + entities.size();
+		Entity heart = new Entity(name);
+		heart.setPosition(position);
+		heart.addComponent(new HeartPhysics("physics"+name, 16, 16, tiledMap));
+		heart.addComponent(new HeartRender("render"+name));
+		entities.add(heart);
+		hearts.add(heart);
 	}
 	
 	protected void nextLevel(GameContainer gc, StateBasedGame sbg) throws SlickException {
@@ -86,6 +99,8 @@ public abstract class Level extends BasicGameState {
 		entities = new ArrayList<Entity>();
 		enemies = new ArrayList<Entity>();
 		hearts = new ArrayList<Entity>();
+		playerBullets = new ArrayList<Entity>();
+		enemyBullets = new ArrayList<Entity>();
 		
 		player1 = new Entity("player1");
 		player1.setPosition(p1Pos);
@@ -140,6 +155,21 @@ public abstract class Level extends BasicGameState {
 				for (Entity entity : entities)
 					entity.update(gc, sbg, delta);
 				map.update(gc, sbg, delta);
+				//Remove hearts from the map that have been used
+				for (Iterator<Entity> iter = hearts.iterator(); iter.hasNext();) {
+					Entity heart = iter.next();
+					Polygon heartPoly = heart.getPhysicsComponent().getPolygon();
+					if (Kyra.vs) {
+						if (player1.getPhysicsComponent().intersections(heartPoly) |
+								player2.getPhysicsComponent().intersections(heartPoly))
+							iter.remove();
+					}
+					else {
+						if (player1.getPhysicsComponent().intersections(heartPoly))
+							iter.remove();
+					}
+				}
+				//Pause if pause key is pressed
 				if (input.isKeyPressed(Input.KEY_ENTER)) {
 					gc.pause();
 					input.clearKeyPressedRecord();

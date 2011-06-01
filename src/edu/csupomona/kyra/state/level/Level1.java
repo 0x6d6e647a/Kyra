@@ -24,6 +24,7 @@ public class Level1 extends Level {
 		if (Kyra.vs)
 			player2.addComponent(new PlayerSoundsLevel1("player2_SFX_lvl1"));
 		addZombie(new Vector2f(1200, 1503));
+		addHeart(new Vector2f(1200,1503));
 	}
 	
 	@Override
