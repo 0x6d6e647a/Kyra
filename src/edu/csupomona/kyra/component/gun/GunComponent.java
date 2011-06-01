@@ -26,8 +26,8 @@ public abstract class GunComponent extends Component {
 
 	protected abstract Entity makeBullet(int delta) throws SlickException;
 	
-	public Entity[] getBullets() {
-		return (Entity[]) bullets.toArray();
+	public ArrayList<Entity> getBullets() {
+		return bullets;
 	}
 	
 	public void fireBullet(int delta) {
