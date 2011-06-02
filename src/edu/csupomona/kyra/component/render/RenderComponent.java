@@ -1,3 +1,13 @@
+/**************************************************************
+ *	file:		RenderComponent.java
+ *	author:		Andrew King, Anthony Mendez, Ghislain Muberwa
+ *	class:		CS499 - Game Programming
+ *
+ *	assignment:	Class Project
+ *	date last modified:	
+ *
+ *	purpose: Abstract class for rendering
+**************************************************************/
 package edu.csupomona.kyra.component.render;
 
 import org.newdawn.slick.GameContainer;

@@ -1,3 +1,13 @@
+/**************************************************************
+ *	file:		ZombieAI.java
+ *	author:		Andrew King, Anthony Mendez, Ghislain Muberwa
+ *	class:		CS499 - Game Programming
+ *
+ *	assignment:	Class Project
+ *	date last modified:	
+ *
+ *	purpose: AI for the enemy's
+**************************************************************/
 package edu.csupomona.kyra.component.ai;
 
 import java.util.ArrayList;

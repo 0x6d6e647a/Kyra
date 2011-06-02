@@ -1,3 +1,13 @@
+/**************************************************************
+ *	file:		PlayerBulletRender.java
+ *	author:		Andrew King, Anthony Mendez, Ghislain Muberwa
+ *	class:		CS499 - Game Programming
+ *
+ *	assignment:	Class Project
+ *	date last modified:	
+ *
+ *	purpose: Renders the players bullets
+**************************************************************/
 package edu.csupomona.kyra.component.render.bullet;
 
 import org.newdawn.slick.Animation;

@@ -1,3 +1,13 @@
+/**************************************************************
+ *	file:		PlayerGun.java
+ *	author:		Andrew King, Anthony Mendez, Ghislain Muberwa
+ *	class:		CS499 - Game Programming
+ *
+ *	assignment:	Class Project
+ *	date last modified:	
+ *
+ *	purpose: Player projectile's
+**************************************************************/
 package edu.csupomona.kyra.component.gun;
 
 import org.newdawn.slick.GameContainer;
@@ -19,7 +29,7 @@ public class PlayerGun extends GunComponent {
 		super(id, 200, map);
 	}
 
-	@Override
+	//Makes the bullet
 	public Entity makeBullet(int delta) throws SlickException {
 		String name = owner.getId() + "bullet";
 		ForceVector forceVector;
@@ -34,7 +44,6 @@ public class PlayerGun extends GunComponent {
 		return bullet;
 	}
 	
-	@Override
 	public void update(GameContainer gc, StateBasedGame sb, int delta) {
 		super.update(gc, sb, delta);
 	}

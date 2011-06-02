@@ -1,3 +1,13 @@
+/**************************************************************
+ *	file:		ItemHealth.java
+ *	author:		Andrew King, Anthony Mendez, Ghislain Muberwa
+ *	class:		CS499 - Game Programming
+ *
+ *	assignment:	Class Project
+ *	date last modified:	
+ *
+ *	purpose: Item health
+**************************************************************/
 package edu.csupomona.kyra.component.health;
 
 import org.newdawn.slick.GameContainer;
@@ -9,6 +19,7 @@ public class ItemHealth extends HealthComponent {
 		super(id, 1);
 	}
 	
+	//Kills the heart when used
 	public void useItem() {
 		currHealth = 0;
 	}

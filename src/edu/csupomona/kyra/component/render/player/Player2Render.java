@@ -1,3 +1,13 @@
+/**************************************************************
+ *	file:		Player2Render.java
+ *	author:		Andrew King, Anthony Mendez, Ghislain Muberwa
+ *	class:		CS499 - Game Programming
+ *
+ *	assignment:	Class Project
+ *	date last modified:	
+ *
+ *	purpose: Images for player 2
+**************************************************************/
 package edu.csupomona.kyra.component.render.player;
 
 import org.newdawn.slick.Animation;

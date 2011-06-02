@@ -1,3 +1,13 @@
+/**************************************************************
+ *	file:		SoundEffects.java
+ *	author:		Andrew King, Anthony Mendez, Ghislain Muberwa
+ *	class:		CS499 - Game Programming
+ *
+ *	assignment:	Class Project
+ *	date last modified:	
+ *
+ *	purpose: Plays player sound effects
+**************************************************************/
 package edu.csupomona.kyra.component.sound;
 
 import java.util.Random;
@@ -20,6 +30,7 @@ public class SoundEffects extends SoundComponent {
 		playHit = true;
 	}	
 	
+	//Sets the sounds
 	public void setSoundFx(Sound[] fx) {
 		jumpFx = fx[0];
 		attackFx = fx[1];
@@ -46,6 +57,8 @@ public class SoundEffects extends SoundComponent {
 		if(inputComponent.isPressed("pause") && (pauseFx != null) && !pauseFx.playing())
 			pauseFx.play();
 	}
+	
+	//Stops all sounds
 	public void stopAll() {
 		if (jumpFx != null)
 			jumpFx.stop();
@@ -58,6 +71,8 @@ public class SoundEffects extends SoundComponent {
 		if (pauseFx != null)
 			pauseFx.stop();
 	}
+	
+	//Randomly chooses whether to play something
 	private boolean randomPlay(){
 		Random rand = new Random();
 		int num = rand.nextInt(100);

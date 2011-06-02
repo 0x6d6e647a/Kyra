@@ -1,3 +1,13 @@
+/**************************************************************
+ *	file:		Level.java
+ *	author:		Andrew King, Anthony Mendez, Ghislain Muberwa
+ *	class:		CS499 - Game Programming
+ *
+ *	assignment:	Class Project
+ *	date last modified:	
+ *
+ *	purpose: Creates players and enemies for levels
+**************************************************************/
 package edu.csupomona.kyra.state.level;
 
 import java.io.File;
@@ -18,7 +28,6 @@ import org.newdawn.slick.tiled.TiledMap;
 
 import edu.csupomona.kyra.Kyra;
 import edu.csupomona.kyra.component.ai.ZombieAI;
-import edu.csupomona.kyra.component.gun.HeartRender;
 import edu.csupomona.kyra.component.gun.PlayerGun;
 import edu.csupomona.kyra.component.health.EnemyHealth;
 import edu.csupomona.kyra.component.health.ItemHealth;
@@ -30,6 +39,7 @@ import edu.csupomona.kyra.component.physics.HeartPhysics;
 import edu.csupomona.kyra.component.physics.PlayerPhysics;
 import edu.csupomona.kyra.component.physics.ZombiePhysics;
 import edu.csupomona.kyra.component.render.HealthRender;
+import edu.csupomona.kyra.component.render.HeartRender;
 import edu.csupomona.kyra.component.render.LevelRender;
 import edu.csupomona.kyra.component.render.PositionRender;
 import edu.csupomona.kyra.component.render.MapHealthRender;
@@ -72,10 +82,10 @@ public abstract class Level extends BasicGameState {
 		}
 		zombie.addComponent(new ZombieFx("fx"+name));
 		if(!Kyra.vs)
-			zombie.addComponent(new EnemyHealth("health"+name, 1, player1, player2));
+			zombie.addComponent(new EnemyHealth("health"+name, 5, player1, player2));
 		else
 			zombie.addComponent(new EnemyHealth("health"+name, 10, player1, player2));
-		zombie.addComponent(new HealthRender("drawHealth"+name));
+		//zombie.addComponent(new HealthRender("drawHealth"+name));
 		enemies.add(zombie);
 	}
 	
@@ -122,7 +132,7 @@ public abstract class Level extends BasicGameState {
 		player1.addComponent(new Player1Render("p1Sprite"));
 		player1.addComponent(new PlayerHealth("p1Health", 3, enemies, hearts));
 		player1.addComponent(new PlayerGun("p1Gun", tiledMap));
-		player1.addComponent(new PositionRender("p1Pos"));
+		//player1.addComponent(new PositionRender("p1Pos"));
 		
 		if (Kyra.vs) {
 			player2 = new Entity("player2");
@@ -153,13 +163,21 @@ public abstract class Level extends BasicGameState {
 			if (Kyra.vs)
 				player2.render(gc, sbg, gr);
 			for (Entity enemy: enemies) {
-				float eXPos = enemy.getPosition().x;
-				float pXPos = player1.getPosition().x;
-				if(Math.abs(eXPos-pXPos) < 500)
+				float eXPos = enemy.getPosition().x,
+				      eYPos = enemy.getPosition().y,
+				      pXPos = player1.getPosition().x,
+				      pYPos = player1.getPosition().y;
+				if(Math.abs(eXPos-pXPos) < 512 && Math.abs(eYPos-pYPos) < 384)
 					enemy.render(gc, sbg, gr);
 			}
-			for (Entity heart : hearts)
-				heart.render(gc, sbg, gr);
+			for (Entity heart : hearts) {
+				float hXPos = heart.getPosition().x,
+				      hYPos = heart.getPosition().y,
+				      pXPos = player1.getPosition().x,
+				      pYPos = player1.getPosition().y;
+				if(Math.abs(hXPos-pXPos) < 512 && Math.abs(hYPos-pYPos) < 384)
+					heart.render(gc, sbg, gr);
+			}
 		}
 	}
 

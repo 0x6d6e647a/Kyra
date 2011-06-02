@@ -1,3 +1,13 @@
+/**************************************************************
+ *	file:		PlayerRender.java
+ *	author:		Andrew King, Anthony Mendez, Ghislain Muberwa
+ *	class:		CS499 - Game Programming
+ *
+ *	assignment:	Class Project
+ *	date last modified:	
+ *
+ *	purpose: Renders the players
+**************************************************************/
 package edu.csupomona.kyra.component.render.player;
 
 import org.newdawn.slick.Animation;
@@ -18,30 +28,37 @@ public abstract class PlayerRender extends SpriteRender {
 		isDead = false;
 	}
 	
+	//Sets movement animation right
 	protected void setMoveRight(Animation moveRight) {
 		this.moveRight = moveRight;
 	}
 	
+	//Sets movement animation left
 	protected void setMoveLeft(Animation moveLeft) {
 		this.moveLeft = moveLeft;
 	}
 	
+	//Sets jump animation right
 	protected void setJumpRight(Animation jumpRight) {
 		this.jumpRight = jumpRight;
 	}
 	
+	//Sets jump animation left
 	protected void setJumpLeft(Animation jumpLeft) {
 		this.jumpLeft = jumpLeft;
 	}
 	
+	//Sets death animation right
 	protected void setDeathRight(Animation deathRight) {
 		this.deathRight = deathRight;
 	}
 	
+	//Sets death animation left
 	protected void setDeathLeft(Animation deathLeft) {
 		this.deathLeft = deathLeft;
 	}
 	
+	//Returns if player is dead
 	public void kill() {
 		isDead = true;
 	}

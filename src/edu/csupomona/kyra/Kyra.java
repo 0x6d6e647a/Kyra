@@ -1,6 +1,6 @@
 /**************************************************************
-d *	file:		Kyra.java
- *	author:		Andrew King, Anthony Mendez
+ *	file:		Kyra.java
+ *	author:		Andrew King, Anthony Mendez,
  *	class:		CS499 - Game Programming
  *
  *	assignment:	Class Project

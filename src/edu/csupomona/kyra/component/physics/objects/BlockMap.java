@@ -1,3 +1,13 @@
+/**************************************************************
+ *	file:		BlockMap.java
+ *	author:		Andrew King, Anthony Mendez, Ghislain Muberwa
+ *	class:		CS499 - Game Programming
+ *
+ *	assignment:	Class Project
+ *	date last modified:	
+ *
+ *	purpose: Creates collision map for the level
+**************************************************************/
 package edu.csupomona.kyra.component.physics.objects;
 
 import java.util.ArrayList;

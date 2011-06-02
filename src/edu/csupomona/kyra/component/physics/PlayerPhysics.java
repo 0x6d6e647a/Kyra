@@ -1,3 +1,13 @@
+/**************************************************************
+ *	file:		PlayerPhysics.java
+ *	author:		Andrew King, Anthony Mendez, Ghislain Muberwa
+ *	class:		CS499 - Game Programming
+ *
+ *	assignment:	Class Project
+ *	date last modified:	
+ *
+ *	purpose: Physics for players
+**************************************************************/
 package edu.csupomona.kyra.component.physics;
 
 import org.newdawn.slick.GameContainer;
@@ -15,7 +25,8 @@ public class PlayerPhysics extends PhysicsComponent{
 		FRICTION = 0.97f,
 		MIN_X = -1.7f,
 		MAX_X = 1.7f,
-		MIN_Y = -20.0f,
+		MIN_Y = -5.0f,
+		//-20
 		MAX_Y = 2.5f;
 
 	public PlayerPhysics(String id, float height, float width, TiledMap map) {

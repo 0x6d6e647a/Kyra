@@ -1,3 +1,13 @@
+/**************************************************************
+ *	file:		PhysicsComponent.java
+ *	author:		Andrew King, Anthony Mendez, Ghislain Muberwa
+ *	class:		CS499 - Game Programming
+ *
+ *	assignment:	Class Project
+ *	date last modified:	
+ *
+ *	purpose: Abstract class for physics
+**************************************************************/
 package edu.csupomona.kyra.component.physics;
 
 import org.newdawn.slick.geom.Line;
@@ -27,6 +37,7 @@ public abstract class PhysicsComponent extends Component {
 		blockMap = new BlockMap(map);
 	}
 	
+	//Creates a polygon around the entity
 	protected void setPolygon() {
 		Vector2f position = owner.getPosition();
 		points = new float[] {
@@ -39,6 +50,7 @@ public abstract class PhysicsComponent extends Component {
 		setLines();
 	}
 	
+	//Sets the lines around the entity
 	private void setLines() {
 		top = new Line(points[0], points[1], points[2], points[3]);
 		bottom = new Line(points[4], points[5], points[6], points[7]);
@@ -46,10 +58,12 @@ public abstract class PhysicsComponent extends Component {
 		right = new Line(points[2], points[3], points[4], points[5]);
 	}
 	
+	//Returns if there is a intersection of entity's
 	public boolean intersections(Shape shape) {
 		return polygon.intersects(shape);
 	}
 	
+	//Sees if the entity collides with the floor
 	protected boolean testFloorCollision(ForceVector gravity) {
 		float polyBottom = bottom.getCenterY();
 		Polygon testPoly = new Polygon(points);
@@ -62,6 +76,7 @@ public abstract class PhysicsComponent extends Component {
 		return false;
 	}
 	
+	//Sees if the entity collides with the ceiling
 	protected  boolean testCeilingCollision(ForceVector up) {
 		float polyTop = top.getCenterY();
 		Polygon testPoly = new Polygon(points);
@@ -74,6 +89,7 @@ public abstract class PhysicsComponent extends Component {
 		return false;
 	}
 	
+	//Sees if the entity collides with the left wall
 	protected boolean testLeftWallCollision(ForceVector right) {
 		float polyRight = this.right.getCenterX();
 		Polygon testPoly = new Polygon(points);
@@ -86,6 +102,7 @@ public abstract class PhysicsComponent extends Component {
 		return false;
 	}
 	
+	//Sees if the entity collides with the right wall
 	protected boolean testRightWallCollision(ForceVector left) {
 		float polyLeft = this.left.getCenterX();
 		Polygon testPoly = new Polygon(points);
@@ -98,10 +115,12 @@ public abstract class PhysicsComponent extends Component {
 		return false;
 	}
 	
+	//Sees for all walls collisions
 	protected boolean testWallCollisions(ForceVector force) {
 		return testLeftWallCollision(force) || testRightWallCollision(force);
 	}
 	
+	//Test for all collisions
 	protected boolean testCollisions(ForceVector force) {
 		return testLeftWallCollision(force) ||
 			testRightWallCollision(force) ||

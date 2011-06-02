@@ -1,3 +1,13 @@
+/**************************************************************
+ *	file:		PlayerInput.java
+ *	author:		Andrew King, Anthony Mendez, Ghislain Muberwa
+ *	class:		CS499 - Game Programming
+ *
+ *	assignment:	Class Project
+ *	date last modified:	
+ *
+ *	purpose: Creates the players controls
+**************************************************************/
 package edu.csupomona.kyra.component.input;
 
 import java.util.Enumeration;

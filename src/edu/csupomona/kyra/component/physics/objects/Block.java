@@ -1,3 +1,13 @@
+/**************************************************************
+ *	file:		Block.java
+ *	author:		Andrew King, Anthony Mendez, Ghislain Muberwa
+ *	class:		CS499 - Game Programming
+ *
+ *	assignment:	Class Project
+ *	date last modified:	
+ *
+ *	purpose: Creates polygons around entity's
+**************************************************************/
 package edu.csupomona.kyra.component.physics.objects;
 
 import org.newdawn.slick.Graphics;
@@ -30,6 +40,7 @@ public class Block  {
 		right = new Line(points[2], points[3], points[4], points[5]);
 	}
 	
+	/* -- Getters -- */
 	public Polygon getPolygon() {
 		return polygon;
 	}

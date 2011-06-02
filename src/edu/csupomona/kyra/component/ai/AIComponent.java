@@ -1,3 +1,13 @@
+/**************************************************************
+ *	file:		AIComponent.java
+ *	author:		Andrew King, Anthony Mendez, Ghislain Muberwa
+ *	class:		CS499 - Game Programming
+ *
+ *	assignment:	Class Project
+ *	date last modified:	
+ *
+ *	purpose: Abstract class for AI
+**************************************************************/
 package edu.csupomona.kyra.component.ai;
 
 import java.util.ArrayList;
@@ -24,10 +34,12 @@ public abstract class AIComponent extends Component {
 		this.map = new BlockMap(map);
 	}
 	
+	//Draws line to player
 	protected Line getLineToPlayer(Entity player) {
 		return new Line(owner.getPosition(), player.getPosition());
 	}
-		
+	
+	//Returns whether there is a clear path to the player
 	protected boolean clearPathToPlayer(Line lineToPlayer) {
 		for (Block block : map.getBlocks()) {
 			if (lineToPlayer.intersects(block.getPolygon()))
@@ -36,6 +48,7 @@ public abstract class AIComponent extends Component {
 		return true;
 	}
 	
+	//Returns the line to player
 	public Line getLineToTarget() {
 		Line p1Line = getLineToPlayer(player1);
 		if (Kyra.vs) {
@@ -60,6 +73,7 @@ public abstract class AIComponent extends Component {
 			return null;
 	}
 	
+	//Returns a set of actions
 	public ArrayList<String> getActions() {
 		return actions;
 	}

@@ -1,3 +1,13 @@
+/**************************************************************
+ *	file:		Player2Input.java
+ *	author:		Andrew King, Anthony Mendez, Ghislain Muberwa
+ *	class:		CS499 - Game Programming
+ *
+ *	assignment:	Class Project
+ *	date last modified:	
+ *
+ *	purpose: Player 2 controls
+**************************************************************/
 package edu.csupomona.kyra.component.input;
 
 import org.newdawn.slick.Input;

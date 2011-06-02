@@ -1,3 +1,13 @@
+/**************************************************************
+ *	file:		BulletPhysics.java
+ *	author:		Andrew King, Anthony Mendez, Ghislain Muberwa
+ *	class:		CS499 - Game Programming
+ *
+ *	assignment:	Class Project
+ *	date last modified:	
+ *
+ *	purpose: Projectile physics
+**************************************************************/
 package edu.csupomona.kyra.component.physics;
 
 import org.newdawn.slick.GameContainer;
@@ -16,6 +26,7 @@ public class BulletPhysics extends PhysicsComponent {
 		hitWall = false;
 	}
 	
+	//Returns if the bullet hits the wall
 	public boolean hitWall() {
 		return hitWall;
 	}

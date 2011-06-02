@@ -1,3 +1,13 @@
+/**************************************************************
+ *	file:		PositionRender.java
+ *	author:		Andrew King, Anthony Mendez, Ghislain Muberwa
+ *	class:		CS499 - Game Programming
+ *
+ *	assignment:	Class Project
+ *	date last modified:	
+ *
+ *	purpose: Renders the position of the entity below itself
+**************************************************************/
 package edu.csupomona.kyra.component.render;
 
 import org.newdawn.slick.Color;

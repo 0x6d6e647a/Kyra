@@ -1,3 +1,13 @@
+/**************************************************************
+ *	file:		LevelRender.java
+ *	author:		Andrew King, Anthony Mendez, Ghislain Muberwa
+ *	class:		CS499 - Game Programming
+ *
+ *	assignment:	Class Project
+ *	date last modified:	
+ *
+ *	purpose: Renders level
+**************************************************************/
 package edu.csupomona.kyra.component.render;
 
 import org.newdawn.slick.GameContainer;
@@ -32,6 +42,7 @@ public class LevelRender extends RenderComponent {
 		map.render(0, 0, map.getLayerIndex("tiles"));
 	}
 	
+	//Returns the map
 	public TiledMap getTiledMap() {
 		return map;
 	}

@@ -1,3 +1,13 @@
+/**************************************************************
+ *	file:		AntiZombieRender.java
+ *	author:		Andrew King, Anthony Mendez, Ghislain Muberwa
+ *	class:		CS499 - Game Programming
+ *
+ *	assignment:	Class Project
+ *	date last modified:	
+ *
+ *	purpose: Images for ceiling enemy
+**************************************************************/
 package edu.csupomona.kyra.component.render.ai;
 
 import org.newdawn.slick.Animation;
@@ -30,7 +40,7 @@ public class AntiZombieRender extends AIRender {
 		};
 		Image[] deathLeft = {
 				new Image("img/anti-enemy-death-left-1.png"),
-				new Image("img/amti-enemy-death-left-2.png")
+				new Image("img/anti-enemy-death-left-2.png")
 		};
 		setDeathRight(new Animation(deathRight, deathTween, false));
 		setDeathLeft(new Animation(deathLeft, deathTween, false));

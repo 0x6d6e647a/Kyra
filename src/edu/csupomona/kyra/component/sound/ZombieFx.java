@@ -1,3 +1,13 @@
+/**************************************************************
+ *	file:		ZombieFx.java
+ *	author:		Andrew King, Anthony Mendez, Ghislain Muberwa
+ *	class:		CS499 - Game Programming
+ *
+ *	assignment:	Class Project
+ *	date last modified:	
+ *
+ *	purpose: Plays enemy sound effects
+**************************************************************/
 package edu.csupomona.kyra.component.sound;
 
 import org.newdawn.slick.GameContainer;
@@ -27,6 +37,8 @@ public class ZombieFx  extends SoundComponent {
 		} else if(attackPath != null && attackPath.length() >= 450.0f)
 			played = false;
 	}
+	
+	//Stops all sounds
 	public void stopAll() {
 		if(random != null)
 			random.stop();

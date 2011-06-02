@@ -1,3 +1,13 @@
+/**************************************************************
+ *	file:		PlayerHealth.java
+ *	author:		Andrew King, Anthony Mendez, Ghislain Muberwa
+ *	class:		CS499 - Game Programming
+ *
+ *	assignment:	Class Project
+ *	date last modified:	
+ *
+ *	purpose: Player health
+**************************************************************/
 package edu.csupomona.kyra.component.health;
 
 import java.util.ArrayList;

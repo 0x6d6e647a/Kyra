@@ -1,3 +1,13 @@
+/**************************************************************
+ *	file:		Component.java
+ *	author:		Andrew King, Anthony Mendez, Ghislain Muberwa
+ *	class:		CS499 - Game Programming
+ *
+ *	assignment:	Class Project
+ *	date last modified:	
+ *
+ *	purpose: Abstract class for adding items to entity's
+**************************************************************/
 package edu.csupomona.kyra.component;
 
 import org.newdawn.slick.GameContainer;

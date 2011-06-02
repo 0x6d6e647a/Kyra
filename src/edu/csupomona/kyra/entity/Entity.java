@@ -92,6 +92,7 @@ public class Entity {
 		return null;
 	}
 	
+	/* -- Getters -- */
 	public Vector2f getPosition() {
 		return position;
 	}
@@ -108,6 +109,7 @@ public class Entity {
 		return id;
 	}
 	
+	/* -- Setters -- */
 	public void setPosition(Vector2f position) {
 		this.position = position;
 	}
@@ -120,6 +122,7 @@ public class Entity {
 		this.scale = scale;
 	}
 	
+	/* -- Getters -- */
 	public ArrayList<RenderComponent> getRenderComponents() {
 		return renderComponents;
 	}
@@ -160,6 +163,7 @@ public class Entity {
 		return yDirection;
 	}
 	
+	/* -- Setter -- */
 	public void setYDirection(Direction yDirection) {
 		this.yDirection = yDirection;
 	}

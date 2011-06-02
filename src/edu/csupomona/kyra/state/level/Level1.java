@@ -1,3 +1,13 @@
+/**************************************************************
+ *	file:		Level1.java
+ *	author:		Andrew King, Anthony Mendez, Ghislain Muberwa
+ *	class:		CS499 - Game Programming
+ *
+ *	assignment:	Class Project
+ *	date last modified:	
+ *
+ *	purpose: Specifies where enimy's are
+**************************************************************/
 package edu.csupomona.kyra.state.level;
 
 import org.newdawn.slick.GameContainer;

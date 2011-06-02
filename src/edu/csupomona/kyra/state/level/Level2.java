@@ -1,3 +1,13 @@
+/**************************************************************
+ *	file:		Level2.java
+ *	author:		Andrew King, Anthony Mendez, Ghislain Muberwa
+ *	class:		CS499 - Game Programming
+ *
+ *	assignment:	Class Project
+ *	date last modified:	
+ *
+ *	purpose: Specifies where enimy's are
+**************************************************************/
 package edu.csupomona.kyra.state.level;
 
 import org.newdawn.slick.GameContainer;
@@ -26,24 +36,24 @@ public class Level2 extends Level {
 		addZombie(new Vector2f(684, 1092), false);
 		addZombie(new Vector2f(1225, 1188), true);
 		addZombie(new Vector2f(1690, 1092), false);
-		addZombie(new Vector2f(2177, 1220), false);
+		//addZombie(new Vector2f(2177, 1220), false);
 		addZombie(new Vector2f(2784, 1028), false);
 		addZombie(new Vector2f(2525, 388), true);
 		addZombie(new Vector2f(1938, 164), false);
 		addZombie(new Vector2f(2432, 132), false);
 		addZombie(new Vector2f(2883, 132), false);
-		addZombie(new Vector2f(3607, 132), false);
-		addZombie(new Vector2f(4057, 260), false);
+		//addZombie(new Vector2f(3607, 132), false);
+		//addZombie(new Vector2f(4057, 260), false);
 		addZombie(new Vector2f(4244, 804), false);
-		addZombie(new Vector2f(3895, 1284), true);
+		//addZombie(new Vector2f(3895, 1284), true);
 		addZombie(new Vector2f(3664, 1508), true);
 		addZombie(new Vector2f(4491, 1284), false);
 		addZombie(new Vector2f(4741, 1156), true);
 		addZombie(new Vector2f(5674, 1284), true);
 		addZombie(new Vector2f(5835, 676), false);
-		addZombie(new Vector2f(6171, 676), false);
+		//addZombie(new Vector2f(6171, 676), false);
 		addZombie(new Vector2f(6343, 676), false);
-		addHeart(new Vector2f(799, 676));
+		addHeart(new Vector2f(802, 676));
 		addHeart(new Vector2f(2849, 1220));
 		addHeart(new Vector2f(1602, 356));
 		addHeart(new Vector2f(4161, 132));

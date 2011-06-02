@@ -1,3 +1,13 @@
+/**************************************************************
+ *	file:		GunComponent.java
+ *	author:		Andrew King, Anthony Mendez, Ghislain Muberwa
+ *	class:		CS499 - Game Programming
+ *
+ *	assignment:	Class Project
+ *	date last modified:	
+ *
+ *	purpose: Abstract class for projectile's
+**************************************************************/
 package edu.csupomona.kyra.component.gun;
 
 import java.util.ArrayList;
@@ -26,10 +36,12 @@ public abstract class GunComponent extends Component {
 
 	protected abstract Entity makeBullet(int delta) throws SlickException;
 	
+	//Returns the list of bullets
 	public ArrayList<Entity> getBullets() {
 		return bullets;
 	}
 	
+	//Shoots the bullet
 	public void fireBullet(int delta) {
 		try {
 			bullets.add(makeBullet(delta));

@@ -1,3 +1,13 @@
+/**************************************************************
+ *	file:		PlayerSoundsLevel1.java
+ *	author:		Andrew King, Anthony Mendez, Ghislain Muberwa
+ *	class:		CS499 - Game Programming
+ *
+ *	assignment:	Class Project
+ *	date last modified:	
+ *
+ *	purpose: Player sounds for level 1
+**************************************************************/
 package edu.csupomona.kyra.component.sound;
 
 import org.newdawn.slick.SlickException;

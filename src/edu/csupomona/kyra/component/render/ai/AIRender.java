@@ -1,3 +1,13 @@
+/**************************************************************
+ *	file:		AIRender.java
+ *	author:		Andrew King, Anthony Mendez, Ghislain Muberwa
+ *	class:		CS499 - Game Programming
+ *
+ *	assignment:	Class Project
+ *	date last modified:	
+ *
+ *	purpose: Renders the enemies using the AI
+**************************************************************/
 package edu.csupomona.kyra.component.render.ai;
 
 import org.newdawn.slick.Animation;
@@ -15,18 +25,22 @@ public abstract class AIRender extends SpriteRender {
 		super(id);
 	}
 	
+	//Sets the movement animation right
 	protected void setMoveRight(Animation moveRight) {
 		this.moveRight = moveRight;
 	}
 	
+	//Sets the movement animation left
 	protected void setMoveLeft(Animation moveLeft) {
 		this.moveLeft = moveLeft;
 	}
 	
+	//Sets the death animation right
 	protected void setDeathRight(Animation deathRight) {
 		this.deathRight = deathRight;
 	}
 	
+	//Sets the death animation left
 	protected void setDeathLeft(Animation deathLeft) {
 		this.deathLeft = deathLeft;
 	}

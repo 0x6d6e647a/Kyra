@@ -1,3 +1,13 @@
+/**************************************************************
+ *	file:		HealthComponent.java
+ *	author:		Andrew King, Anthony Mendez, Ghislain Muberwa
+ *	class:		CS499 - Game Programming
+ *
+ *	assignment:	Class Project
+ *	date last modified:	
+ *
+ *	purpose: Abstract class for health
+**************************************************************/
 package edu.csupomona.kyra.component.health;
 
 import java.util.Timer;
@@ -20,14 +30,17 @@ public abstract class HealthComponent extends Component {
 		badHit = false;
 	}
 	
+	//Returns current health
 	public int getCurrHealth() {
 		return currHealth;
 	}
 	
+	//Returns max health
 	public int getMaxHealth() {
 		return maxHealth;
 	}
 	
+	//Returns whether the hit was bad
 	public boolean getBadHit() {
 		if (badHit) {
 			badHit = false;
@@ -36,6 +49,7 @@ public abstract class HealthComponent extends Component {
 		return false;
 	}
 	
+	//Returns whether the hit was good
 	public boolean getGoodHit() {
 		if (goodHit) {
 			goodHit = false;
@@ -44,6 +58,7 @@ public abstract class HealthComponent extends Component {
 		return false;
 	}
 	
+	//Adds health
 	protected void addHealth(int health) {
 		if ((currHealth + health) > maxHealth)
 			currHealth = maxHealth;
@@ -51,18 +66,22 @@ public abstract class HealthComponent extends Component {
 			currHealth += health;
 	}
 	
+	//Returns whether entity is vulnerable
 	public boolean isVulnerable() {
 		return vulnerable;
 	}
 	
+	//Makes the entity invulnerable
 	protected void makeInvulnerable() {
 		vulnerable = false;
 	}
 	
+	//Makes the entity vulnerable
 	protected void makeVulnerable() {
 		vulnerable = true;
 	}
 	
+	//Temporary makes invulnerable
 	protected void makeTempInvulnerable(long delay) {
 		makeInvulnerable();
 		timer = new Timer();
@@ -74,18 +93,22 @@ public abstract class HealthComponent extends Component {
 		timer.schedule(end, delay);
 	}
 	
+	//Sets a bad hit
 	protected void setBadHit() {
 		badHit = true;
 	}
 	
+	//Sets a good hit
 	protected void setGoodHit() {
 		goodHit = true;
 	}
 	
+	//Returns if entity is dead
 	public boolean isDead() {
 		return currHealth <= 0;
 	}
 	
+	//Returns if entity is at full health
 	public boolean isHealthFull() {
 		return currHealth == maxHealth;
 	}

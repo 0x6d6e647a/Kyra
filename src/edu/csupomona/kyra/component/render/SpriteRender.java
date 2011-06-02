@@ -1,3 +1,13 @@
+/**************************************************************
+ *	file:		SpriteRender.java
+ *	author:		Andrew King, Anthony Mendez, Ghislain Muberwa
+ *	class:		CS499 - Game Programming
+ *
+ *	assignment:	Class Project
+ *	date last modified:	
+ *
+ *	purpose: Renders sprite's
+**************************************************************/
 package edu.csupomona.kyra.component.render;
 
 import org.newdawn.slick.Animation;

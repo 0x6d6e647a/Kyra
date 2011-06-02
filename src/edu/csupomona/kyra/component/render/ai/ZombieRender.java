@@ -1,3 +1,13 @@
+/**************************************************************
+ *	file:		ZombieRender.java
+ *	author:		Andrew King, Anthony Mendez, Ghislain Muberwa
+ *	class:		CS499 - Game Programming
+ *
+ *	assignment:	Class Project
+ *	date last modified:	
+ *
+ *	purpose: Images for normal enemy
+**************************************************************/
 package edu.csupomona.kyra.component.render.ai;
 
 import org.newdawn.slick.Animation;
