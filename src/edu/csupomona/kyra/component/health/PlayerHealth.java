@@ -2,7 +2,6 @@ package edu.csupomona.kyra.component.health;
 
 import java.util.ArrayList;
 import java.util.Timer;
-import java.util.TimerTask;
 
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.geom.Polygon;
