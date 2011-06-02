@@ -15,9 +15,7 @@ import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.Timer;
-import java.util.TimerTask;
-
+import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
@@ -60,22 +58,20 @@ public abstract class Level extends BasicGameState {
 	Entity map, player1, player2, boss;
 	ArrayList<Entity> entities;
 	Vector2f p1Pos, p2Pos;
-	Image intro, pause;
+	Image intro, pause, complete;
 	boolean drawIntro, levelWon;
 
 	
 	final int PLAYER_HEALTH = 10,
 		PLAYER_HEIGHT = 60,
 		PLAYER_WIDTH = 31,
-		ZOMBIE_HEALTH = 5,
+		ZOMBIE_HEALTH = 1,
 		ZOMBIE_HEIGHT = 60,
 		ZOMBIE_WIDTH = 31,
 		HEART_HEIGHT = 16,
 		HEART_WIDTH = 16,
-		PAUSE_HEIGHT = 384,
-		PAUSE_WIDTH = 512,
-		INTRO_HEIGHT = 384,
-		INTRO_WIDTH = 512;
+		CENTER_HEIGHT = 384,
+		CENTER_WIDTH = 512;
 	
 	public Level(int stateID, String path, Vector2f p1Pos, Vector2f p2Pos, boolean drawIntro) {
 		this.stateID = stateID;
@@ -150,27 +146,7 @@ public abstract class Level extends BasicGameState {
 		sbg.getState(Kyra.GAMEOVERSTATE).enter(gc, sbg);
 		sbg.enterState(Kyra.GAMEOVERSTATE);
 	}
-	
-	/*protected boolean inRange(Entity thing, Entity player1, Entity player2) {
-		float eXPos = thing.getPosition().x,
-	          eYPos = thing.getPosition().y,
-	          pXPos = 0, pYPos = 0;
-		if(!player1.getHealthComponent().isDead())  {
-			pXPos = player1.getPosition().x;
-			pYPos = player1.getPosition().y;
-		} else {
-			if(Kyra.vs) {
-				if(!player2.getHealthComponent().isDead()) {
-					pXPos = player2.getPosition().x;
-					pYPos = player2.getPosition().y;
-				}
-			}
-		}
-		if(Math.abs(eXPos-pXPos) < 512 && Math.abs(eYPos-pYPos) < 384)
-			return true;
-		return false;
-	}*/
-	
+		
 	@Override
 	public final int getID() {
 		return stateID; 
@@ -218,18 +194,19 @@ public abstract class Level extends BasicGameState {
 		Vector2f otherPos = other.getPosition();
 		float xDiff = Math.abs(otherPos.x-playerPos.x);
 		float yDiff = Math.abs(otherPos.y-playerPos.y);
-		return ((xDiff < 1000) || (yDiff < 1000));
+		return ((xDiff < CENTER_WIDTH) && (yDiff < CENTER_HEIGHT));
 	}
 	
 	@Override
 	public void render(GameContainer gc, StateBasedGame sbg, Graphics gr) throws SlickException {
 		if (drawIntro)
-			intro.drawCentered(INTRO_WIDTH, INTRO_HEIGHT);
-		if (levelWon)
-			gr.drawString("You Win!", gc.getWidth()/2, gc.getHeight()/2);
-		if (gc.isPaused())
-			pause.drawCentered(PAUSE_WIDTH, PAUSE_HEIGHT);
-		else {
+			intro.drawCentered(CENTER_WIDTH, CENTER_HEIGHT);
+		if (gc.isPaused() && !levelWon)
+			pause.drawCentered(CENTER_WIDTH, CENTER_HEIGHT);
+		else if(gc.isPaused() && levelWon) {
+			gr.setColor(Color.white);
+			gr.drawString("You Win! Press SPACEBAR to contuine", CENTER_WIDTH - 50, CENTER_HEIGHT);
+		} else {
 			map.render(gc, sbg, gr);
 			if(!player1.getHealthComponent().isDead())
 				player1.render(gc, sbg, gr);
@@ -266,9 +243,7 @@ public abstract class Level extends BasicGameState {
 					}
 					else if (type.equals(EntityType.BOSS) && entity.getHealthComponent().isDead()) {
 						gc.pause();
-						input.clearKeyPressedRecord();
-						nextLevel(gc, sbg);
-						//LEVEL WON STUFF
+						levelWon = true;
 					}
 				}
 				map.update(gc, sbg, delta);
@@ -286,10 +261,12 @@ public abstract class Level extends BasicGameState {
 				for (Entity entity : entities)
 					if (entity.getSoundComponent() != null)
 						entity.getSoundComponent().stopAll();
-				if (input.isKeyPressed(Input.KEY_ENTER)) {
+				if(input.isKeyPressed(Input.KEY_ENTER)) {
 					gc.resume();
 					input.clearKeyPressedRecord();
 				}
+				if(input.isKeyPressed(Input.KEY_SPACE))
+					nextLevel(gc, sbg);
 				if(input.isKeyPressed(Input.KEY_Q)) {
 					File f = new File("save.txt");
 					try {
