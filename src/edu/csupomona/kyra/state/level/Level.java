@@ -276,7 +276,7 @@ public abstract class Level extends BasicGameState {
 					gc.resume();
 					input.clearKeyPressedRecord();
 				}
-				if(input.isKeyPressed(Input.KEY_SPACE))
+				if(input.isKeyPressed(Input.KEY_SPACE) && levelWon)
 					nextLevel(gc, sbg);
 				if(input.isKeyPressed(Input.KEY_Q)) {
 					File f = new File("save.txt");
