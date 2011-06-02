@@ -60,10 +60,10 @@ public abstract class Level extends BasicGameState {
 	boolean drawIntro, levelWon;
 
 	
-	final int PLAYER_HEALTH = 999,
+	final int PLAYER_HEALTH = 10,
 		PLAYER_HEIGHT = 60,
 		PLAYER_WIDTH = 31,
-		ZOMBIE_HEALTH = 1,
+		ZOMBIE_HEALTH = 5,
 		ZOMBIE_HEIGHT = 60,
 		ZOMBIE_WIDTH = 31,
 		HEART_HEIGHT = 16,
@@ -193,7 +193,7 @@ public abstract class Level extends BasicGameState {
 		Vector2f otherPos = other.getPosition();
 		float xDiff = Math.abs(otherPos.x-playerPos.x);
 		float yDiff = Math.abs(otherPos.y-playerPos.y);
-		return ((xDiff < CENTER_WIDTH) && (yDiff < CENTER_HEIGHT));
+		return ((xDiff < CENTER_WIDTH+300) && (yDiff < CENTER_HEIGHT+300));
 	}
 	
 	@Override
