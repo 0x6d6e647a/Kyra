@@ -33,7 +33,11 @@ public class Level1 extends Level {
 		addZombie(new Vector2f(3844, 1508));
 		addZombie(new Vector2f(4062, 1508));
 		addZombie(new Vector2f(4502, 1508));
-		addHeart(new Vector2f(1200,1503));
+		addHeart(new Vector2f(1200, 1503));
+		addHeart(new Vector2f(2591, 196));
+		addHeart(new Vector2f(3649, 836));
+		addHeart(new Vector2f(4982, 1508));
+		addHeart(new Vector2f(6048, 932));
 	}
 	
 	@Override
