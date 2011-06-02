@@ -1,9 +1,8 @@
-package edu.csupomona.kyra.component.gun;
+package edu.csupomona.kyra.component.render;
 
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 
-import edu.csupomona.kyra.component.render.ImageRender;
 
 
 public class HeartRender extends ImageRender {
