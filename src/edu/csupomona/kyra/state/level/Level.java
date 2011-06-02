@@ -211,7 +211,10 @@ public abstract class Level extends BasicGameState {
 			pause.drawCentered(CENTER_WIDTH, CENTER_HEIGHT);
 		else if(gc.isPaused() && levelWon) {
 			complete.drawCentered(CENTER_WIDTH, CENTER_HEIGHT);
-			//p1Win.drawCentered(CENTER_WIDTH, CENTER_HEIGHT+115);
+			if(Kyra.vs && player1.getScoreComponent().getScore() > player2.getScoreComponent().getScore())
+				p1Win.drawCentered(CENTER_WIDTH, CENTER_HEIGHT+115);
+			else
+				p2Win.drawCentered(CENTER_WIDTH, CENTER_HEIGHT+115);
 		} else {
 			map.render(gc, sbg, gr);
 			if(!player1.getHealthComponent().isDead())

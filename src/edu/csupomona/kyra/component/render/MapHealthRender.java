@@ -37,12 +37,12 @@ public class MapHealthRender extends RenderComponent {
 		gr.setColor(Color.white);
 		hc = player1.getHealthComponent();
 		gr.drawString("Player 1 - HEALTH: " + hc.getCurrHealth() + "/" + hc.getMaxHealth(), xPos+50, yPos+5);
-		//gr.drawString("POINTS: ", xPos+275, yPos+5);
+		gr.drawString("POINTS: " + player1.getScoreComponent().getScore(), xPos+275, yPos+5);
 		if(player2 != null) {
 			hc = player2.getHealthComponent();
-			gr.drawString("Player 2 - HEALTH: " + hc.getCurrHealth() + "/" + hc.getMaxHealth(), xPos+gc.getWidth()-275, yPos+5);
-			//gr.drawString("Player 2 - HEALTH: " + hc.getCurrHealth() + "/" + hc.getMaxHealth(), xPos+gc.getWidth()-400, yPos+5);
-			//gr.drawString("POINTS: ", xPos+gc.getWidth()-175, yPos+5);
+			//gr.drawString("Player 2 - HEALTH: " + hc.getCurrHealth() + "/" + hc.getMaxHealth(), xPos+gc.getWidth()-275, yPos+5);
+			gr.drawString("Player 2 - HEALTH: " + hc.getCurrHealth() + "/" + hc.getMaxHealth(), xPos+gc.getWidth()-400, yPos+5);
+			gr.drawString("POINTS: " + player2.getScoreComponent().getScore(), xPos+gc.getWidth()-175, yPos+5);
 		}
 	}
 
