@@ -29,6 +29,7 @@ import edu.csupomona.kyra.component.physics.PhysicsComponent;
 import edu.csupomona.kyra.component.physics.objects.Direction;
 import edu.csupomona.kyra.component.render.RenderComponent;
 import edu.csupomona.kyra.component.sound.SoundComponent;
+import edu.csupomona.kyra.state.level.ScoreComponent;
 
 public class Entity {
 	String id;
@@ -47,6 +48,7 @@ public class Entity {
 	SoundComponent soundComponent;
 	HealthComponent healthComponent;
 	GunComponent gunComponent;
+	ScoreComponent scoreComponent;
 	
 	
 	protected ArrayList<Component> components = null;
@@ -81,6 +83,8 @@ public class Entity {
 			aiComponent = (AIComponent)component;
 		else if (GunComponent.class.isInstance(component))
 			gunComponent = (GunComponent)component;
+		else if (ScoreComponent.class.isInstance(component))
+			scoreComponent = (ScoreComponent)component;
 		
 		component.setOwnerEntity(this);
 		components.add(component);
@@ -155,6 +159,10 @@ public class Entity {
 	
 	public GunComponent getGunComponent() {
 		return gunComponent;
+	}
+	
+	public ScoreComponent getScoreComponent() {
+		return scoreComponent;
 	}
 	
 	public Direction getXDirection() {

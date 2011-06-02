@@ -73,7 +73,7 @@ public class SoundEffects extends SoundComponent {
 	}
 	
 	//Randomly chooses whether to play something
-	private boolean randomPlay(){
+	protected boolean randomPlay(){
 		Random rand = new Random();
 		int num = rand.nextInt(1000);
 		return num >= 20 && num <= 25;
