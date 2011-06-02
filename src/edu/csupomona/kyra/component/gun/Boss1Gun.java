@@ -20,6 +20,7 @@ import edu.csupomona.kyra.component.physics.BulletPhysics;
 import edu.csupomona.kyra.component.physics.objects.ForceVector;
 import edu.csupomona.kyra.component.render.bullet.Boss1BulletRender;
 import edu.csupomona.kyra.entity.Entity;
+import edu.csupomona.kyra.entity.EntityType;
 
 public class Boss1Gun extends GunComponent {
 	
@@ -33,7 +34,7 @@ public class Boss1Gun extends GunComponent {
 		Boss1AI bossAI = (Boss1AI)owner.getAIComponent();
 		String name = owner.getId()+"bullet";
 		ForceVector bulletPath = bossAI.getAim();
-		Entity bullet = new Entity(name);
+		Entity bullet = new Entity(name, EntityType.BULLET);
 		bullet.setPosition(owner.getPosition());
 		bullet.addComponent(new BulletPhysics(name+"physics", 32.0f, 32.0f, map, bulletPath));
 		bullet.addComponent(new Boss1BulletRender(name+"bulletRender"));

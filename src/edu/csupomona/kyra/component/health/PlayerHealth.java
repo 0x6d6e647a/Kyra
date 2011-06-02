@@ -17,14 +17,11 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.geom.Polygon;
 import org.newdawn.slick.state.StateBasedGame;
 
-import edu.csupomona.kyra.component.gun.GunComponent;
-import edu.csupomona.kyra.component.physics.PhysicsComponent;
 import edu.csupomona.kyra.entity.Entity;
+import edu.csupomona.kyra.entity.EntityType;
 
 public class PlayerHealth extends HealthComponent {
-	ArrayList<Entity> enemies;
-	ArrayList<Entity> hearts;
-	Entity boss;
+	ArrayList<Entity> entities;
 	boolean vulnerable;
 	
 	final long INVUL_TIME = 1200;
@@ -34,58 +31,65 @@ public class PlayerHealth extends HealthComponent {
 		HEART_HEAL = 1;
 		
 	
-	public PlayerHealth(String id, int health, ArrayList<Entity> enemies, ArrayList<Entity> hearts, Entity boss) {
+	public PlayerHealth(String id, int health, ArrayList<Entity> entities) {
 		super(id, health);
-		this.enemies = enemies;
-		this.hearts = hearts;
-		this.boss = boss;
+		this.entities = entities;
 	}
 	
 	@Override
 	public void update(GameContainer gc, StateBasedGame sb, int delta) {
 		if (isVulnerable()) {
-			Polygon polygon = owner.getPhysicsComponent().getPolygon();
-			// Take damage from enemies
-			for (Entity enemy : enemies) {
-				Polygon enemyPoly = enemy.getPhysicsComponent().getPolygon();
-				if ((enemyPoly != null) && (enemyPoly.intersects(polygon))) {
-					setBadHit();
-					addHealth(ENEMY_BODY_DMG);
-					makeTempInvulnerable(INVUL_TIME);
-					break;
+			for (Iterator<Entity> iter = entities.iterator(); iter.hasNext();) {
+				Entity entity = iter.next();
+				if (entity.getPhysicsComponent() == null)
+					continue;
+				Polygon playerPoly = owner.getPhysicsComponent().getPolygon();
+				EntityType type = entity.getType();
+				if (type.equals(EntityType.ZOMBIE)) {
+					//Damage from Zombie hits
+					Polygon zombiePoly = entity.getPhysicsComponent().getPolygon();
+					if ((zombiePoly != null) && (zombiePoly.intersects(playerPoly))) {
+						setBadHit();
+						addHealth(ENEMY_BODY_DMG);
+						makeTempInvulnerable(INVUL_TIME);
+						break;
+					}
 				}
-			}
-			//Take damage from boss bullets
-			GunComponent bossGun = boss.getGunComponent();
-			for (Iterator<Entity> iter = bossGun.getBullets().iterator(); iter.hasNext();) {
-				Polygon bulletPoly = iter.next().getPhysicsComponent().getPolygon();
-				if ((bulletPoly != null) && (bulletPoly.intersects(polygon))) {
-					setBadHit();
-					addHealth(BOSS_BULLET_DMG);
-					makeTempInvulnerable(INVUL_TIME);
-					iter.remove();
-					break;
+				else if (type.equals(EntityType.BOSS)) {
+					//Damage from boss body
+					Polygon bossPoly = entity.getPhysicsComponent().getPolygon();
+					if ((bossPoly != null) && (bossPoly.intersects(playerPoly))) {
+						setBadHit();
+						addHealth(BOSS_BODY_DMG);
+						makeTempInvulnerable(INVUL_TIME);
+						break;
+					}
+					//Damage from boss bullets
+					boolean wasHit = false;
+					for (Iterator<Entity> bulletIter = entity.getGunComponent().getBullets().iterator(); bulletIter.hasNext();) {
+						Polygon bulletPoly = bulletIter.next().getPhysicsComponent().getPolygon();
+						if ((bulletPoly != null) && (bulletPoly.intersects(playerPoly))) {
+							wasHit = true;
+							setBadHit();
+							addHealth(BOSS_BULLET_DMG);
+							makeTempInvulnerable(INVUL_TIME);
+							bulletIter.remove();
+							break;
+						}
+					}
+					if (wasHit)
+						break;
 				}
-			}
-			//Take damage from boss body
-			PhysicsComponent bossPhysics = boss.getPhysicsComponent();
-			if (bossPhysics != null) {
-				Polygon bossPoly = boss.getPhysicsComponent().getPolygon();
-				if ((bossPoly != null) && (bossPoly.intersects(polygon))) {
-					setBadHit();
-					addHealth(BOSS_BODY_DMG);
-					makeTempInvulnerable(INVUL_TIME);
+				else if (type.equals(EntityType.HEART)) {
+					Polygon heartPoly = entity.getPhysicsComponent().getPolygon();
+					ItemHealth heartHealth = (ItemHealth)entity.getHealthComponent();
+					if ((heartPoly != null) && (heartPoly.intersects(playerPoly))) {
+						setGoodHit();
+						addHealth(1);
+						heartHealth.useItem();
+					}
 				}
-			}
-			//Give player health if they get a heart
-			for (Entity heart : hearts) {
-				Polygon heartPoly = heart.getPhysicsComponent().getPolygon();
-				ItemHealth heartHealth = (ItemHealth)heart.getHealthComponent();
-				if ((heartPoly != null) && (heartPoly.intersects(polygon)) && !isHealthFull()) {
-					setGoodHit();
-					addHealth(1);
-					heartHealth.useItem();
-				}
+				
 			}
 		}
 	}

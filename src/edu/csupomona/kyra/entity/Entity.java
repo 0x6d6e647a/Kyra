@@ -32,6 +32,7 @@ import edu.csupomona.kyra.component.sound.SoundComponent;
 
 public class Entity {
 	String id;
+	EntityType type;
 	
 	Vector2f position;
 	Direction xDirection, yDirection;
@@ -50,8 +51,9 @@ public class Entity {
 	
 	protected ArrayList<Component> components = null;
 	
-	public Entity(String id) {
+	public Entity(String id, EntityType type) {
 		this.id = id;
+		this.type = type;
 		
 		components = new ArrayList<Component>();
 		renderComponents = new ArrayList<RenderComponent>();
@@ -107,6 +109,10 @@ public class Entity {
 	
 	public String getId() {
 		return id;
+	}
+	
+	public EntityType getType() {
+		return type;
 	}
 	
 	/* -- Setters -- */
