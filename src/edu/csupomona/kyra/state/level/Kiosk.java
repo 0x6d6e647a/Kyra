@@ -80,7 +80,6 @@ public class Kiosk extends Level {
 		player1.addComponent(new KioskPlayerSounds("kioskSFX"));
 		player1.addComponent(new KioskPlayerHealth("kioskHealth", 5, entities));
 		player1.addComponent(new KioskPlayerGun("kioskGun", tiledMap));
-		player1.addComponent(new PositionRender("kioskPos"));
 		
 		map = new Entity("map", EntityType.MAP);
 		map.addComponent(new LevelRender("level", tiledMap, player1, player2));
