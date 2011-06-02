@@ -83,7 +83,7 @@ public abstract class AIComponent extends Component {
 				return null;
 			
 		}
-		if (clearPathToPlayer(p1Line))
+		if ((p1Line != null) && clearPathToPlayer(p1Line))
 			return p1Line;
 		else
 			return null;
