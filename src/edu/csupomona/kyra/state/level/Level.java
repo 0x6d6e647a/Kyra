@@ -60,7 +60,7 @@ public abstract class Level extends BasicGameState {
 	boolean drawIntro, levelWon;
 
 	
-	final int PLAYER_HEALTH = 999,
+	final int PLAYER_HEALTH = 5,
 		PLAYER_HEIGHT = 60,
 		PLAYER_WIDTH = 31,
 		ZOMBIE_HEALTH = 1,
@@ -187,7 +187,7 @@ public abstract class Level extends BasicGameState {
 		
 	}
 
-	private boolean isInRange(Entity player, Entity other) {
+	protected boolean isInRange(Entity player, Entity other) {
 		Vector2f playerPos = player.getPosition();
 		Vector2f otherPos = other.getPosition();
 		float xDiff = Math.abs(otherPos.x-playerPos.x);
