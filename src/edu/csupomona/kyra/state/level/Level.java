@@ -11,6 +11,7 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.geom.Line;
 import org.newdawn.slick.geom.Polygon;
 import org.newdawn.slick.geom.Vector2f;
 import org.newdawn.slick.state.BasicGameState;
@@ -142,6 +143,12 @@ public abstract class Level extends BasicGameState {
 				player2.render(gc, sbg, gr);
 			for (Entity entity : entities)
 				entity.render(gc, sbg, gr);
+			/*for (Iterator<Entity> iter = enemies.iterator(); iter.hasNext();) {
+				Entity enemy = iter.next();
+				Line l = enemy.getAIComponent().getLineToTarget();
+				if(l != null && l.length() <= 3000)
+					enemy.render(gc, sbg, gr);
+			}*/
 		}
 	}
 
@@ -156,6 +163,12 @@ public abstract class Level extends BasicGameState {
 					player2.update(gc, sbg, delta);
 				for (Entity entity : entities)
 					entity.update(gc, sbg, delta);
+				/*for (Iterator<Entity> iter = enemies.iterator(); iter.hasNext();) {
+					Entity enemy = iter.next();
+					Line l = enemy.getAIComponent().getLineToTarget();
+					if(l != null && l.length() <= 3000)
+						enemy.update(gc, sbg, delta);
+				}*/
 				map.update(gc, sbg, delta);
 				//Remove hearts from the map that have been used
 				for (Iterator<Entity> iter = hearts.iterator(); iter.hasNext();) {

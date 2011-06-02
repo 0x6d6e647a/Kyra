@@ -26,14 +26,14 @@ public class Level1 extends Level {
 		addZombie(new Vector2f(1200, 1503));
 		addHeart(new Vector2f(1200,1503));
 		addZombie(new Vector2f(1362, 580));
-		//addZombie(new Vector2f(2057, 196));
-		//addZombie(new Vector2f(2359, 196));
-		//addZombie(new Vector2f(2596, 580));
-		//addZombie(new Vector2f(1028, 2855));
-		//addZombie(new Vector2f(3414, 1028));
-		//addZombie(new Vector2f(3844, 1508));
-		//addZombie(new Vector2f(4062, 1508));
-		//addZombie(new Vector2f(4502, 1508));
+		addZombie(new Vector2f(2057, 196));
+		addZombie(new Vector2f(2359, 196));
+		addZombie(new Vector2f(2596, 580));
+		addZombie(new Vector2f(1028, 2855));
+		addZombie(new Vector2f(3414, 1028));
+		addZombie(new Vector2f(3844, 1508));
+		addZombie(new Vector2f(4062, 1508));
+		addZombie(new Vector2f(4502, 1508));
 	}
 	
 	@Override
