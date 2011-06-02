@@ -11,8 +11,6 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
-import org.newdawn.slick.geom.Line;
-import org.newdawn.slick.geom.Polygon;
 import org.newdawn.slick.geom.Vector2f;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
@@ -22,6 +20,7 @@ import edu.csupomona.kyra.Kyra;
 import edu.csupomona.kyra.component.ai.ZombieAI;
 import edu.csupomona.kyra.component.gun.HeartRender;
 import edu.csupomona.kyra.component.gun.PlayerGun;
+import edu.csupomona.kyra.component.health.ItemHealth;
 import edu.csupomona.kyra.component.health.PlayerHealth;
 import edu.csupomona.kyra.component.input.Player1Input;
 import edu.csupomona.kyra.component.input.Player2Input;
@@ -64,7 +63,6 @@ public abstract class Level extends BasicGameState {
 		zombie.addComponent(new ZombieRender("render"+name));
 		zombie.addComponent(new ZombieFx("fx"+name));
 		//zombie.addComponent(new EnemyHealth("hp"+name, 5, player1, player2));
-		entities.add(zombie);
 		enemies.add(zombie);
 	}
 	
@@ -74,7 +72,7 @@ public abstract class Level extends BasicGameState {
 		heart.setPosition(position);
 		heart.addComponent(new HeartPhysics("physics"+name, 16, 16, tiledMap));
 		heart.addComponent(new HeartRender("render"+name));
-		entities.add(heart);
+		heart.addComponent(new ItemHealth("item"+name));
 		hearts.add(heart);
 	}
 	
@@ -141,14 +139,14 @@ public abstract class Level extends BasicGameState {
 			player1.render(gc, sbg, gr);
 			if (Kyra.vs)
 				player2.render(gc, sbg, gr);
-			for (Entity entity : entities)
-				entity.render(gc, sbg, gr);
-			/*for (Iterator<Entity> iter = enemies.iterator(); iter.hasNext();) {
-				Entity enemy = iter.next();
-				Line l = enemy.getAIComponent().getLineToTarget();
-				if(l != null && l.length() <= 3000)
+			for (Entity enemy: enemies) {
+				float eXPos = enemy.getPosition().x;
+				float pXPos = player1.getPosition().x;
+				if(Math.abs(eXPos-pXPos) < 1000)
 					enemy.render(gc, sbg, gr);
-			}*/
+			}
+			for (Entity heart : hearts)
+				heart.render(gc, sbg, gr);
 		}
 	}
 
@@ -161,28 +159,20 @@ public abstract class Level extends BasicGameState {
 				player1.update(gc, sbg, delta);
 				if (Kyra.vs)
 					player2.update(gc, sbg, delta);
-				for (Entity entity : entities)
-					entity.update(gc, sbg, delta);
-				/*for (Iterator<Entity> iter = enemies.iterator(); iter.hasNext();) {
-					Entity enemy = iter.next();
-					Line l = enemy.getAIComponent().getLineToTarget();
-					if(l != null && l.length() <= 3000)
+				for (Entity enemy: enemies) {
+					float eXPos = enemy.getPosition().x;
+					float pXPos = player1.getPosition().x;
+					if(Math.abs(eXPos-pXPos) < 1000)
 						enemy.update(gc, sbg, delta);
-				}*/
+				}
+				for (Entity heart : hearts)
+					heart.update(gc, sbg, delta);
 				map.update(gc, sbg, delta);
 				//Remove hearts from the map that have been used
 				for (Iterator<Entity> iter = hearts.iterator(); iter.hasNext();) {
 					Entity heart = iter.next();
-					Polygon heartPoly = heart.getPhysicsComponent().getPolygon();
-					if (Kyra.vs) {
-						if (player1.getPhysicsComponent().intersections(heartPoly) |
-								player2.getPhysicsComponent().intersections(heartPoly))
-							iter.remove();
-					}
-					else {
-						if (player1.getPhysicsComponent().intersections(heartPoly))
-							iter.remove();
-					}
+					if (heart.getHealthComponent().zeroHealth())
+						iter.remove();
 				}
 				//Pause if pause key is pressed
 				if (input.isKeyPressed(Input.KEY_ENTER)) {
@@ -218,9 +208,9 @@ public abstract class Level extends BasicGameState {
 				if(player1.getHealthComponent().zeroHealth()) {
 					input.clearKeyPressedRecord();
         			player1.getSoundComponent().stopAll();
-        			for (Entity entity : entities)
-    					if (entity.getSoundComponent() != null)
-    						entity.getSoundComponent().stopAll();
+        			for (Entity enemy: enemies)
+    					if (enemy.getSoundComponent() != null)
+    						enemy.getSoundComponent().stopAll();
         			gc.resume();
         			sbg.getCurrentState().leave(gc, sbg);
         			sbg.getState(Kyra.GAMEOVERSTATE).init(gc, sbg);
@@ -233,9 +223,9 @@ public abstract class Level extends BasicGameState {
 					input.clearKeyPressedRecord();
         			player1.getSoundComponent().stopAll();
             		player2.getSoundComponent().stopAll();
-            		for (Entity entity : entities)
-    					if (entity.getSoundComponent() != null)
-    						entity.getSoundComponent().stopAll();
+            		for (Entity enemy: enemies)
+    					if (enemy.getSoundComponent() != null)
+    						enemy.getSoundComponent().stopAll();
         			gc.resume();
         			sbg.getCurrentState().leave(gc, sbg);
         			sbg.getState(Kyra.GAMEOVERSTATE).init(gc, sbg);
