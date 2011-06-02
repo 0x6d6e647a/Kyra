@@ -18,6 +18,7 @@ public abstract class HealthComponent extends Component {
 		this.maxHealth = health;
 		vulnerable = true;
 		badHit = false;
+		timer = new Timer();
 	}
 	
 	public int getCurrHealth() {

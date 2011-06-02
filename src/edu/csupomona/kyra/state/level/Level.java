@@ -20,6 +20,7 @@ import edu.csupomona.kyra.Kyra;
 import edu.csupomona.kyra.component.ai.ZombieAI;
 import edu.csupomona.kyra.component.gun.PlayerGun;
 import edu.csupomona.kyra.component.health.EnemyHealth;
+import edu.csupomona.kyra.component.health.HealthComponent;
 import edu.csupomona.kyra.component.health.ItemHealth;
 import edu.csupomona.kyra.component.health.PlayerHealth;
 import edu.csupomona.kyra.component.input.Player1Input;
@@ -105,6 +106,7 @@ public abstract class Level extends BasicGameState {
 		intro = new Image("img/intro.png");
 		pause = new Image("img/pause.png");
 		
+		boss = new Entity("boss");
 		entities = new ArrayList<Entity>();
 		enemies = new ArrayList<Entity>();
 		hearts = new ArrayList<Entity>();
@@ -114,7 +116,7 @@ public abstract class Level extends BasicGameState {
 		player1.addComponent(new Player1Input("p1Input"));
 		player1.addComponent(new PlayerPhysics("p1Physics", 60, 31, tiledMap));
 		player1.addComponent(new Player1Render("p1Sprite"));
-		player1.addComponent(new PlayerHealth("p1Health", 3, enemies, hearts));
+		player1.addComponent(new PlayerHealth("p1Health", 10, enemies, hearts, boss));
 		player1.addComponent(new PlayerGun("p1Gun", tiledMap));
 		player1.addComponent(new PositionRender("p1Pos"));
 		
@@ -124,7 +126,7 @@ public abstract class Level extends BasicGameState {
 			player2.addComponent(new Player2Input("p2Input"));
 			player2.addComponent(new PlayerPhysics("p1Physics", 60, 31, tiledMap));
 			player2.addComponent(new Player2Render("p2Sprite"));
-			player2.addComponent(new PlayerHealth("p2Health", 3, enemies, hearts));
+			player2.addComponent(new PlayerHealth("p2Health", 10, enemies, hearts, boss));
 			player2.addComponent(new PlayerGun("p2Gun", tiledMap));
 		}
 		
@@ -189,6 +191,13 @@ public abstract class Level extends BasicGameState {
 					Entity enemy = iter.next();
 					if (enemy.getHealthComponent().isDead())
 						iter.remove();
+				}
+				//Remove the boss if he died
+				HealthComponent bossHealth = boss.getHealthComponent();
+				if ((bossHealth != null) && (bossHealth.isDead())) {
+					gc.pause();
+					input.clearKeyPressedRecord();
+					nextLevel(gc, sbg);
 				}
 				//Pause if pause key is pressed
 				if (input.isKeyPressed(Input.KEY_ENTER)) {
