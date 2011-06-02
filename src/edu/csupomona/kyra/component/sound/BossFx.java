@@ -14,7 +14,7 @@ public class BossFx extends SoundComponent{
 	public BossFx(String id) {
 		super(id);
 		try {
-			gun = new Sound("audio/menu_select.ogg");
+			gun = new Sound("audio/boss_fire.ogg");
 			random = new Sound("audio/boss_random.ogg");
 		} catch (SlickException e) {
 			e.printStackTrace();
