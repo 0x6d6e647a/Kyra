@@ -23,7 +23,6 @@ import edu.csupomona.kyra.component.physics.Boss1Physics;
 import edu.csupomona.kyra.component.physics.KioskPlayerPhysics;
 import edu.csupomona.kyra.component.render.HealthRender;
 import edu.csupomona.kyra.component.render.LevelRender;
-import edu.csupomona.kyra.component.render.PositionRender;
 import edu.csupomona.kyra.component.render.ai.Boss1Render;
 import edu.csupomona.kyra.component.render.player.KioskPlayerRender;
 import edu.csupomona.kyra.component.sound.KioskPlayerSounds;

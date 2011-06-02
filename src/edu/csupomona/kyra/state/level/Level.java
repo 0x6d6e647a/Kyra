@@ -166,6 +166,7 @@ public abstract class Level extends BasicGameState {
 		player1.addComponent(new Player1Render("p1Sprite"));
 		player1.addComponent(new PlayerHealth("p1Health", PLAYER_HEALTH, entities));
 		player1.addComponent(new PlayerGun("p1Gun", tiledMap));
+		player1.addComponent(new ScoreComponent("p1Score"));
 		//player1.addComponent(new PositionRender("p1Pos"));
 		
 		if (Kyra.vs) {
@@ -176,6 +177,7 @@ public abstract class Level extends BasicGameState {
 			player2.addComponent(new Player2Render("p2Sprite"));
 			player2.addComponent(new PlayerHealth("p2Health", PLAYER_HEALTH, entities));
 			player2.addComponent(new PlayerGun("p2Gun", tiledMap));
+			player2.addComponent(new ScoreComponent("p2Score"));
 		}
 		
 		map = new Entity("map", EntityType.MAP);

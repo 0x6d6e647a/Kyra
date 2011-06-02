@@ -20,6 +20,8 @@ import org.newdawn.slick.state.StateBasedGame;
 import edu.csupomona.kyra.Kyra;
 import edu.csupomona.kyra.component.physics.PhysicsComponent;
 import edu.csupomona.kyra.entity.Entity;
+import edu.csupomona.kyra.entity.EntityType;
+import edu.csupomona.kyra.state.level.ScoreComponent;
 
 public class EnemyHealth extends HealthComponent{
 
@@ -33,9 +35,12 @@ public class EnemyHealth extends HealthComponent{
 	
 	public void update(GameContainer gc, StateBasedGame sb, int delta) {
 		PhysicsComponent physics = owner.getPhysicsComponent();
+		ScoreComponent p1Score = player1.getScoreComponent();
+		EntityType type = owner.getType();
 		if (physics != null) {
 			Polygon polygon = owner.getPhysicsComponent().getPolygon();
 			if (isVulnerable()) {
+				//Check player1's bullets
 				ArrayList<Entity> p1Bullets = player1.getGunComponent().getBullets();
 				for (Iterator<Entity> iter = p1Bullets.iterator(); iter.hasNext();) {
 					Entity bullet = iter.next();
@@ -45,10 +50,23 @@ public class EnemyHealth extends HealthComponent{
 						addHealth(-1);
 						makeTempInvulnerable(75);
 						iter.remove();
+						
 						break;
 					}
 				}
+				if (isDead()) {
+					long points = 0;
+					if (type.equals(EntityType.ZOMBIE))
+						points = 1000;
+					else if (type.equals(EntityType.BOSS))
+						points = 50000;
+					if (p1Score != null)
+						p1Score.addToScore(points);
+					return;
+				}
+				//Check player2's bullets
 				if (Kyra.vs) {
+					ScoreComponent p2Score = player2.getScoreComponent();
 					ArrayList<Entity> p2Bullets = player2.getGunComponent().getBullets();
 					for (Iterator<Entity> iter = p2Bullets.iterator(); iter.hasNext();) {
 						Entity bullet = iter.next();
@@ -60,6 +78,15 @@ public class EnemyHealth extends HealthComponent{
 							iter.remove();
 							break;
 						}
+					}
+					if (isDead()) {
+						long points = 0;
+						if (type.equals(EntityType.ZOMBIE))
+							points = 1000;
+						else if (type.equals(EntityType.BOSS))
+							points = 50000;
+						if (p2Score != null)
+							p2Score.addToScore(points);
 					}
 				}
 			}
