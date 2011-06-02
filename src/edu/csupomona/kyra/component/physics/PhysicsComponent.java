@@ -102,6 +102,11 @@ public abstract class PhysicsComponent extends Component {
 		return false;
 	}
 	
+	//Public facing test for KioskPlayerAI
+	public  boolean testCollision_RightWall(ForceVector left) {
+		return testRightWallCollision(left);
+	}
+	
 	//Sees if the entity collides with the right wall
 	protected boolean testRightWallCollision(ForceVector left) {
 		float polyLeft = this.left.getCenterX();
