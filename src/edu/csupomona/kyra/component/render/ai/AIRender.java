@@ -11,13 +11,6 @@ public abstract class AIRender extends SpriteRender {
 		super(id);
 	}
 	
-/*	public void render(GameContainer gc, StateBasedGame sb, Graphics gr) {
-		if(owner.getAIComponent().getLineToTarget() != null && owner.getAIComponent().getLineToTarget().length() <= 1000) {
-			Vector2f pos = owner.getPosition();
-			sprite.draw(pos.x, pos.y);
-		}
-	}*/
-	
 	public void update(GameContainer gc, StateBasedGame sb, int delta) {
 		for (String action : owner.getAIComponent().getActions()) {
 			if (action.equals("left")) {
