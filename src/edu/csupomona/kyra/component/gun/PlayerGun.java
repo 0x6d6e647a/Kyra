@@ -11,6 +11,7 @@ import edu.csupomona.kyra.component.physics.objects.Direction;
 import edu.csupomona.kyra.component.physics.objects.ForceVector;
 import edu.csupomona.kyra.component.render.bullet.PlayerBulletRender;
 import edu.csupomona.kyra.entity.Entity;
+import edu.csupomona.kyra.entity.EntityType;
 
 public class PlayerGun extends GunComponent {
 	
@@ -28,7 +29,7 @@ public class PlayerGun extends GunComponent {
 			forceVector = new ForceVector(delta * -SPEED, 0.0f);
 		else 
 			forceVector = new ForceVector(delta * SPEED, 0.0f);
-		Entity bullet = new Entity(name);
+		Entity bullet = new Entity(name, EntityType.BULLET);
 		bullet.setPosition(owner.getPosition());
 		bullet.addComponent(new BulletPhysics(name+" physics", 32.0f, 32.0f, map, forceVector));
 		bullet.addComponent(new PlayerBulletRender(name+"bullet"));

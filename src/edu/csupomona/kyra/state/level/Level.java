@@ -20,7 +20,6 @@ import edu.csupomona.kyra.Kyra;
 import edu.csupomona.kyra.component.ai.ZombieAI;
 import edu.csupomona.kyra.component.gun.PlayerGun;
 import edu.csupomona.kyra.component.health.EnemyHealth;
-import edu.csupomona.kyra.component.health.HealthComponent;
 import edu.csupomona.kyra.component.health.ItemHealth;
 import edu.csupomona.kyra.component.health.PlayerHealth;
 import edu.csupomona.kyra.component.input.Player1Input;
@@ -38,17 +37,30 @@ import edu.csupomona.kyra.component.render.player.Player1Render;
 import edu.csupomona.kyra.component.render.player.Player2Render;
 import edu.csupomona.kyra.component.sound.ZombieFx;
 import edu.csupomona.kyra.entity.Entity;
+import edu.csupomona.kyra.entity.EntityType;
 
 public abstract class Level extends BasicGameState {
 	int stateID;
 	String path;
 	TiledMap tiledMap;
-	Entity map, player1, player2;
-	ArrayList<Entity> entities, enemies, hearts;
-	Entity boss;
+	Entity map, player1, player2, boss;
+	ArrayList<Entity> entities;
 	Vector2f p1Pos, p2Pos;
 	Image intro, pause;
 	boolean drawIntro;
+	
+	final int PLAYER_HEALTH = 10,
+		PLAYER_HEIGHT = 60,
+		PLAYER_WIDTH = 31,
+		ZOMBIE_HEALTH = 5,
+		ZOMBIE_HEIGHT = 60,
+		ZOMBIE_WIDTH = 31,
+		HEART_HEIGHT = 16,
+		HEART_WIDTH = 16,
+		PAUSE_HEIGHT = 384,
+		PAUSE_WIDTH = 512,
+		INTRO_HEIGHT = 384,
+		INTRO_WIDTH = 512;
 	
 	public Level(int stateID, String path, Vector2f p1Pos, Vector2f p2Pos, boolean drawIntro) {
 		this.stateID = stateID;
@@ -62,28 +74,28 @@ public abstract class Level extends BasicGameState {
 	
 	protected void addZombie(Vector2f position) throws SlickException {
 		String name = "zombie" + entities.size();
-		Entity zombie = new Entity(name);
+		Entity zombie = new Entity(name, EntityType.ZOMBIE);
 		zombie.setPosition(position);
 		zombie.addComponent(new ZombieAI("ai_"+name, player1, player2, tiledMap));
-		zombie.addComponent(new ZombiePhysics("physics"+name, 60, 31, tiledMap));
+		zombie.addComponent(new ZombiePhysics("physics"+name, ZOMBIE_HEIGHT, ZOMBIE_WIDTH, tiledMap));
 		zombie.addComponent(new ZombieRender("render"+name));
 		zombie.addComponent(new ZombieFx("fx"+name));
 		if(!Kyra.vs)
-			zombie.addComponent(new EnemyHealth("health"+name, 5, player1, player2));
+			zombie.addComponent(new EnemyHealth("health"+name, ZOMBIE_HEALTH, player1, player2));
 		else
-			zombie.addComponent(new EnemyHealth("health"+name, 10, player1, player2));
+			zombie.addComponent(new EnemyHealth("health"+name, ZOMBIE_HEALTH*2, player1, player2));
 		zombie.addComponent(new HealthRender("drawHealth"+name));
-		enemies.add(zombie);
+		entities.add(zombie);
 	}
 	
 	protected void addHeart(Vector2f position) throws SlickException {
 		String name = "heart" + entities.size();
-		Entity heart = new Entity(name);
+		Entity heart = new Entity(name, EntityType.HEART);
 		heart.setPosition(position);
-		heart.addComponent(new HeartPhysics("physics"+name, 16, 16, tiledMap));
+		heart.addComponent(new HeartPhysics("physics"+name, HEART_HEIGHT, HEART_WIDTH, tiledMap));
 		heart.addComponent(new HeartRender("render"+name));
 		heart.addComponent(new ItemHealth("item"+name));
-		hearts.add(heart);
+		entities.add(heart);
 	}
 	
 	protected void nextLevel(GameContainer gc, StateBasedGame sbg) throws SlickException {
@@ -106,58 +118,60 @@ public abstract class Level extends BasicGameState {
 		intro = new Image("img/intro.png");
 		pause = new Image("img/pause.png");
 		
-		boss = new Entity("boss");
+		boss = new Entity("boss", EntityType.BOSS);
 		entities = new ArrayList<Entity>();
-		enemies = new ArrayList<Entity>();
-		hearts = new ArrayList<Entity>();
 		
-		player1 = new Entity("player1");
+		player1 = new Entity("player1", EntityType.PLAYER1);
 		player1.setPosition(p1Pos);
 		player1.addComponent(new Player1Input("p1Input"));
-		player1.addComponent(new PlayerPhysics("p1Physics", 60, 31, tiledMap));
+		player1.addComponent(new PlayerPhysics("p1Physics", PLAYER_HEIGHT, PLAYER_WIDTH, tiledMap));
 		player1.addComponent(new Player1Render("p1Sprite"));
-		player1.addComponent(new PlayerHealth("p1Health", 10, enemies, hearts, boss));
+		player1.addComponent(new PlayerHealth("p1Health", PLAYER_HEALTH, entities));
 		player1.addComponent(new PlayerGun("p1Gun", tiledMap));
 		player1.addComponent(new PositionRender("p1Pos"));
 		
 		if (Kyra.vs) {
-			player2 = new Entity("player2");
+			player2 = new Entity("player2", EntityType.PLAYER2);
 			player2.setPosition(p2Pos);
 			player2.addComponent(new Player2Input("p2Input"));
-			player2.addComponent(new PlayerPhysics("p1Physics", 60, 31, tiledMap));
+			player2.addComponent(new PlayerPhysics("p1Physics", PLAYER_HEIGHT, PLAYER_WIDTH, tiledMap));
 			player2.addComponent(new Player2Render("p2Sprite"));
-			player2.addComponent(new PlayerHealth("p2Health", 10, enemies, hearts, boss));
+			player2.addComponent(new PlayerHealth("p2Health", PLAYER_HEALTH, entities));
 			player2.addComponent(new PlayerGun("p2Gun", tiledMap));
 		}
 		
-		map = new Entity("map");
+		map = new Entity("map", EntityType.MAP);
 		map.addComponent(new LevelRender("level", tiledMap, player1));
 		map.addComponent(new MapHealthRender("playerHealth", player1, player2));
 		
 		setBoss();
+		entities.add(boss);
 		
 	}
 
+	private boolean isInRange(Entity player, Entity other) {
+		Vector2f playerPos = player.getPosition();
+		Vector2f otherPos = other.getPosition();
+		float xDiff = Math.abs(otherPos.x-playerPos.x);
+		float yDiff = Math.abs(otherPos.y-playerPos.y);
+		return ((xDiff < 1000) || (yDiff < 1000));
+	}
+	
 	@Override
 	public void render(GameContainer gc, StateBasedGame sbg, Graphics gr) throws SlickException {
 		if (drawIntro)
-			intro.drawCentered(512, 384);
+			intro.drawCentered(INTRO_WIDTH, INTRO_HEIGHT);
 		if (gc.isPaused())
-			pause.drawCentered(512, 384);
+			pause.drawCentered(PAUSE_WIDTH, PAUSE_HEIGHT);
 		else {
 			map.render(gc, sbg, gr);
 			player1.render(gc, sbg, gr);
 			if (Kyra.vs)
 				player2.render(gc, sbg, gr);
-			boss.render(gc, sbg, gr);
-			for (Entity enemy: enemies) {
-				float eXPos = enemy.getPosition().x;
-				float pXPos = player1.getPosition().x;
-				if(Math.abs(eXPos-pXPos) < 1000)
-					enemy.render(gc, sbg, gr);
+			for (Entity entity : entities) {
+				if (isInRange(player1, entity))
+					entity.render(gc, sbg, gr);
 			}
-			for (Entity heart : hearts)
-				heart.render(gc, sbg, gr);
 		}
 	}
 
@@ -166,46 +180,35 @@ public abstract class Level extends BasicGameState {
 		Input input = gc.getInput();
 		
 		if(!drawIntro) {
-			if (!gc.isPaused()) {
+			if (!gc.isPaused()) { //game is playing
 				player1.update(gc, sbg, delta);
 				if (Kyra.vs)
 					player2.update(gc, sbg, delta);
-				for (Entity enemy: enemies) {
-					float eXPos = enemy.getPosition().x;
-					float pXPos = player1.getPosition().x;
-					if(Math.abs(eXPos-pXPos) < 700)
-						enemy.update(gc, sbg, delta);
+				//Remove dead things from the game world
+				for (Iterator<Entity> iter = entities.iterator(); iter.hasNext();) {
+					Entity entity = iter.next();
+					if (isInRange(player1, entity))
+						entity.update(gc, sbg, delta);
+					EntityType type = entity.getType();
+					if (type.equals(EntityType.HEART) && entity.getHealthComponent().isDead())
+						iter.remove();
+					else if (type.equals(EntityType.ZOMBIE) && entity.getHealthComponent().isDead())
+						iter.remove();
+					else if (type.equals(EntityType.BOSS) && entity.getHealthComponent().isDead()) {
+						gc.pause();
+						input.clearKeyPressedRecord();
+						nextLevel(gc, sbg);
+					}
 				}
-				boss.update(gc, sbg, delta);
-				for (Entity heart : hearts)
-					heart.update(gc, sbg, delta);
 				map.update(gc, sbg, delta);
-				//Remove hearts from the map that have been used
-				for (Iterator<Entity> iter = hearts.iterator(); iter.hasNext();) {
-					Entity heart = iter.next();
-					if (heart.getHealthComponent().isDead())
-						iter.remove();
-				}
-				//Remove zombies from that map that have died
-				for (Iterator<Entity> iter = enemies.iterator(); iter.hasNext();) {
-					Entity enemy = iter.next();
-					if (enemy.getHealthComponent().isDead())
-						iter.remove();
-				}
-				//Remove the boss if he died
-				HealthComponent bossHealth = boss.getHealthComponent();
-				if ((bossHealth != null) && (bossHealth.isDead())) {
-					gc.pause();
-					input.clearKeyPressedRecord();
-					nextLevel(gc, sbg);
-				}
 				//Pause if pause key is pressed
 				if (input.isKeyPressed(Input.KEY_ENTER)) {
 					gc.pause();
 					input.clearKeyPressedRecord();
 				}
 			}
-			else {
+			else { //game is paused
+				// stop all sounds
 				player1.getSoundComponent().stopAll();
 				if (Kyra.vs)
 					player2.getSoundComponent().stopAll();
@@ -233,9 +236,9 @@ public abstract class Level extends BasicGameState {
 				if(player1.getHealthComponent().isDead()) {
 					input.clearKeyPressedRecord();
         			player1.getSoundComponent().stopAll();
-        			for (Entity enemy: enemies)
-    					if (enemy.getSoundComponent() != null)
-    						enemy.getSoundComponent().stopAll();
+					for (Entity entity : entities)
+						if (entity.getSoundComponent() != null)
+							entity.getSoundComponent().stopAll();
         			gc.resume();
         			sbg.getCurrentState().leave(gc, sbg);
         			sbg.getState(Kyra.GAMEOVERSTATE).init(gc, sbg);
@@ -248,9 +251,9 @@ public abstract class Level extends BasicGameState {
 					input.clearKeyPressedRecord();
         			player1.getSoundComponent().stopAll();
             		player2.getSoundComponent().stopAll();
-            		for (Entity enemy: enemies)
-    					if (enemy.getSoundComponent() != null)
-    						enemy.getSoundComponent().stopAll();
+					for (Entity entity : entities)
+						if (entity.getSoundComponent() != null)
+							entity.getSoundComponent().stopAll();
         			gc.resume();
         			sbg.getCurrentState().leave(gc, sbg);
         			sbg.getState(Kyra.GAMEOVERSTATE).init(gc, sbg);
