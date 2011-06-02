@@ -30,7 +30,7 @@ public abstract class GunComponent extends Component {
 	ArrayList<Entity> bullets;
 	TiledMap map;
 	Timer coolDown;
-	boolean canFire;
+	boolean canFire, fired;
 	final int COOLDOWN;
 
 	protected abstract Entity makeBullet(int delta) throws SlickException;
