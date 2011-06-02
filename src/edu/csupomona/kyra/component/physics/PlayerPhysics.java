@@ -26,7 +26,6 @@ public class PlayerPhysics extends PhysicsComponent{
 		MIN_X = -1.7f,
 		MAX_X = 1.7f,
 		MIN_Y = -5.0f,
-		//-20
 		MAX_Y = 2.5f;
 
 	public PlayerPhysics(String id, float height, float width, TiledMap map) {

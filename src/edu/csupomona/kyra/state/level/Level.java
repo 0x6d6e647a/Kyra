@@ -38,10 +38,8 @@ import edu.csupomona.kyra.component.physics.AntiZombiePhysics;
 import edu.csupomona.kyra.component.physics.HeartPhysics;
 import edu.csupomona.kyra.component.physics.PlayerPhysics;
 import edu.csupomona.kyra.component.physics.ZombiePhysics;
-import edu.csupomona.kyra.component.render.HealthRender;
 import edu.csupomona.kyra.component.render.HeartRender;
 import edu.csupomona.kyra.component.render.LevelRender;
-import edu.csupomona.kyra.component.render.PositionRender;
 import edu.csupomona.kyra.component.render.MapHealthRender;
 import edu.csupomona.kyra.component.render.ai.AntiZombieRender;
 import edu.csupomona.kyra.component.render.ai.ZombieRender;
@@ -62,7 +60,7 @@ public abstract class Level extends BasicGameState {
 	boolean drawIntro, levelWon;
 
 	
-	final int PLAYER_HEALTH = 10,
+	final int PLAYER_HEALTH = 999,
 		PLAYER_HEIGHT = 60,
 		PLAYER_WIDTH = 31,
 		ZOMBIE_HEALTH = 1,
