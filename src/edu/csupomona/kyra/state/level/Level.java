@@ -213,7 +213,7 @@ public abstract class Level extends BasicGameState {
 			complete.drawCentered(CENTER_WIDTH, CENTER_HEIGHT);
 			if(Kyra.vs && player1.getScoreComponent().getScore() > player2.getScoreComponent().getScore())
 				p1Win.drawCentered(CENTER_WIDTH, CENTER_HEIGHT+115);
-			else
+			else if (Kyra.vs && player1.getScoreComponent().getScore() < player2.getScoreComponent().getScore())
 				p2Win.drawCentered(CENTER_WIDTH, CENTER_HEIGHT+115);
 		} else {
 			map.render(gc, sbg, gr);
