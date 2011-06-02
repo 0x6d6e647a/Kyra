@@ -60,11 +60,6 @@ public abstract class GunComponent extends Component {
 
 	@Override
 	public void update(GameContainer gc, StateBasedGame sb, int delta) {
-		InputComponent input = owner.getInputComponent();
-		
-		//Fire 
-		if (input.isPressed("attack") && canFire)
-			fireBullet(delta);
 		
 		//Remove bullets that have hit walls
 		for (Iterator<Entity> iter = bullets.iterator(); iter.hasNext();) {
