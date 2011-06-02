@@ -15,6 +15,7 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
 import org.newdawn.slick.tiled.TiledMap;
 
+import edu.csupomona.kyra.component.input.InputComponent;
 import edu.csupomona.kyra.component.physics.BulletPhysics;
 import edu.csupomona.kyra.component.physics.objects.Direction;
 import edu.csupomona.kyra.component.physics.objects.ForceVector;
@@ -45,6 +46,10 @@ public class PlayerGun extends GunComponent {
 	}
 	
 	public void update(GameContainer gc, StateBasedGame sb, int delta) {
+		InputComponent input = owner.getInputComponent();
+		if (input.isPressed("attack") && canFire)
+			fireBullet(delta);
+		
 		super.update(gc, sb, delta);
 	}
 

@@ -27,6 +27,14 @@ public class ForceVector {
 		this.yComponent = yComponent;
 	}
 	
+	public ForceVector(Line line, float magnitude, int delta) {
+		float lineXComponent = line.getX2() - line.getX1();
+		float lineYComponent = line.getY2() - line.getY1();
+		double direction = Math.atan2(lineYComponent, lineXComponent);
+		this.xComponent = delta * (float)(magnitude * Math.cos(direction));
+		this.yComponent = delta * (float)(magnitude * Math.sin(direction));
+	}
+	
 	//Returns string of force vector
 	public String toString() {
 		return "xComp: " + xComponent + ", yComp: " + yComponent;

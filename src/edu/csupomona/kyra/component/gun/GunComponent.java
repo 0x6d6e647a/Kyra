@@ -22,7 +22,6 @@ import org.newdawn.slick.state.StateBasedGame;
 import org.newdawn.slick.tiled.TiledMap;
 
 import edu.csupomona.kyra.component.Component;
-import edu.csupomona.kyra.component.input.InputComponent;
 import edu.csupomona.kyra.component.physics.BulletPhysics;
 import edu.csupomona.kyra.entity.Entity;
 
@@ -72,11 +71,6 @@ public abstract class GunComponent extends Component {
 
 	@Override
 	public void update(GameContainer gc, StateBasedGame sb, int delta) {
-		InputComponent input = owner.getInputComponent();
-		
-		//Fire 
-		if (input.isPressed("attack") && canFire)
-			fireBullet(delta);
 		
 		//Remove bullets that have hit walls
 		for (Iterator<Entity> iter = bullets.iterator(); iter.hasNext();) {

@@ -17,7 +17,12 @@ import org.newdawn.slick.geom.Vector2f;
 import org.newdawn.slick.state.StateBasedGame;
 
 import edu.csupomona.kyra.Kyra;
+import edu.csupomona.kyra.component.ai.Boss1AI;
+import edu.csupomona.kyra.component.gun.Boss1Gun;
+import edu.csupomona.kyra.component.physics.Boss1Physics;
+import edu.csupomona.kyra.component.render.ai.Boss1Render;
 import edu.csupomona.kyra.component.sound.PlayerSoundsLevel1;
+import edu.csupomona.kyra.entity.Entity;
 
 public class Level1 extends Level {
 	final static Vector2f P1_POS = new Vector2f(33, 1503);
@@ -25,6 +30,15 @@ public class Level1 extends Level {
 	
 	public Level1() throws SlickException {
 		super(Kyra.GAMESTATEONE, "lvl/level1map.tmx", P1_POS, P2_POS, true);
+	}
+	
+	protected void setBoss() {
+		boss = new Entity("Level1Boss");
+		boss.setPosition(new Vector2f(5575.0f, 1140.0f));
+		boss.addComponent(new Boss1Render("boss1Render"));
+		boss.addComponent(new Boss1AI("boss1AI", player1, player2, tiledMap));
+		boss.addComponent(new Boss1Physics("boss1Physics", 96.0f, 64.0f, tiledMap));
+		boss.addComponent(new Boss1Gun("boss1Gun", tiledMap));
 	}
 	
 	@Override
