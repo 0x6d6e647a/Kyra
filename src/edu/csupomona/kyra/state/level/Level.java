@@ -20,6 +20,7 @@ import edu.csupomona.kyra.Kyra;
 import edu.csupomona.kyra.component.ai.ZombieAI;
 import edu.csupomona.kyra.component.gun.HeartRender;
 import edu.csupomona.kyra.component.gun.PlayerGun;
+import edu.csupomona.kyra.component.health.EnemyHealth;
 import edu.csupomona.kyra.component.health.ItemHealth;
 import edu.csupomona.kyra.component.health.PlayerHealth;
 import edu.csupomona.kyra.component.input.Player1Input;
@@ -27,6 +28,7 @@ import edu.csupomona.kyra.component.input.Player2Input;
 import edu.csupomona.kyra.component.physics.HeartPhysics;
 import edu.csupomona.kyra.component.physics.PlayerPhysics;
 import edu.csupomona.kyra.component.physics.ZombiePhysics;
+import edu.csupomona.kyra.component.render.HealthRender;
 import edu.csupomona.kyra.component.render.LevelRender;
 import edu.csupomona.kyra.component.render.PositionRender;
 import edu.csupomona.kyra.component.render.MapHealthRender;
@@ -62,7 +64,8 @@ public abstract class Level extends BasicGameState {
 		zombie.addComponent(new ZombiePhysics("physics"+name, 60, 31, tiledMap));
 		zombie.addComponent(new ZombieRender("render"+name));
 		zombie.addComponent(new ZombieFx("fx"+name));
-		//zombie.addComponent(new EnemyHealth("hp"+name, 5, player1, player2));
+		zombie.addComponent(new EnemyHealth("health"+name, 3, player1, player2));
+		zombie.addComponent(new HealthRender("drawHealth"+name));
 		enemies.add(zombie);
 	}
 	
@@ -172,6 +175,12 @@ public abstract class Level extends BasicGameState {
 				for (Iterator<Entity> iter = hearts.iterator(); iter.hasNext();) {
 					Entity heart = iter.next();
 					if (heart.getHealthComponent().isDead())
+						iter.remove();
+				}
+				//Remove zombies from that map that have died
+				for (Iterator<Entity> iter = enemies.iterator(); iter.hasNext();) {
+					Entity enemy = iter.next();
+					if (enemy.getHealthComponent().isDead())
 						iter.remove();
 				}
 				//Pause if pause key is pressed
