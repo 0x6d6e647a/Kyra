@@ -7,7 +7,6 @@ import org.newdawn.slick.state.StateBasedGame;
 
 import edu.csupomona.kyra.component.physics.objects.Direction;
 import edu.csupomona.kyra.component.render.ImageRender;
-import edu.csupomona.kyra.component.render.SpriteRender;
 
 public class Boss2Render extends ImageRender {
 	
