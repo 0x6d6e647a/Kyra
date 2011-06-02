@@ -23,16 +23,16 @@ public class Level1 extends Level {
 		player1.addComponent(new PlayerSoundsLevel1("player1_SFX_lvl1"));
 		if (Kyra.vs)
 			player2.addComponent(new PlayerSoundsLevel1("player2_SFX_lvl1"));
-		addZombie(new Vector2f(1200, 1503));
-		addZombie(new Vector2f(1362, 580));
-		addZombie(new Vector2f(2057, 196));
-		addZombie(new Vector2f(2359, 196));
-		addZombie(new Vector2f(2596, 580));
-		addZombie(new Vector2f(1028, 2855));
-		addZombie(new Vector2f(3414, 1028));
-		addZombie(new Vector2f(3844, 1508));
-		addZombie(new Vector2f(4062, 1508));
-		addZombie(new Vector2f(4502, 1508));
+		addZombie(new Vector2f(1200, 1503), false);
+		addZombie(new Vector2f(1362, 580), false);
+		addZombie(new Vector2f(2057, 196), false);
+		addZombie(new Vector2f(2359, 196), false);
+		addZombie(new Vector2f(2596, 580), false);
+		addZombie(new Vector2f(1028, 2855), false);
+		addZombie(new Vector2f(3414, 1028), false);
+		addZombie(new Vector2f(3844, 1508), false);
+		addZombie(new Vector2f(4062, 1508), false);
+		addZombie(new Vector2f(4502, 1508), false);
 		addHeart(new Vector2f(1200, 1503));
 		addHeart(new Vector2f(2591, 196));
 		addHeart(new Vector2f(3649, 836));

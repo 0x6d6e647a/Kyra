@@ -25,6 +25,7 @@ import edu.csupomona.kyra.component.health.ItemHealth;
 import edu.csupomona.kyra.component.health.PlayerHealth;
 import edu.csupomona.kyra.component.input.Player1Input;
 import edu.csupomona.kyra.component.input.Player2Input;
+import edu.csupomona.kyra.component.physics.AntiZombiePhysics;
 import edu.csupomona.kyra.component.physics.HeartPhysics;
 import edu.csupomona.kyra.component.physics.PlayerPhysics;
 import edu.csupomona.kyra.component.physics.ZombiePhysics;
@@ -32,6 +33,7 @@ import edu.csupomona.kyra.component.render.HealthRender;
 import edu.csupomona.kyra.component.render.LevelRender;
 import edu.csupomona.kyra.component.render.PositionRender;
 import edu.csupomona.kyra.component.render.MapHealthRender;
+import edu.csupomona.kyra.component.render.ai.AntiZombieRender;
 import edu.csupomona.kyra.component.render.ai.ZombieRender;
 import edu.csupomona.kyra.component.render.player.Player1Render;
 import edu.csupomona.kyra.component.render.player.Player2Render;
@@ -56,16 +58,21 @@ public abstract class Level extends BasicGameState {
 		this.drawIntro = drawIntro;
 	}
 	
-	protected void addZombie(Vector2f position) throws SlickException {
+	protected void addZombie(Vector2f position, boolean anti) throws SlickException {
 		String name = "zombie" + entities.size();
 		Entity zombie = new Entity(name);
 		zombie.setPosition(position);
 		zombie.addComponent(new ZombieAI("ai_"+name, player1, player2, tiledMap));
-		zombie.addComponent(new ZombiePhysics("physics"+name, 60, 31, tiledMap));
-		zombie.addComponent(new ZombieRender("render"+name));
+		if(!anti) {
+			zombie.addComponent(new ZombiePhysics("physics"+name, 60, 31, tiledMap));
+			zombie.addComponent(new ZombieRender("render"+name));
+		} else {
+			zombie.addComponent(new AntiZombiePhysics("physics"+name, 60, 31, tiledMap));
+			zombie.addComponent(new AntiZombieRender("render"+name));
+		}
 		zombie.addComponent(new ZombieFx("fx"+name));
 		if(!Kyra.vs)
-			zombie.addComponent(new EnemyHealth("health"+name, 5, player1, player2));
+			zombie.addComponent(new EnemyHealth("health"+name, 1, player1, player2));
 		else
 			zombie.addComponent(new EnemyHealth("health"+name, 10, player1, player2));
 		zombie.addComponent(new HealthRender("drawHealth"+name));
@@ -148,7 +155,7 @@ public abstract class Level extends BasicGameState {
 			for (Entity enemy: enemies) {
 				float eXPos = enemy.getPosition().x;
 				float pXPos = player1.getPosition().x;
-				if(Math.abs(eXPos-pXPos) < 1000)
+				if(Math.abs(eXPos-pXPos) < 500)
 					enemy.render(gc, sbg, gr);
 			}
 			for (Entity heart : hearts)
@@ -168,7 +175,7 @@ public abstract class Level extends BasicGameState {
 				for (Entity enemy: enemies) {
 					float eXPos = enemy.getPosition().x;
 					float pXPos = player1.getPosition().x;
-					if(Math.abs(eXPos-pXPos) < 700)
+					if(Math.abs(eXPos-pXPos) < 500)
 						enemy.update(gc, sbg, delta);
 				}
 				for (Entity heart : hearts)
@@ -183,8 +190,10 @@ public abstract class Level extends BasicGameState {
 				//Remove zombies from that map that have died
 				for (Iterator<Entity> iter = enemies.iterator(); iter.hasNext();) {
 					Entity enemy = iter.next();
-					if (enemy.getHealthComponent().isDead())
+					if (enemy.getHealthComponent().isDead()) {
+						enemy.getSoundComponent().stopAll();
 						iter.remove();
+					}
 				}
 				//Pause if pause key is pressed
 				if (input.isKeyPressed(Input.KEY_ENTER)) {
@@ -224,10 +233,11 @@ public abstract class Level extends BasicGameState {
     					if (enemy.getSoundComponent() != null)
     						enemy.getSoundComponent().stopAll();
         			gc.resume();
+        			if(sbg.getCurrentStateID() == 4)
+        				drawIntro = true;
         			sbg.getCurrentState().leave(gc, sbg);
         			sbg.getState(Kyra.GAMEOVERSTATE).init(gc, sbg);
         			sbg.getState(Kyra.GAMEOVERSTATE).enter(gc, sbg);
-        			drawIntro = true;
         			sbg.enterState(Kyra.GAMEOVERSTATE);
 				}
 			} else {
@@ -239,10 +249,12 @@ public abstract class Level extends BasicGameState {
     					if (enemy.getSoundComponent() != null)
     						enemy.getSoundComponent().stopAll();
         			gc.resume();
+        			if(sbg.getCurrentStateID() == 4)
+        				drawIntro = true;
+        			sbg.getCurrentState().leave(gc, sbg);
         			sbg.getCurrentState().leave(gc, sbg);
         			sbg.getState(Kyra.GAMEOVERSTATE).init(gc, sbg);
         			sbg.getState(Kyra.GAMEOVERSTATE).enter(gc, sbg);
-        			drawIntro = true;
         			sbg.enterState(Kyra.GAMEOVERSTATE);
 				}
 			}

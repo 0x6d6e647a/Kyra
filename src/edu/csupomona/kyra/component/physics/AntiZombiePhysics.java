@@ -14,7 +14,7 @@ public class AntiZombiePhysics extends PhysicsComponent {
 		INAIR_X = 0.001f,
 		FRICTION = 0.97f,
 		MIN_X = -1.1f,
-		MAX_X = 1.1f,
+		MAX_X = 2.1f,
 		MIN_Y = -20.0f,
 		MAX_Y = 2.5f;
 	

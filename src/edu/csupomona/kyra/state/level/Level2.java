@@ -23,26 +23,26 @@ public class Level2 extends Level {
 		player1.addComponent(new PlayerSoundsLevel2("player1_SFX_lvl2"));
 		if (Kyra.vs)
 			player2.addComponent(new PlayerSoundsLevel2("player2_SFX_lvl2"));
-		addZombie(new Vector2f(684, 1092));
-		addZombie(new Vector2f(1225, 1188));
-		addZombie(new Vector2f(1690, 1092));
-		addZombie(new Vector2f(2177, 1220));
-		addZombie(new Vector2f(2784, 1028));
-		addZombie(new Vector2f(2525, 388));
-		addZombie(new Vector2f(1938, 164));
-		addZombie(new Vector2f(2432, 132));
-		addZombie(new Vector2f(2883, 132));
-		addZombie(new Vector2f(3607, 132));
-		addZombie(new Vector2f(4057, 260));
-		addZombie(new Vector2f(4244, 804));
-		addZombie(new Vector2f(3895, 1284));
-		addZombie(new Vector2f(3664, 1508));
-		addZombie(new Vector2f(4491, 1284));
-		addZombie(new Vector2f(4741, 1156));
-		addZombie(new Vector2f(5674, 1284));
-		addZombie(new Vector2f(5835, 676));
-		addZombie(new Vector2f(6171, 676));
-		addZombie(new Vector2f(6343, 676));
+		addZombie(new Vector2f(684, 1092), false);
+		addZombie(new Vector2f(1225, 1188), true);
+		addZombie(new Vector2f(1690, 1092), false);
+		addZombie(new Vector2f(2177, 1220), false);
+		addZombie(new Vector2f(2784, 1028), false);
+		addZombie(new Vector2f(2525, 388), true);
+		addZombie(new Vector2f(1938, 164), false);
+		addZombie(new Vector2f(2432, 132), false);
+		addZombie(new Vector2f(2883, 132), false);
+		addZombie(new Vector2f(3607, 132), false);
+		addZombie(new Vector2f(4057, 260), false);
+		addZombie(new Vector2f(4244, 804), false);
+		addZombie(new Vector2f(3895, 1284), true);
+		addZombie(new Vector2f(3664, 1508), true);
+		addZombie(new Vector2f(4491, 1284), false);
+		addZombie(new Vector2f(4741, 1156), true);
+		addZombie(new Vector2f(5674, 1284), true);
+		addZombie(new Vector2f(5835, 676), false);
+		addZombie(new Vector2f(6171, 676), false);
+		addZombie(new Vector2f(6343, 676), false);
 		addHeart(new Vector2f(799, 676));
 		addHeart(new Vector2f(2849, 1220));
 		addHeart(new Vector2f(1602, 356));
@@ -52,7 +52,7 @@ public class Level2 extends Level {
 		addHeart(new Vector2f(5064, 1252));
 		addHeart(new Vector2f(4257, 516));
 		addHeart(new Vector2f(2822, 132));
-		addHeart(new Vector2f(799, 1444));
+		addHeart(new Vector2f(805, 1444));
 	}
 	
 	@Override
