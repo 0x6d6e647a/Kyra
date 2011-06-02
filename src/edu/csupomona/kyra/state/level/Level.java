@@ -43,7 +43,8 @@ public abstract class Level extends BasicGameState {
 	String path;
 	TiledMap tiledMap;
 	Entity map, player1, player2;
-	ArrayList<Entity> entities, enemies, hearts, playerBullets, enemyBullets;
+	ArrayList<Entity> entities, enemies, hearts;
+	Entity boss;
 	Vector2f p1Pos, p2Pos;
 	Image intro, pause;
 	boolean drawIntro;
@@ -55,6 +56,8 @@ public abstract class Level extends BasicGameState {
 		this.p2Pos = p2Pos;
 		this.drawIntro = drawIntro;
 	}
+	
+	protected abstract void setBoss();
 	
 	protected void addZombie(Vector2f position) throws SlickException {
 		String name = "zombie" + entities.size();
@@ -105,8 +108,6 @@ public abstract class Level extends BasicGameState {
 		entities = new ArrayList<Entity>();
 		enemies = new ArrayList<Entity>();
 		hearts = new ArrayList<Entity>();
-		playerBullets = new ArrayList<Entity>();
-		enemyBullets = new ArrayList<Entity>();
 		
 		player1 = new Entity("player1");
 		player1.setPosition(p1Pos);

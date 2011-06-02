@@ -17,6 +17,10 @@ public class Level1 extends Level {
 		super(Kyra.GAMESTATEONE, "lvl/level1map.tmx", P1_POS, P2_POS, true);
 	}
 	
+	protected void setBoss() {
+		//Set the boss entity!
+	}
+	
 	@Override
 	public void init(GameContainer gc, StateBasedGame sbg) throws SlickException {
 		super.init(gc, sbg);
