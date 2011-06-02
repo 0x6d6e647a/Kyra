@@ -144,6 +144,9 @@ public class Entity {
 		return healthComponent;
 	}
 	
+	public GunComponent getGunComponent() {
+		return gunComponent;
+	}
 	
 	public Direction getXDirection() {
 		return xDirection;
