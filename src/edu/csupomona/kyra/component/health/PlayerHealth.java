@@ -23,17 +23,6 @@ public class PlayerHealth extends HealthComponent {
 		timer = new Timer();
 	}
 	
-	protected void makeTempInvulnerable() {
-		makeInvulnerable();
-		timer = new Timer();
-		TimerTask end = new TimerTask() {
-			public void run() {
-				makeVulnerable();
-			}
-		};
-		timer.schedule(end, 1200);
-	}
-
 	@Override
 	public void update(GameContainer gc, StateBasedGame sb, int delta) {
 		if (isVulnerable()) {
@@ -43,7 +32,7 @@ public class PlayerHealth extends HealthComponent {
 				if ((enemyPoly != null) && (enemyPoly.intersects(polygon))) {
 					setBadHit();
 					addHealth(-1);
-					makeTempInvulnerable();
+					makeTempInvulnerable(1200);
 					break;
 				}
 			}

@@ -1,5 +1,8 @@
 package edu.csupomona.kyra.component.health;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
 import edu.csupomona.kyra.component.Component;
 
 public abstract class HealthComponent extends Component {
@@ -7,6 +10,7 @@ public abstract class HealthComponent extends Component {
 	int currHealth;
 	final int maxHealth;
 	boolean vulnerable, badHit, goodHit;
+	Timer timer;
 	
 	public HealthComponent(String id, int health) {
 		super(id);
@@ -45,7 +49,6 @@ public abstract class HealthComponent extends Component {
 			currHealth = maxHealth;
 		else
 			currHealth += health;
-		System.out.println(owner.getId() + "Health: " + currHealth + "/" + maxHealth + ".");
 	}
 	
 	public boolean isVulnerable() {
@@ -58,6 +61,17 @@ public abstract class HealthComponent extends Component {
 	
 	protected void makeVulnerable() {
 		vulnerable = true;
+	}
+	
+	protected void makeTempInvulnerable(long delay) {
+		makeInvulnerable();
+		timer = new Timer();
+		TimerTask end = new TimerTask() {
+			public void run() {
+				makeVulnerable();
+			}
+		};
+		timer.schedule(end, delay);
 	}
 	
 	protected void setBadHit() {
