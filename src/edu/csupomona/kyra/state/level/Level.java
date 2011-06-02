@@ -15,6 +15,8 @@ import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -60,7 +62,7 @@ public abstract class Level extends BasicGameState {
 	Entity boss;
 	Vector2f p1Pos, p2Pos;
 	Image intro, pause;
-	boolean drawIntro;
+	boolean drawIntro, levelWon;
 	
 	public Level(int stateID, String path, Vector2f p1Pos, Vector2f p2Pos, boolean drawIntro) {
 		this.stateID = stateID;
@@ -68,6 +70,7 @@ public abstract class Level extends BasicGameState {
 		this.p1Pos = p1Pos;
 		this.p2Pos = p2Pos;
 		this.drawIntro = drawIntro;
+		levelWon = false;
 	}
 	
 	protected abstract void setBoss();
@@ -86,7 +89,7 @@ public abstract class Level extends BasicGameState {
 		}
 		zombie.addComponent(new ZombieFx("fx"+name));
 		if(!Kyra.vs)
-			zombie.addComponent(new EnemyHealth("health"+name, 5, player1, player2));
+			zombie.addComponent(new EnemyHealth("health"+name, 1, player1, player2));
 		else
 			zombie.addComponent(new EnemyHealth("health"+name, 10, player1, player2));
 		//zombie.addComponent(new HealthRender("drawHealth"+name));
@@ -106,10 +109,31 @@ public abstract class Level extends BasicGameState {
 	protected void nextLevel(GameContainer gc, StateBasedGame sbg) throws SlickException {
 		gc.getInput().clearKeyPressedRecord();
 		gc.resume();
+		player1.getSoundComponent().stopAll();
+		if (Kyra.vs)
+			player2.getSoundComponent().stopAll();
+		for (Entity entity : entities)
+			if (entity.getSoundComponent() != null)
+				entity.getSoundComponent().stopAll();
 		sbg.getCurrentState().leave(gc, sbg);
 		sbg.getState(stateID+1).init(gc, sbg);
 		sbg.getState(stateID+1).enter(gc, sbg);
 		sbg.enterState(stateID+1);
+	}
+	
+	protected void gameOver(GameContainer gc, StateBasedGame sbg) throws SlickException {
+		gc.getInput().clearKeyPressedRecord();
+		player1.getSoundComponent().stopAll();
+		for (Entity enemy: enemies)
+			if (enemy.getSoundComponent() != null)
+				enemy.getSoundComponent().stopAll();
+		gc.resume();
+		if(sbg.getCurrentStateID() == 4)
+			drawIntro = true;
+		sbg.getCurrentState().leave(gc, sbg);
+		sbg.getState(Kyra.GAMEOVERSTATE).init(gc, sbg);
+		sbg.getState(Kyra.GAMEOVERSTATE).enter(gc, sbg);
+		sbg.enterState(Kyra.GAMEOVERSTATE);
 	}
 	
 	protected boolean inRange(Entity thing, Entity player1, Entity player2) {
@@ -181,6 +205,8 @@ public abstract class Level extends BasicGameState {
 			intro.drawCentered(512, 384);
 		if (gc.isPaused())
 			pause.drawCentered(512, 384);
+		if (levelWon)
+			gr.drawString("You Win!", gc.getWidth()/2, gc.getHeight()/2);
 		else {
 			map.render(gc, sbg, gr);
 			if(!player1.getHealthComponent().isDead())
@@ -188,13 +214,13 @@ public abstract class Level extends BasicGameState {
 			if (Kyra.vs)
 				if(!player2.getHealthComponent().isDead())
 					player2.render(gc, sbg, gr);
-			boss.render(gc, sbg, gr);
 			for (Entity enemy: enemies)
 				if(inRange(enemy, player1, player2))
 					enemy.render(gc, sbg, gr);
 			for (Entity heart : hearts)
 				if(inRange(heart, player1, player2))
 					heart.render(gc, sbg, gr);
+			boss.render(gc, sbg, gr);
 		}
 	}
 
@@ -204,103 +230,79 @@ public abstract class Level extends BasicGameState {
 		
 		if(!drawIntro) {
 			if (!gc.isPaused()) {
-				if(!player1.getHealthComponent().isDead())
-					player1.update(gc, sbg, delta);
-				if (Kyra.vs)
-					if(!player2.getHealthComponent().isDead())
-						player2.update(gc, sbg, delta);
-				for (Entity enemy: enemies)
-					if(inRange(enemy, player1, player2))
-						enemy.update(gc, sbg, delta);
-				boss.update(gc, sbg, delta);
-				for (Entity heart : hearts)
-					if(inRange(heart, player1, player2))
-						heart.update(gc, sbg, delta);
-				map.update(gc, sbg, delta);
-				//Remove hearts from the map that have been used
-				for (Iterator<Entity> iter = hearts.iterator(); iter.hasNext();) {
-					Entity heart = iter.next();
-					if (heart.getHealthComponent().isDead())
-						iter.remove();
-				}
-				//Remove zombies from that map that have died
-				for (Iterator<Entity> iter = enemies.iterator(); iter.hasNext();) {
-					Entity enemy = iter.next();
-					if (enemy.getHealthComponent().isDead()) {
-						enemy.getSoundComponent().stopAll();
-						iter.remove();
+					if(!player1.getHealthComponent().isDead())
+						player1.update(gc, sbg, delta);
+					if (Kyra.vs)
+						if(!player2.getHealthComponent().isDead())
+							player2.update(gc, sbg, delta);
+					for (Entity enemy: enemies)
+						if(inRange(enemy, player1, player2))
+							enemy.update(gc, sbg, delta);
+					boss.update(gc, sbg, delta);
+					HealthComponent bossHealth = boss.getHealthComponent();
+					if ((bossHealth != null) && (bossHealth.isDead())) {
+						levelWon = true;
+					for (Entity heart : hearts)
+						if(inRange(heart, player1, player2))
+							heart.update(gc, sbg, delta);
+					map.update(gc, sbg, delta);
+					//Remove hearts from the map that have been used
+					for (Iterator<Entity> iter = hearts.iterator(); iter.hasNext();) {
+						Entity heart = iter.next();
+						if (heart.getHealthComponent().isDead())
+							iter.remove();
+					}
+					//Remove zombies from that map that have died
+					for (Iterator<Entity> iter = enemies.iterator(); iter.hasNext();) {
+						Entity enemy = iter.next();
+						if (enemy.getHealthComponent().isDead()) {
+							enemy.getSoundComponent().stopAll();
+							iter.remove();
+						}
+					}
+					/*//Remove the boss if he died
+					HealthComponent bossHealth = boss.getHealthComponent();
+					if ((bossHealth != null) && (bossHealth.isDead())) {
+								if(input.isKeyPressed(Input.KEY_SPACE))
+									nextLevel(gc, sbg);	
+					}*/
+					//Pause if pause key is pressed
+					if (input.isKeyPressed(Input.KEY_ENTER)) {
+						gc.pause();
+						input.clearKeyPressedRecord();
 					}
 				}
-				//Remove the boss if he died
-				HealthComponent bossHealth = boss.getHealthComponent();
-				if ((bossHealth != null) && (bossHealth.isDead())) {
-					gc.pause();
-					input.clearKeyPressedRecord();
-					nextLevel(gc, sbg);
-				}
-				//Pause if pause key is pressed
-				if (input.isKeyPressed(Input.KEY_ENTER)) {
-					gc.pause();
-					input.clearKeyPressedRecord();
-				}
-			}
-			else {
-				player1.getSoundComponent().stopAll();
-				if (Kyra.vs)
-					player2.getSoundComponent().stopAll();
-				for (Entity entity : entities)
-					if (entity.getSoundComponent() != null)
-						entity.getSoundComponent().stopAll();
-				if (input.isKeyPressed(Input.KEY_ENTER)) {
-					gc.resume();
-					input.clearKeyPressedRecord();
-				}
-				if(input.isKeyPressed(Input.KEY_Q)) {
-					File f = new File("save.txt");
-					try {
-						PrintWriter pw = new PrintWriter(f);
-						pw.println(Kyra.vs);
-						pw.println(sbg.getCurrentStateID());
-						pw.close();
-					} catch (FileNotFoundException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
+				else {
+					player1.getSoundComponent().stopAll();
+					if (Kyra.vs)
+						player2.getSoundComponent().stopAll();
+					for (Entity entity : entities)
+						if (entity.getSoundComponent() != null)
+							entity.getSoundComponent().stopAll();
+					if (input.isKeyPressed(Input.KEY_ENTER)) {
+						gc.resume();
+						input.clearKeyPressedRecord();
 					}
-				}		
-			}
-			if(!Kyra.vs) {
-				if(player1.getHealthComponent().isDead()) {
-					input.clearKeyPressedRecord();
-        			player1.getSoundComponent().stopAll();
-        			for (Entity enemy: enemies)
-    					if (enemy.getSoundComponent() != null)
-    						enemy.getSoundComponent().stopAll();
-        			gc.resume();
-        			if(sbg.getCurrentStateID() == 4)
-        				drawIntro = true;
-        			sbg.getCurrentState().leave(gc, sbg);
-        			sbg.getState(Kyra.GAMEOVERSTATE).init(gc, sbg);
-        			sbg.getState(Kyra.GAMEOVERSTATE).enter(gc, sbg);
-        			sbg.enterState(Kyra.GAMEOVERSTATE);
-				}
-			} else {
-				if(player1.getHealthComponent().isDead() && player2.getHealthComponent().isDead()) {
-					input.clearKeyPressedRecord();
-        			player1.getSoundComponent().stopAll();
-            		player2.getSoundComponent().stopAll();
-            		for (Entity enemy: enemies)
-    					if (enemy.getSoundComponent() != null)
-    						enemy.getSoundComponent().stopAll();
-        			gc.resume();
-        			if(sbg.getCurrentStateID() == 4)
-        				drawIntro = true;
-        			sbg.getCurrentState().leave(gc, sbg);
-        			sbg.getCurrentState().leave(gc, sbg);
-        			sbg.getState(Kyra.GAMEOVERSTATE).init(gc, sbg);
-        			sbg.getState(Kyra.GAMEOVERSTATE).enter(gc, sbg);
-        			sbg.enterState(Kyra.GAMEOVERSTATE);
+					if(input.isKeyPressed(Input.KEY_Q)) {
+						File f = new File("save.txt");
+						try {
+							PrintWriter pw = new PrintWriter(f);
+							pw.println(Kyra.vs);
+							pw.println(sbg.getCurrentStateID());
+							pw.close();
+						} catch (FileNotFoundException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					}		
 				}
 			}
+			if(!Kyra.vs)
+				if(player1.getHealthComponent().isDead())
+					gameOver(gc, sbg);
+			else
+				if(player1.getHealthComponent().isDead() && player2.getHealthComponent().isDead())
+					gameOver(gc, sbg);
 		} else {
 			if (input.isKeyPressed(Input.KEY_SPACE)) {
 				drawIntro = false;

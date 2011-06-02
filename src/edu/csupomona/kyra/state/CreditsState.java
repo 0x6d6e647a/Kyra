@@ -25,7 +25,7 @@ import edu.csupomona.kyra.Kyra;
 public class CreditsState extends BasicGameState {
 
 	private Image background = null;
-	private int stateID = 7;
+	private int stateID = 6;
 	
 	public CreditsState(int stateID) {
 		this.stateID = stateID;

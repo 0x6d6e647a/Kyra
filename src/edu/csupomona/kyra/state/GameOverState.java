@@ -26,7 +26,7 @@ import edu.csupomona.kyra.Kyra;
 public class GameOverState extends BasicGameState {
 
 	private Image background = null;
-	private int stateID = 6;
+	private int stateID = 7;
 	
 	public GameOverState(int stateID) {
 		this.stateID = stateID;
