@@ -8,6 +8,7 @@ import org.newdawn.slick.state.StateBasedGame;
 
 import edu.csupomona.kyra.Kyra;
 import edu.csupomona.kyra.component.sound.PlayerSoundsLevel2;
+import edu.csupomona.kyra.entity.Entity;
 
 public class Level2 extends Level {
 	final static Vector2f P1_POS = new Vector2f(33, 1216);
@@ -18,7 +19,7 @@ public class Level2 extends Level {
 	}
 	
 	protected void setBoss() {
-		//Set the boss entity!
+		boss = new Entity("Level2Boss");
 	}
 	
 	@Override

@@ -132,6 +132,7 @@ public abstract class Level extends BasicGameState {
 		map.addComponent(new LevelRender("level", tiledMap, player1));
 		map.addComponent(new MapHealthRender("playerHealth", player1, player2));
 		
+		setBoss();
 		
 	}
 
@@ -146,6 +147,7 @@ public abstract class Level extends BasicGameState {
 			player1.render(gc, sbg, gr);
 			if (Kyra.vs)
 				player2.render(gc, sbg, gr);
+			boss.render(gc, sbg, gr);
 			for (Entity enemy: enemies) {
 				float eXPos = enemy.getPosition().x;
 				float pXPos = player1.getPosition().x;
@@ -172,6 +174,7 @@ public abstract class Level extends BasicGameState {
 					if(Math.abs(eXPos-pXPos) < 700)
 						enemy.update(gc, sbg, delta);
 				}
+				boss.update(gc, sbg, delta);
 				for (Entity heart : hearts)
 					heart.update(gc, sbg, delta);
 				map.update(gc, sbg, delta);

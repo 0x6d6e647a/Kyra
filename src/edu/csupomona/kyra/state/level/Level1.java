@@ -7,7 +7,9 @@ import org.newdawn.slick.geom.Vector2f;
 import org.newdawn.slick.state.StateBasedGame;
 
 import edu.csupomona.kyra.Kyra;
+import edu.csupomona.kyra.component.render.ai.Boss1Render;
 import edu.csupomona.kyra.component.sound.PlayerSoundsLevel1;
+import edu.csupomona.kyra.entity.Entity;
 
 public class Level1 extends Level {
 	final static Vector2f P1_POS = new Vector2f(33, 1503);
@@ -18,7 +20,9 @@ public class Level1 extends Level {
 	}
 	
 	protected void setBoss() {
-		//Set the boss entity!
+		boss = new Entity("Level1Boss");
+		boss.setPosition(new Vector2f(5575.0f, 1140.0f));
+		boss.addComponent(new Boss1Render("boss1Render"));
 	}
 	
 	@Override
