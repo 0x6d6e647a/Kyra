@@ -66,6 +66,8 @@ public abstract class AIComponent extends Component {
 					return p2Line;
 				return null;
 			}
+			else if ((p1Line == null) && (p2Line == null))
+				return null;
 			//If both players are alive return the one with the clear path
 			if (clearPathToPlayer(p1Line) && !clearPathToPlayer(p2Line))
 				return p1Line;

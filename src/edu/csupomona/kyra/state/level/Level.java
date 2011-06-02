@@ -249,8 +249,7 @@ public abstract class Level extends BasicGameState {
 					gc.pause();
 					input.clearKeyPressedRecord();
 				}
-			}
-			else { //game is paused
+			} else { //game is paused
 				// stop all sounds
 				player1.getSoundComponent().stopAll();
 				if (Kyra.vs)
@@ -276,11 +275,9 @@ public abstract class Level extends BasicGameState {
 					}
 				}	
 			}
-			if(!Kyra.vs)
-				if(player1.getHealthComponent().isDead())
+			if(!Kyra.vs && player1.getHealthComponent().isDead())
 					gameOver(gc, sbg);
-			else
-				if(player1.getHealthComponent().isDead() && player2.getHealthComponent().isDead())
+			else if(Kyra.vs &&  player1.getHealthComponent().isDead() && player2.getHealthComponent().isDead())
 					gameOver(gc, sbg);
 		} else {
 			if (input.isKeyPressed(Input.KEY_SPACE)) {
