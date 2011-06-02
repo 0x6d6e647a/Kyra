@@ -34,7 +34,6 @@ public abstract class GunComponent extends Component {
 		try {
 			bullets.add(makeBullet(delta));
 			canFire = false;
-			System.out.println("Bullet Fired: " + bullets.size());
 			coolDown = new Timer();
 			TimerTask cooling = new TimerTask() {
 				
