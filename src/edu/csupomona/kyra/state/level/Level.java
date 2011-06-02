@@ -55,7 +55,7 @@ public abstract class Level extends BasicGameState {
 	Entity map, player1, player2, boss;
 	ArrayList<Entity> entities;
 	Vector2f p1Pos, p2Pos;
-	Image intro, pause, complete;
+	Image intro, pause, complete, p1Win, p2Win;
 	boolean drawIntro, levelWon;
 
 	
@@ -155,6 +155,8 @@ public abstract class Level extends BasicGameState {
 		intro = new Image("img/intro.png");
 		pause = new Image("img/pause.png");
 		complete = new Image("img/complete.png"); 
+		p1Win = new Image("img/p1_win.png");
+		p2Win = new Image("img/p2_win.png");
 		
 		boss = new Entity("boss", EntityType.BOSS);
 		entities = new ArrayList<Entity>();
@@ -187,8 +189,12 @@ public abstract class Level extends BasicGameState {
 		
 	}
 
-	protected boolean isInRange(Entity player, Entity other) {
-		Vector2f playerPos = player.getPosition();
+	protected boolean isInRange(Entity player1, Entity player2, Entity other) {
+		Vector2f playerPos = null;
+		if(!player1.getHealthComponent().isDead())
+			playerPos = player1.getPosition();
+		else if (Kyra.vs && !player2.getHealthComponent().isDead())
+			playerPos = player2.getPosition();
 		Vector2f otherPos = other.getPosition();
 		float xDiff = Math.abs(otherPos.x-playerPos.x);
 		float yDiff = Math.abs(otherPos.y-playerPos.y);
@@ -203,6 +209,7 @@ public abstract class Level extends BasicGameState {
 			pause.drawCentered(CENTER_WIDTH, CENTER_HEIGHT);
 		else if(gc.isPaused() && levelWon) {
 			complete.drawCentered(CENTER_WIDTH, CENTER_HEIGHT);
+			//p1Win.drawCentered(CENTER_WIDTH, CENTER_HEIGHT+115);
 		} else {
 			map.render(gc, sbg, gr);
 			if(!player1.getHealthComponent().isDead())
@@ -210,7 +217,7 @@ public abstract class Level extends BasicGameState {
 			if (Kyra.vs && !player2.getHealthComponent().isDead())
 				player2.render(gc, sbg, gr);
 			for (Entity entity : entities) {
-				if (isInRange(player1, entity))
+				if (isInRange(player1, player2, entity))
 					entity.render(gc, sbg, gr);
 			}
 		}	
@@ -229,7 +236,7 @@ public abstract class Level extends BasicGameState {
 				//Remove dead things from the game world
 				for (Iterator<Entity> iter = entities.iterator(); iter.hasNext();) {
 					Entity entity = iter.next();
-					if (isInRange(player1, entity))
+					if (isInRange(player1, player2, entity))
 						entity.update(gc, sbg, delta);
 					EntityType type = entity.getType();
 					if (type.equals(EntityType.HEART) && entity.getHealthComponent().isDead())

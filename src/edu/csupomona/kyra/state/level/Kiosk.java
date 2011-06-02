@@ -85,7 +85,7 @@ public class Kiosk extends Level {
 		if(!player1.getHealthComponent().isDead())
 			player1.render(gc, sbg, gr);
 		for (Entity entity : entities)
-			if (isInRange(player1, entity))
+			if (isInRange(player1, player2, entity))
 				entity.render(gc, sbg, gr);
 	}
 	
@@ -98,7 +98,7 @@ public class Kiosk extends Level {
 		player1.update(gc, sbg, delta);
 		for(Iterator<Entity> iter = entities.iterator(); iter.hasNext();) {
 			Entity entity = iter.next();
-			if (isInRange(player1, entity))
+			if (isInRange(player1, player2, entity))
 				entity.update(gc, sbg, delta);
 			HealthComponent healthCmpt = entity.getHealthComponent();
 			if ((healthCmpt != null) && healthCmpt.isDead())
