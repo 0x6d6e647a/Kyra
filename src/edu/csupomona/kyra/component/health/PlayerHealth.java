@@ -83,7 +83,7 @@ public class PlayerHealth extends HealthComponent {
 				else if (type.equals(EntityType.HEART)) {
 					Polygon heartPoly = entity.getPhysicsComponent().getPolygon();
 					ItemHealth heartHealth = (ItemHealth)entity.getHealthComponent();
-					if ((heartPoly != null) && (heartPoly.intersects(playerPoly))) {
+					if ((heartPoly != null) && (heartPoly.intersects(playerPoly)) && !isHealthFull()) {
 						setGoodHit();
 						addHealth(1);
 						heartHealth.useItem();
