@@ -64,7 +64,10 @@ public abstract class Level extends BasicGameState {
 		zombie.addComponent(new ZombiePhysics("physics"+name, 60, 31, tiledMap));
 		zombie.addComponent(new ZombieRender("render"+name));
 		zombie.addComponent(new ZombieFx("fx"+name));
-		zombie.addComponent(new EnemyHealth("health"+name, 3, player1, player2));
+		if(!Kyra.vs)
+			zombie.addComponent(new EnemyHealth("health"+name, 5, player1, player2));
+		else
+			zombie.addComponent(new EnemyHealth("health"+name, 10, player1, player2));
 		zombie.addComponent(new HealthRender("drawHealth"+name));
 		enemies.add(zombie);
 	}
