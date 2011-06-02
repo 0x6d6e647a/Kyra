@@ -23,6 +23,7 @@ import edu.csupomona.kyra.component.health.EnemyHealth;
 import edu.csupomona.kyra.component.physics.Boss2Physics;
 import edu.csupomona.kyra.component.render.HealthRender;
 import edu.csupomona.kyra.component.render.ai.Boss2Render;
+import edu.csupomona.kyra.component.sound.BossFx;
 import edu.csupomona.kyra.component.sound.PlayerSoundsLevel2;
 
 public class Level2 extends Level {
@@ -40,7 +41,8 @@ public class Level2 extends Level {
 		boss.addComponent(new Boss2Physics("boss2physics", 96.0f, 96.0f, tiledMap));
 		boss.addComponent(new Boss2Gun("boss2Gun", tiledMap));
 		boss.addComponent(new EnemyHealth("boss2Health", 35, player1, player2));
-		boss.addComponent(new HealthRender("boss1Health"));
+		boss.addComponent(new HealthRender("boss2Health"));
+		boss.addComponent(new BossFx("boss2Fx"));
 	}
 	
 	@Override

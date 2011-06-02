@@ -29,8 +29,8 @@ public abstract class GunComponent extends Component {
 	
 	ArrayList<Entity> bullets;
 	TiledMap map;
-	Timer coolDown;
-	boolean canFire;
+	Timer coolDown, fireDown;
+	boolean canFire, fired;
 	final int COOLDOWN;
 
 	protected abstract Entity makeBullet(int delta) throws SlickException;
@@ -40,11 +40,16 @@ public abstract class GunComponent extends Component {
 		return bullets;
 	}
 	
+	public boolean getFire() {
+		return fired;
+	}
+	
 	//Shoots the bullet
 	public void fireBullet(int delta) {
 		try {
 			bullets.add(makeBullet(delta));
 			canFire = false;
+			fired = true;
 			coolDown = new Timer();
 			TimerTask cooling = new TimerTask() {
 				
@@ -54,6 +59,15 @@ public abstract class GunComponent extends Component {
 				}
 			};
 			coolDown.schedule(cooling, COOLDOWN);
+			fireDown = new Timer();
+			TimerTask fire = new TimerTask() {
+				
+				@Override
+				public void run() {
+					fired = false;
+				}
+			};
+			fireDown.schedule(fire, 500);
 		}
 		catch (SlickException e) {
 			System.out.println("Unable to load bullet sprite!");

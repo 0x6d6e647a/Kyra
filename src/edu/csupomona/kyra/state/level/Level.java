@@ -15,7 +15,6 @@ import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Iterator;
-import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
@@ -60,10 +59,10 @@ public abstract class Level extends BasicGameState {
 	boolean drawIntro, levelWon;
 
 	
-	final int PLAYER_HEALTH = 5,
+	final int PLAYER_HEALTH = 10,
 		PLAYER_HEIGHT = 60,
 		PLAYER_WIDTH = 31,
-		ZOMBIE_HEALTH = 1,
+		ZOMBIE_HEALTH = 5,
 		ZOMBIE_HEIGHT = 60,
 		ZOMBIE_WIDTH = 31,
 		HEART_HEIGHT = 16,
@@ -155,6 +154,7 @@ public abstract class Level extends BasicGameState {
 		tiledMap = new TiledMap(path);
 		intro = new Image("img/intro.png");
 		pause = new Image("img/pause.png");
+		complete = new Image("img/complete.png"); 
 		
 		boss = new Entity("boss", EntityType.BOSS);
 		entities = new ArrayList<Entity>();
@@ -192,7 +192,7 @@ public abstract class Level extends BasicGameState {
 		Vector2f otherPos = other.getPosition();
 		float xDiff = Math.abs(otherPos.x-playerPos.x);
 		float yDiff = Math.abs(otherPos.y-playerPos.y);
-		return ((xDiff < CENTER_WIDTH) && (yDiff < CENTER_HEIGHT));
+		return ((xDiff < CENTER_WIDTH+300) && (yDiff < CENTER_HEIGHT+300));
 	}
 	
 	@Override
@@ -202,8 +202,7 @@ public abstract class Level extends BasicGameState {
 		if (gc.isPaused() && !levelWon)
 			pause.drawCentered(CENTER_WIDTH, CENTER_HEIGHT);
 		else if(gc.isPaused() && levelWon) {
-			gr.setColor(Color.white);
-			gr.drawString("You Win! Press SPACEBAR to contuine", CENTER_WIDTH - 50, CENTER_HEIGHT);
+			complete.drawCentered(CENTER_WIDTH, CENTER_HEIGHT);
 		} else {
 			map.render(gc, sbg, gr);
 			if(!player1.getHealthComponent().isDead())
