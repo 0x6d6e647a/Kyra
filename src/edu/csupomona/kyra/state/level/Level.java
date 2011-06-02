@@ -157,6 +157,7 @@ public abstract class Level extends BasicGameState {
 		tiledMap = new TiledMap(path);
 		intro = new Image("img/intro.png");
 		pause = new Image("img/pause.png");
+		complete = new Image("img/complete.png"); 
 		
 		boss = new Entity("boss", EntityType.BOSS);
 		entities = new ArrayList<Entity>();
@@ -204,8 +205,7 @@ public abstract class Level extends BasicGameState {
 		if (gc.isPaused() && !levelWon)
 			pause.drawCentered(CENTER_WIDTH, CENTER_HEIGHT);
 		else if(gc.isPaused() && levelWon) {
-			gr.setColor(Color.white);
-			gr.drawString("You Win! Press SPACEBAR to contuine", CENTER_WIDTH - 50, CENTER_HEIGHT);
+			complete.drawCentered(CENTER_WIDTH, CENTER_HEIGHT);
 		} else {
 			map.render(gc, sbg, gr);
 			if(!player1.getHealthComponent().isDead())
