@@ -20,7 +20,7 @@ public class Boss2AI extends AIComponent {
 		BULLET_SPEED = 0.85f,
 		MOVE_SPEED = 0.5f,
 		JUMP_SPEED = -2.0f;
-	final int JUMP_COOLDOWN = 1500;
+	final int JUMP_COOLDOWN = 5000;
 	
 	public Boss2AI(String id, Entity player1, Entity player2, TiledMap map) {
 		super(id, player1, player2, map);
