@@ -36,6 +36,8 @@ public abstract class AIComponent extends Component {
 	
 	//Draws line to player
 	protected Line getLineToPlayer(Entity player) {
+		if (player.getHealthComponent().isDead())
+			return null;
 		return new Line(owner.getPosition(), player.getPosition());
 	}
 	
@@ -53,16 +55,30 @@ public abstract class AIComponent extends Component {
 		Line p1Line = getLineToPlayer(player1);
 		if (Kyra.vs) {
 			Line p2Line = getLineToPlayer(player2);
+			//If a player is dead, return the living player's line if it is clear
+			if (p1Line != null && p2Line == null) {
+				if (clearPathToPlayer(p1Line))
+					return p1Line;
+				return null;
+			}
+			else if (p2Line != null && p1Line == null) {
+				if (clearPathToPlayer(p2Line))
+					return p2Line;
+				return null;
+			}
+			//If both players are alive return the one with the clear path
 			if (clearPathToPlayer(p1Line) && !clearPathToPlayer(p2Line))
 				return p1Line;
 			else if (!clearPathToPlayer(p1Line) && clearPathToPlayer(p2Line))
 				return p2Line;
+			//If both are clear return the shorter line
 			else if (clearPathToPlayer(p1Line) && clearPathToPlayer(p2Line)) {
 				if (p1Line.length() < p2Line.length())
 					return p1Line;
 				else
 					return p2Line;
 			}
+			//If all of the above fail, then there is no path
 			else
 				return null;
 			
