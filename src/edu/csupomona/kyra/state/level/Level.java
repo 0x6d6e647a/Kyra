@@ -187,7 +187,7 @@ public abstract class Level extends BasicGameState {
 		
 	}
 
-	private boolean isInRange(Entity player, Entity other) {
+	protected boolean isInRange(Entity player, Entity other) {
 		Vector2f playerPos = player.getPosition();
 		Vector2f otherPos = other.getPosition();
 		float xDiff = Math.abs(otherPos.x-playerPos.x);

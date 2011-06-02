@@ -29,6 +29,7 @@ public class Kyra extends StateBasedGame {
 	public static final int GAMESTATETWO = 5;
 	public static final int GAMEOVERSTATE = 7;
 	public static final int CREDITSSTATE = 6;
+	public static final int KIOSKSTATE = 9;
 	public static boolean vs = false;
 	
 	public Kyra() throws SlickException {
