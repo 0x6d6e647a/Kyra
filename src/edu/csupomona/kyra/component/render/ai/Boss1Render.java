@@ -26,19 +26,13 @@ public class Boss1Render extends ImageRender {
 
 	@Override
 	public void update(GameContainer gc, StateBasedGame sb, int delta) {
-//		for (String action : owner.getAIComponent().getActions()) {
-//			if (action.equals("right"))
-//				setImage(bossRight);
-//			if (action.equals("left"))
-//				setImage(bossLeft);
-//			else {
-//				Direction direction = owner.getXDirection();
-//				if (direction.equals(Direction.RIGHT))
-//					setImage(bossRight);
-//				else
-//					setImage(bossLeft);
-//			}
-//		}
+		Direction dir = owner.getXDirection();
+		if (dir.equals(Direction.RIGHT))
+			setImage(bossRight);
+		else if (dir.equals(Direction.LEFT))
+			setImage(bossLeft);
+		else
+			setImage(bossLeft);
 	}
 
 }

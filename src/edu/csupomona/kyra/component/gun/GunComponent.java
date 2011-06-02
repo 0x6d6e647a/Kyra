@@ -12,7 +12,6 @@ import org.newdawn.slick.state.StateBasedGame;
 import org.newdawn.slick.tiled.TiledMap;
 
 import edu.csupomona.kyra.component.Component;
-import edu.csupomona.kyra.component.input.InputComponent;
 import edu.csupomona.kyra.component.physics.BulletPhysics;
 import edu.csupomona.kyra.entity.Entity;
 

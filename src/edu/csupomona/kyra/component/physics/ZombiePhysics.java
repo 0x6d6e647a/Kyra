@@ -66,8 +66,6 @@ public class ZombiePhysics extends PhysicsComponent {
 		forceVector.clampY(MIN_Y, MAX_Y);
 		if (testWallCollisions(forceVector))
 			forceVector.setXComponent(0.0f);
-		if (testWallCollisions(forceVector))
-			forceVector.setYComponent(0.0f);
 		setLocation(forceVector.shiftPosition(owner.getPosition()));
 	}
 

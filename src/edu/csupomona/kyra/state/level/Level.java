@@ -18,7 +18,6 @@ import org.newdawn.slick.tiled.TiledMap;
 
 import edu.csupomona.kyra.Kyra;
 import edu.csupomona.kyra.component.ai.ZombieAI;
-import edu.csupomona.kyra.component.gun.HeartRender;
 import edu.csupomona.kyra.component.gun.PlayerGun;
 import edu.csupomona.kyra.component.health.EnemyHealth;
 import edu.csupomona.kyra.component.health.ItemHealth;
@@ -29,6 +28,7 @@ import edu.csupomona.kyra.component.physics.HeartPhysics;
 import edu.csupomona.kyra.component.physics.PlayerPhysics;
 import edu.csupomona.kyra.component.physics.ZombiePhysics;
 import edu.csupomona.kyra.component.render.HealthRender;
+import edu.csupomona.kyra.component.render.HeartRender;
 import edu.csupomona.kyra.component.render.LevelRender;
 import edu.csupomona.kyra.component.render.PositionRender;
 import edu.csupomona.kyra.component.render.MapHealthRender;
