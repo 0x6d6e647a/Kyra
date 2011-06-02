@@ -165,7 +165,7 @@ public abstract class Level extends BasicGameState {
 				for (Entity enemy: enemies) {
 					float eXPos = enemy.getPosition().x;
 					float pXPos = player1.getPosition().x;
-					if(Math.abs(eXPos-pXPos) < 1000)
+					if(Math.abs(eXPos-pXPos) < 700)
 						enemy.update(gc, sbg, delta);
 				}
 				for (Entity heart : hearts)
