@@ -171,7 +171,7 @@ public abstract class Level extends BasicGameState {
 				//Remove hearts from the map that have been used
 				for (Iterator<Entity> iter = hearts.iterator(); iter.hasNext();) {
 					Entity heart = iter.next();
-					if (heart.getHealthComponent().zeroHealth())
+					if (heart.getHealthComponent().isDead())
 						iter.remove();
 				}
 				//Pause if pause key is pressed
@@ -205,7 +205,7 @@ public abstract class Level extends BasicGameState {
 				}		
 			}
 			if(!Kyra.vs) {
-				if(player1.getHealthComponent().zeroHealth()) {
+				if(player1.getHealthComponent().isDead()) {
 					input.clearKeyPressedRecord();
         			player1.getSoundComponent().stopAll();
         			for (Entity enemy: enemies)
@@ -219,7 +219,7 @@ public abstract class Level extends BasicGameState {
         			sbg.enterState(Kyra.GAMEOVERSTATE);
 				}
 			} else {
-				if(player1.getHealthComponent().zeroHealth() || player2.getHealthComponent().zeroHealth()) {
+				if(player1.getHealthComponent().isDead() || player2.getHealthComponent().isDead()) {
 					input.clearKeyPressedRecord();
         			player1.getSoundComponent().stopAll();
             		player2.getSoundComponent().stopAll();
