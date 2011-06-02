@@ -13,8 +13,8 @@ public class Boss2Physics extends PhysicsComponent {
 		FRICTION = 0.97f,
 		MIN_X = -2.0f,
 		MAX_X = 2.0f,
-		MIN_Y = -7.0f,
-		MAX_Y = 3.5f;
+		MIN_Y = -5.0f,
+		MAX_Y = 2.5f;
 	
 	public Boss2Physics(String id, float height, float width, TiledMap map) {
 		super(id, height, width, map);
@@ -28,14 +28,17 @@ public class Boss2Physics extends PhysicsComponent {
 		
 		ForceVector gravity = new ForceVector(0, delta * GRAVITY);
 		
-		if (testCeilingCollision(forceVector.clone().add(gravity))) {
+		if (testFloorCollision(forceVector.clone().add(gravity))) {
 			onFloor = true;
 			forceVector.setYComponent(0.0f);
+			forceVector.setXComponent(0.0f);
 			ForceVector jump = bossAI.getJump();
 			if (jump != null) {
 				forceVector.add(jump);
 			}
-			owner.setXDirection(bossAI.getAim().getXDirection());
+			ForceVector aim = bossAI.getAim();
+			if (aim != null)
+				owner.setXDirection(bossAI.getAim().getXDirection());
 		}
 		else {
 			onFloor = false;
