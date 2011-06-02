@@ -15,9 +15,6 @@ import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.Timer;
-import java.util.TimerTask;
-
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -61,14 +58,14 @@ public abstract class Level extends BasicGameState {
 	Entity map, player1, player2, boss;
 	ArrayList<Entity> entities;
 	Vector2f p1Pos, p2Pos;
-	Image intro, pause;
+	Image intro, pause, complete;
 	boolean drawIntro, levelWon;
 
 	
 	final int PLAYER_HEALTH = 10,
 		PLAYER_HEIGHT = 60,
 		PLAYER_WIDTH = 31,
-		ZOMBIE_HEALTH = 5,
+		ZOMBIE_HEALTH = 1,
 		ZOMBIE_HEIGHT = 60,
 		ZOMBIE_WIDTH = 31,
 		HEART_HEIGHT = 16,
@@ -197,7 +194,7 @@ public abstract class Level extends BasicGameState {
 		Vector2f otherPos = other.getPosition();
 		float xDiff = Math.abs(otherPos.x-playerPos.x);
 		float yDiff = Math.abs(otherPos.y-playerPos.y);
-		return ((xDiff < CENTER_WIDTH) || (yDiff < CENTER_HEIGHT));
+		return ((xDiff < CENTER_WIDTH) && (yDiff < CENTER_HEIGHT));
 	}
 	
 	@Override
@@ -247,9 +244,6 @@ public abstract class Level extends BasicGameState {
 					else if (type.equals(EntityType.BOSS) && entity.getHealthComponent().isDead()) {
 						gc.pause();
 						levelWon = true;
-						//input.clearKeyPressedRecord();
-						//nextLevel(gc, sbg);
-						//LEVEL WON STUFF
 					}
 				}
 				map.update(gc, sbg, delta);
