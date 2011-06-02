@@ -15,9 +15,6 @@ package edu.csupomona.kyra.state;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
-import java.util.Timer;
-import java.util.TimerTask;
-
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
@@ -79,16 +76,6 @@ public class MenuState extends BasicGameState {
 	    optionsSelect = optionsLook.getSubImage(0, 115, 400, 115);
 	    exit = exitLook.getSubImage(0, 0, 400, 115);
 	    exitSelect = exitLook.getSubImage(0, 115, 400, 115);
-	    
-	    Timer kiosk = new Timer();
-		TimerTask activateKiosk = new TimerTask() {
-			
-			@Override
-			public void run() {
-				
-			}
-		};
-		kiosk.schedule(activateKiosk, 30000);
     }
  
     public void render(GameContainer gc, StateBasedGame sbg, Graphics gc1) throws SlickException {
@@ -125,6 +112,14 @@ public class MenuState extends BasicGameState {
     	
     	if(!backSound.playing())
     		backSound.play();
+    	
+    	if(input.isKeyPressed(Input.KEY_K)) {
+    		input.clearKeyPressedRecord();
+			sbg.getCurrentState().leave(gc, sbg);
+			sbg.getState(Kyra.KIOSKSTATE).init(gc, sbg);
+    		sbg.getState(Kyra.KIOSKSTATE).enter(gc, sbg);
+			sbg.enterState(Kyra.KIOSKSTATE);
+    	}
     	
     	if(insideStart) {
     		if(input.isKeyPressed(Input.KEY_UP)) {

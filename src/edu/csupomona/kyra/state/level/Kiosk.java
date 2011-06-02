@@ -31,8 +31,8 @@ public class Kiosk extends Level {
 	final static Vector2f P1_POS = new Vector2f(0.0f, 0.0f);
 	final static Vector2f P2_POS = new Vector2f(0.0f, 0.0f);
 	
-	public Kiosk() throws SlickException {
-		super(Kyra.KIOSKSTATE, "lvl/kiosk.tmx", P1_POS, P2_POS, true);
+	public Kiosk(int stateID) throws SlickException {
+		super(stateID, "lvl/kiosk.tmx", P1_POS, P2_POS, true);
 	}
 	
 	@Override

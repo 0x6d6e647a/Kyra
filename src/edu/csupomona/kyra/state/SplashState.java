@@ -19,6 +19,7 @@ import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
 import edu.csupomona.kyra.Kyra;
+import edu.csupomona.kyra.state.level.Kiosk;
 import edu.csupomona.kyra.state.level.Level1;
 import edu.csupomona.kyra.state.level.Level2;
 
@@ -60,6 +61,8 @@ public class SplashState extends BasicGameState {
 		sbg.getState(Kyra.GAMEOVERSTATE).init(gc, sbg);
 		sbg.addState(new CreditsState(Kyra.CREDITSSTATE));
 		sbg.getState(Kyra.CREDITSSTATE).init(gc, sbg);
+		sbg.addState(new Kiosk(Kyra.KIOSKSTATE));
+    	sbg.getState(Kyra.KIOSKSTATE).init(gc, sbg);
 		
     	sbg.getCurrentState().leave(gc, sbg);
 		sbg.getState(Kyra.MENUSTATE).enter(gc, sbg);
