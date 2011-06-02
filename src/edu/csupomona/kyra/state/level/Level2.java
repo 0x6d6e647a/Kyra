@@ -86,8 +86,5 @@ public class Level2 extends Level {
 	@Override
 	public void update(GameContainer gc, StateBasedGame sbg, int delta) throws SlickException {
 		super.update(gc, sbg, delta);
-		if (gc.isPaused() && gc.getInput().isKeyPressed(Input.KEY_P)) {
-			nextLevel(gc, sbg);
-		}
 	}
 }
