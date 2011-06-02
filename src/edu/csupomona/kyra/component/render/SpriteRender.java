@@ -7,22 +7,19 @@ import org.newdawn.slick.geom.Vector2f;
 import org.newdawn.slick.state.StateBasedGame;
 
 public abstract class SpriteRender extends RenderComponent{
-	protected Animation[] animations;
 	protected Animation sprite;
 	
 	public SpriteRender(String id) {
 		super(id);
 	}
 	
-	public SpriteRender(String id, Animation[] animations) {
+	public SpriteRender(String id, Animation sprite) {
 		super(id);
-		this.animations = animations;
-		sprite = animations[0];
+		this.sprite = sprite;
 	}
 	
-	protected void setAnimations(Animation[] animations) {
-		this.animations = animations;
-		sprite = this.animations[0];
+	protected void setSprite(Animation sprite) {
+		this.sprite = sprite;
 	}
 	
 	public void render(GameContainer gc, StateBasedGame sb, Graphics gr) {

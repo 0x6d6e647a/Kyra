@@ -7,24 +7,34 @@ import org.newdawn.slick.SlickException;
 public class ZombieRender extends AIRender {
 	public ZombieRender(String id) throws SlickException {
 		super(id);
-		Image[] bERightmovement = {
+		int[] moveTween = {200, 200, 200, 200};
+		Image[] moveRight = {
 				new Image("img/basic-enemy-move-right_001.png"),
 				new Image("img/basic-enemy-move-right_002.png"),
 				new Image("img/basic-enemy-move-right_001.png"),
 				new Image("img/basic-enemy-move-right_003.png")
 		};
-		Image[] bELeftmovement = {
+		Image[] moveLeft = {
 				new Image("img/basic-enemy-move-left_001.png"),
 				new Image("img/basic-enemy-move-left_002.png"),
 				new Image("img/basic-enemy-move-left_001.png"),
 				new Image("img/basic-enemy-move-left_003.png")
 		};
-		int[] movementDuration = {200, 200, 200, 200};
+		setMoveRight(new Animation(moveRight, moveTween, false));
+		setMoveLeft(new Animation(moveLeft, moveTween, false));
 		
-		animations = new Animation[2];
-		animations[0] = new Animation(bELeftmovement, movementDuration, false);
-		animations[1] = new Animation(bERightmovement, movementDuration, false);
+		int[] deathTween = {500,175};
+		Image[] deathRight = {
+				new Image("img/basic-enemy-death-right-1.png"),
+				new Image("img/basic-enemy-death-right-2.png")
+		};
+		Image[] deathLeft = {
+				new Image("img/basic-enemy-death-left-1.png"),
+				new Image("img/basic-enemy-death-left-2.png")
+		};
+		setDeathRight(new Animation(deathRight, deathTween, false));
+		setDeathLeft(new Animation(deathLeft, deathTween, false));
 		
-		super.setAnimations(animations);
+		setSprite(super.moveLeft);
 	}
 }
