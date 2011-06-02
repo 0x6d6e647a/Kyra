@@ -16,7 +16,7 @@ public class Boss2AI extends AIComponent {
 	ForceVector aim, jump;
 	Timer jumpCooldown;
 	boolean canJump;
-	final float SIGHT_RANGE = 520.0f,
+	final float SIGHT_RANGE = 850.0f,
 		BULLET_SPEED = 0.85f,
 		MOVE_SPEED = 0.5f,
 		JUMP_SPEED = -2.0f;

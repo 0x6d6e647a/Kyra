@@ -198,9 +198,12 @@ public abstract class Level extends BasicGameState {
 		else if (Kyra.vs && !player2.getHealthComponent().isDead())
 			playerPos = player2.getPosition();
 		Vector2f otherPos = other.getPosition();
-		float xDiff = Math.abs(otherPos.x-playerPos.x);
-		float yDiff = Math.abs(otherPos.y-playerPos.y);
-		return ((xDiff < CENTER_WIDTH+300) && (yDiff < CENTER_HEIGHT+300));
+		if (otherPos != null) {
+			float xDiff = Math.abs(otherPos.x-playerPos.x);
+			float yDiff = Math.abs(otherPos.y-playerPos.y);
+			return ((xDiff < CENTER_WIDTH+300) && (yDiff < CENTER_HEIGHT+300));
+		}
+		return false;
 	}
 	
 	@Override
