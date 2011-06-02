@@ -111,6 +111,26 @@ public abstract class Level extends BasicGameState {
 		sbg.enterState(stateID+1);
 	}
 	
+	protected boolean inRange(Entity thing, Entity player1, Entity player2) {
+		float eXPos = thing.getPosition().x,
+	          eYPos = thing.getPosition().y,
+	          pXPos = 0, pYPos = 0;
+		if(!player1.getHealthComponent().isDead())  {
+			pXPos = player1.getPosition().x;
+			pYPos = player1.getPosition().y;
+		} else {
+			if(Kyra.vs) {
+				if(!player2.getHealthComponent().isDead()) {
+					pXPos = player2.getPosition().x;
+					pYPos = player2.getPosition().y;
+				}
+			}
+		}
+		if(Math.abs(eXPos-pXPos) < 512 && Math.abs(eYPos-pYPos) < 384)
+			return true;
+		return false;
+	}
+	
 	@Override
 	public final int getID() {
 		return stateID; 
@@ -146,7 +166,7 @@ public abstract class Level extends BasicGameState {
 		}
 		
 		map = new Entity("map");
-		map.addComponent(new LevelRender("level", tiledMap, player1));
+		map.addComponent(new LevelRender("level", tiledMap, player1, player2));
 		map.addComponent(new MapHealthRender("playerHealth", player1, player2));
 		
 		setBoss();
@@ -161,26 +181,18 @@ public abstract class Level extends BasicGameState {
 			pause.drawCentered(512, 384);
 		else {
 			map.render(gc, sbg, gr);
-			player1.render(gc, sbg, gr);
+			if(!player1.getHealthComponent().isDead())
+				player1.render(gc, sbg, gr);
 			if (Kyra.vs)
-				player2.render(gc, sbg, gr);
+				if(!player2.getHealthComponent().isDead())
+					player2.render(gc, sbg, gr);
 			boss.render(gc, sbg, gr);
-			for (Entity enemy: enemies) {
-				float eXPos = enemy.getPosition().x,
-				      eYPos = enemy.getPosition().y,
-				      pXPos = player1.getPosition().x,
-				      pYPos = player1.getPosition().y;
-				if(Math.abs(eXPos-pXPos) < 512 && Math.abs(eYPos-pYPos) < 384)
+			for (Entity enemy: enemies)
+				if(inRange(enemy, player1, player2))
 					enemy.render(gc, sbg, gr);
-			}
-			for (Entity heart : hearts) {
-				float hXPos = heart.getPosition().x,
-				      hYPos = heart.getPosition().y,
-				      pXPos = player1.getPosition().x,
-				      pYPos = player1.getPosition().y;
-				if(Math.abs(hXPos-pXPos) < 512 && Math.abs(hYPos-pYPos) < 384)
+			for (Entity heart : hearts)
+				if(inRange(heart, player1, player2))
 					heart.render(gc, sbg, gr);
-			}
 		}
 	}
 
@@ -190,18 +202,18 @@ public abstract class Level extends BasicGameState {
 		
 		if(!drawIntro) {
 			if (!gc.isPaused()) {
-				player1.update(gc, sbg, delta);
+				if(!player1.getHealthComponent().isDead())
+					player1.update(gc, sbg, delta);
 				if (Kyra.vs)
-					player2.update(gc, sbg, delta);
-				for (Entity enemy: enemies) {
-					float eXPos = enemy.getPosition().x;
-					float pXPos = player1.getPosition().x;
-					if(Math.abs(eXPos-pXPos) < 500)
+					if(!player2.getHealthComponent().isDead())
+						player2.update(gc, sbg, delta);
+				for (Entity enemy: enemies)
+					if(inRange(enemy, player1, player2))
 						enemy.update(gc, sbg, delta);
-				}
 				boss.update(gc, sbg, delta);
 				for (Entity heart : hearts)
-					heart.update(gc, sbg, delta);
+					if(inRange(heart, player1, player2))
+						heart.update(gc, sbg, delta);
 				map.update(gc, sbg, delta);
 				//Remove hearts from the map that have been used
 				for (Iterator<Entity> iter = hearts.iterator(); iter.hasNext();) {
@@ -263,7 +275,7 @@ public abstract class Level extends BasicGameState {
         			sbg.enterState(Kyra.GAMEOVERSTATE);
 				}
 			} else {
-				if(player1.getHealthComponent().isDead() || player2.getHealthComponent().isDead()) {
+				if(player1.getHealthComponent().isDead() && player2.getHealthComponent().isDead()) {
 					input.clearKeyPressedRecord();
         			player1.getSoundComponent().stopAll();
             		player2.getSoundComponent().stopAll();

@@ -15,6 +15,7 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.state.StateBasedGame;
 
+import edu.csupomona.kyra.Kyra;
 import edu.csupomona.kyra.component.health.HealthComponent;
 import edu.csupomona.kyra.entity.Entity;
 
@@ -43,8 +44,17 @@ public class MapHealthRender extends RenderComponent {
 	}
 
 	public void update(GameContainer gc, StateBasedGame sb, int delta) {
-		xPos = player1.getPosition().x - gc.getWidth()/2;
-		yPos = player1.getPosition().y - gc.getHeight()/2;
+		if(!player1.getHealthComponent().isDead()) {
+			xPos = player1.getPosition().x - gc.getWidth()/2;
+			yPos = player1.getPosition().y - gc.getHeight()/2;
+		} else {
+			if(Kyra.vs) {
+				if(!player2.getHealthComponent().isDead()) {
+					xPos = player2.getPosition().x - gc.getWidth()/2;
+					yPos = player2.getPosition().y - gc.getHeight()/2;
+				}
+			}
+		}
 	}
 
 }
